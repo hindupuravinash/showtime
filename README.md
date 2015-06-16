@@ -1,5 +1,9 @@
 # Cram
 
+This project is the home to **Cram - Complete Ratings of All Movies** for Android.
+
+Started off as a canvas to explore the new Android Libraries and Material Design.
+
 ## License
 
     Copyright 2015 Avinash Hindupur
