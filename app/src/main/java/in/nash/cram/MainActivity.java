@@ -1,5 +1,6 @@
 package in.nash.cram;
 
+import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -12,11 +13,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit.RetrofitError;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,6 +52,35 @@ public class MainActivity extends AppCompatActivity {
         }
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        new FetchTopMoviesAsync().execute();
+
+    }
+
+    private class FetchTopMoviesAsync extends AsyncTask<URL, Integer, Boolean> {
+
+
+        protected Boolean doInBackground(URL... urls) {
+            try {
+                getMovies();
+            } catch (RetrofitError e) {
+
+                Log.d("Error", e.getMessage());
+                return false;
+            }
+            return true;
+        }
+
+        protected void onPostExecute(Boolean result) {
+
+        }
+    }
+
+    private void getMovies() {
+        TmdbService tmdbService = new TmdbService();
+        TmdbService.Tmdb tmdb = tmdbService.getRestAdapter().create(TmdbService.Tmdb.class);
+
+        TmdbService.MovieResponse movies = tmdb.movies();
 
     }
 
