@@ -1,4 +1,4 @@
-package in.nash.cram;
+package in.nash.cram.model;
 
 /**
  * Created by avinash on 19/06/15.

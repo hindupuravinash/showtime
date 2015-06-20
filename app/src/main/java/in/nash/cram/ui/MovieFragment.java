@@ -1,4 +1,4 @@
-package in.nash.cram;
+package in.nash.cram.ui;
 
 import android.support.v4.app.Fragment;
 

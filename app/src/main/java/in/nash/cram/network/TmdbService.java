@@ -1,9 +1,10 @@
-package in.nash.cram;
+package in.nash.cram.network;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+import in.nash.cram.model.Movie;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.http.GET;
@@ -29,7 +30,7 @@ public final class TmdbService {
         return new RestAdapter.Builder();
     }
 
-    protected RestAdapter getRestAdapter() {
+    public RestAdapter getRestAdapter() {
         if (this.restAdapter == null) {
             RestAdapter.Builder builder = this.newRestAdapterBuilder();
             builder.setEndpoint(API_URL);
@@ -46,7 +47,7 @@ public final class TmdbService {
         return this.restAdapter;
     }
 
-    class MovieResponse {
+    public class MovieResponse {
 
         @SerializedName("results")
         public ArrayList<Movie> mMovies;

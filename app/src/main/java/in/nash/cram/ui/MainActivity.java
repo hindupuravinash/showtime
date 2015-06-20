@@ -1,4 +1,4 @@
-package in.nash.cram;
+package in.nash.cram.ui;
 
 import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
@@ -21,6 +21,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.nash.cram.R;
+import in.nash.cram.network.TmdbService;
 import retrofit.RetrofitError;
 
 public class MainActivity extends AppCompatActivity {
