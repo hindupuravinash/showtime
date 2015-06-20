@@ -22,12 +22,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.nash.cram.R;
+import in.nash.cram.model.Movie;
 import in.nash.cram.network.TmdbService;
 import retrofit.RetrofitError;
 
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    public ArrayList<Movie> mMoviesList = new ArrayList<>();
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +52,11 @@ public class MainActivity extends AppCompatActivity {
             setupDrawerContent(navigationView);
         }
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
         if (viewPager != null) {
             setupViewPager(viewPager);
         }
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         new FetchTopMoviesAsync().execute();
 
@@ -75,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
 
         protected void onPostExecute(Boolean result) {
 
+            tabLayout.setupWithViewPager(viewPager);
+
         }
     }
 
@@ -83,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
         TmdbService.Tmdb tmdb = tmdbService.getRestAdapter().create(TmdbService.Tmdb.class);
 
         TmdbService.MovieResponse movies = tmdb.movies();
+
+        Globals.moviesList = movies.mMovies;
 
     }
 
