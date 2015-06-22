@@ -1,5 +1,6 @@
 package in.nash.cram.ui;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -34,7 +35,27 @@ public class MovieFragment extends Fragment {
 
         mAdapter = new MovieGridAdapter(Globals.moviesList);
         mRecyclerView.setAdapter(mAdapter);
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
+        mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
         return rootView;
+    }
+
+    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+        private int space;
+
+        public SpacesItemDecoration(int space) {
+            this.space = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view,
+                RecyclerView parent, RecyclerView.State state) {
+            outRect.left = space;
+            outRect.right = space;
+            outRect.bottom = space;
+            outRect.top = space;
+
+        }
     }
 }
