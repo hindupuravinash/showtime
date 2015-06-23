@@ -23,7 +23,16 @@ public final class TmdbService {
     public interface Tmdb {
 
         @GET("/movie/top_rated")
-        MovieResponse movies();
+        MovieResponse fetchTopMovies();
+
+        @GET("/movie/popular")
+        MovieResponse fetchPopularMovies();
+
+        @GET("/movie/upcoming")
+        MovieResponse fetchUpcomingMovies();
+
+        @GET("/movie/now_playing")
+        MovieResponse fetchNowPlayingMovies();
     }
 
     protected RestAdapter.Builder newRestAdapterBuilder() {

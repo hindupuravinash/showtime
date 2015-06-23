@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         TmdbService tmdbService = new TmdbService();
         TmdbService.Tmdb tmdb = tmdbService.getRestAdapter().create(TmdbService.Tmdb.class);
 
-        TmdbService.MovieResponse movies = tmdb.movies();
+        TmdbService.MovieResponse movies = tmdb.fetchTopMovies();
 
         Globals.moviesList = movies.mMovies;
 
