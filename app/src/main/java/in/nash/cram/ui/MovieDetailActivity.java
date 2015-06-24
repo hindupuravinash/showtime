@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import in.nash.cram.R;
 import in.nash.cram.model.Movie;
@@ -33,15 +34,19 @@ public class MovieDetailActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle("Movie");
-
         Context context = MovieDetailActivity.this;
 
         Movie movie = Globals.moviesList.get(moviePosition);
-        String url = "http://image.tmdb.org/t/p/w300" + movie.getPosterUrl();
+        String url = "http://image.tmdb.org/t/p/w780" + movie.getBackdropPath();
+        String movieTitle = movie.getTitle();
+        String movieOverview = movie.getOverview();
+
+        CollapsingToolbarLayout collapsingToolbar =
+                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitle(movieTitle);
+
+        TextView overview = (TextView) findViewById(R.id.summary);
+        overview.setText(movieOverview);
         final ImageView imageView = (ImageView) findViewById(R.id.movie_backdrop);
         Picasso.with(context)
                 .load(url)
