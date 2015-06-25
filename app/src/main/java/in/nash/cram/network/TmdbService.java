@@ -5,9 +5,11 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 import in.nash.cram.model.Movie;
+import in.nash.cram.model.Person;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.http.GET;
+import retrofit.http.Path;
 
 /**
  * Created by avinash on 19/06/15.
@@ -33,6 +35,12 @@ public final class TmdbService {
 
         @GET("/movie/now_playing")
         MovieResponse fetchNowPlayingMovies();
+
+        @GET("/movie/{id}/similar")
+        MovieResponse fetchSimilarMovies(@Path("id") String id);
+
+        @GET("/movie/{id}/credits")
+        CreditResponse fetchMovieCredits(@Path("id") String id);
     }
 
     protected RestAdapter.Builder newRestAdapterBuilder() {
@@ -54,6 +62,14 @@ public final class TmdbService {
         }
 
         return this.restAdapter;
+    }
+
+    public class CreditResponse {
+        @SerializedName("cast")
+        public ArrayList<Person> mCast;
+
+        @SerializedName("crew")
+        public ArrayList<Person> mCrew;
     }
 
     public class MovieResponse {
