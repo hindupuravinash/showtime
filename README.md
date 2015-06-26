@@ -4,6 +4,7 @@ This project is the home to **Cram - Complete Ratings of All Movies** for Androi
 
 Started off as a canvas to explore the new Android Libraries and Material Design.
 
+Will be working on newer 3rd party libraries soon
 ## License
 
     Copyright 2015 Avinash Hindupur
