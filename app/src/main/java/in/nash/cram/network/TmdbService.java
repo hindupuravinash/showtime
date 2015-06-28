@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import in.nash.cram.model.Movie;
 import in.nash.cram.model.Person;
+import in.nash.cram.model.Review;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.http.GET;
@@ -41,6 +42,9 @@ public final class TmdbService {
 
         @GET("/movie/{id}/credits")
         CreditResponse fetchMovieCredits(@Path("id") String id);
+
+        @GET("/movie/{id}/reviews")
+        ReviewResponse fetchMovieReviews(@Path("id")String id);
     }
 
     protected RestAdapter.Builder newRestAdapterBuilder() {
@@ -62,6 +66,23 @@ public final class TmdbService {
         }
 
         return this.restAdapter;
+    }
+
+    private static class ReviewResponse {
+        @SerializedName("id")
+        public String id;
+
+        @SerializedName("page")
+        public int page;
+
+        @SerializedName("results")
+        public ArrayList<Review> mReviews;
+
+        @SerializedName("total_pages")
+        public int totalPages;
+
+        @SerializedName("total_results")
+        public int totalResults;
     }
 
     public class CreditResponse {
