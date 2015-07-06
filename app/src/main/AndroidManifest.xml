@@ -26,6 +26,10 @@
             android:name=".ui.AboutActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name=".ui.LoginActivity"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>
