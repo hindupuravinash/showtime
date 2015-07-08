@@ -1,10 +1,10 @@
 package in.nash.cram.ui;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -21,6 +21,7 @@ public class LoginActivity extends AppCompatActivity implements TextView.OnEdito
 
     private Button mSubmitButton;
     private EditText mEmail;
+    private TextInputLayout mEmailInputLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +39,10 @@ public class LoginActivity extends AppCompatActivity implements TextView.OnEdito
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radio_group);
         radioGroup.setOnCheckedChangeListener(this);
 
+        mEmailInputLayout = (TextInputLayout)findViewById(R.id.input_layout_email);
         mEmail = (EditText) findViewById(R.id.input_email);
 
         RadioButton loginRadio = (RadioButton) findViewById(R.id.radio_login);
-        RadioButton registerRadio = (RadioButton) findViewById(R.id.radio_register);
 
         loginRadio.setChecked(true);
 
@@ -52,11 +53,11 @@ public class LoginActivity extends AppCompatActivity implements TextView.OnEdito
         switch (checkedId) {
             case R.id.radio_login:
                 mSubmitButton.setText("Login");
-                mEmail.setVisibility(View.GONE);
+                mEmailInputLayout.setVisibility(View.INVISIBLE);
                 break;
             case R.id.radio_register:
                 mSubmitButton.setText("Register");
-                mEmail.setVisibility(View.VISIBLE);
+                mEmailInputLayout.setVisibility(View.VISIBLE);
                 break;
         }
     }
