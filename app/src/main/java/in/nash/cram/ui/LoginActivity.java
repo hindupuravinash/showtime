@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import in.nash.cram.R;
 
@@ -22,16 +23,18 @@ public class LoginActivity extends AppCompatActivity implements TextView.OnEdito
     private Button mSubmitButton;
     private EditText mEmail;
     private TextInputLayout mEmailInputLayout;
+    private EditText mUserName;
+    private EditText mPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        EditText username = (EditText) findViewById(R.id.input_username);
-        username.setOnEditorActionListener(this);
-        EditText password = (EditText) findViewById(R.id.input_password);
-        password.setOnEditorActionListener(this);
+        mUserName = (EditText) findViewById(R.id.input_username);
+        mUserName.setOnEditorActionListener(this);
+        mPassword = (EditText) findViewById(R.id.input_password);
+        mPassword.setOnEditorActionListener(this);
 
         mSubmitButton = (Button) findViewById(R.id.button_submit);
         mSubmitButton.setOnClickListener(this);
@@ -69,6 +72,15 @@ public class LoginActivity extends AppCompatActivity implements TextView.OnEdito
 
     @Override
     public void onClick(View v) {
+        if(v.getId() == R.id.button_submit){
+            if(mUserName.getText().toString().isEmpty()){
+                Toast.makeText(LoginActivity.this, "Username cannot be empty", Toast.LENGTH_SHORT).show();
+            }
+            if(mPassword.getText().toString().isEmpty()){
+                Toast.makeText(LoginActivity.this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
+
+            }
+        }
 
     }
 }
