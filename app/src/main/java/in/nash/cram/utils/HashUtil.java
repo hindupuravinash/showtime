@@ -1,4 +1,4 @@
-package in.nash.cram.util;
+package in.nash.cram.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
