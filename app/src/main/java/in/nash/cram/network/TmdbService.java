@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+import in.nash.cram.Secrets;
 import in.nash.cram.model.Movie;
 import in.nash.cram.model.Person;
 import in.nash.cram.model.Review;
@@ -18,7 +19,7 @@ import retrofit.http.Path;
 public final class TmdbService {
 
     public static final String API_URL = "https://api.themoviedb.org/3";
-    public static final String PARAM_API_KEY = "api_key";
+    public static final String PARAM_API_KEY = Secrets.PARAM_API_KEY;
 
     private String apiKey = PARAM_API_KEY;
     private RestAdapter restAdapter;

@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements TextView.OnEdito
 
         switch (mRadioGroup.getCheckedRadioButtonId()) {
             case R.id.radio_login:
-                
+
                 //TODO: login(username, password);
                 break;
             case R.id.radio_register:
