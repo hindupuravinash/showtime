@@ -10,36 +10,42 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/released"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Released"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <TextView
+            android:id="@+id/runtime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Runtime"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <TextView
+            android:id="@+id/certification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Certification"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <TextView
+            android:id="@+id/genres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Genres"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <TextView
+            android:id="@+id/budget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Budget"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <TextView
+            android:id="@+id/language"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Language"
