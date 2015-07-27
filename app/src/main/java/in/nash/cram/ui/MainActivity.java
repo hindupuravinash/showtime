@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         protected Boolean doInBackground(URL... urls) {
             try {
-                getMovies();
+                getMovies("top");
             } catch (RetrofitError e) {
 
                 Log.d("Error", e.getMessage());
@@ -95,11 +95,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getMovies() {
+    private void getMovies(String category) {
         TmdbService tmdbService = new TmdbService();
         TmdbService.Tmdb tmdb = tmdbService.getRestAdapter().create(TmdbService.Tmdb.class);
 
-        TmdbService.MovieResponse movies = tmdb.fetchTopMovies();
+        TmdbService.MovieResponse movies;
+        switch (category) {
+
+            case "top":
+                movies = tmdb.fetchTopMovies();
+                break;
+            case "upcoming":
+                movies = tmdb.fetchUpcomingMovies();
+                break;
+            case "playing":
+                movies = tmdb.fetchNowPlayingMovies();
+                break;
+            default:
+                movies = tmdb.fetchPopularMovies();
+
+        }
 
         Globals.moviesList = movies.mMovies;
 
@@ -107,9 +122,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new MovieFragment(), "Top");
-        adapter.addFragment(new MovieFragment(), "Upcoming");
-        adapter.addFragment(new MovieFragment(), "Playing");
+        adapter.addFragment(new TopFragment(), "Top");
+        adapter.addFragment(new UpcomingFragment(), "Upcoming");
+        adapter.addFragment(new PlayingFragment(), "Playing");
 
         viewPager.setAdapter(adapter);
     }
