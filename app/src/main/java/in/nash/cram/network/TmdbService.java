@@ -46,6 +46,9 @@ public final class TmdbService {
 
         @GET("/movie/{id}/reviews")
         ReviewResponse fetchMovieReviews(@Path("id")String id);
+
+        @GET("/movie/{id}")
+        Movie fetchMovieDetails(@Path("id") String id);
     }
 
     protected RestAdapter.Builder newRestAdapterBuilder() {

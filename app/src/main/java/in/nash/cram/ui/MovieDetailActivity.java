@@ -4,17 +4,23 @@ import com.squareup.picasso.Picasso;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.net.URL;
+
 import in.nash.cram.R;
 import in.nash.cram.model.Movie;
+import in.nash.cram.network.TmdbService;
+import retrofit.RetrofitError;
 
 /**
  * Created by Avinash Hindupur on 24/06/15.
@@ -22,6 +28,9 @@ import in.nash.cram.model.Movie;
 public class MovieDetailActivity extends AppCompatActivity {
 
     public static final String MOVIE_POSITION = "movie_position";
+    private String mMovieId;
+    private Movie mMovie;
+    private Context mContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,25 +43,55 @@ public class MovieDetailActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Context context = MovieDetailActivity.this;
+        mContext = MovieDetailActivity.this;
 
         Movie movie = Globals.moviesList.get(moviePosition);
-        String url = "http://image.tmdb.org/t/p/w780" + movie.getBackdropPath();
-        String movieTitle = movie.getTitle();
-        String movieOverview = movie.getOverview();
+        mMovieId = movie.getId();
+        new FetchMovieDetailsAsync().execute();
 
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(movieTitle);
+    }
 
-        TextView overview = (TextView) findViewById(R.id.summary);
-        overview.setText(movieOverview);
-        final ImageView imageView = (ImageView) findViewById(R.id.movie_backdrop);
-        Picasso.with(context)
-                .load(url)
-                .into(imageView);
+    private class FetchMovieDetailsAsync extends AsyncTask<URL, Integer, Boolean> {
 
-        setMovieDetails(movie);
+
+        protected Boolean doInBackground(URL... urls) {
+            try {
+                getMovieDetails();
+            } catch (RetrofitError e) {
+
+                Log.d("Error", e.getMessage());
+                return false;
+            }
+            return true;
+        }
+
+        protected void onPostExecute(Boolean result) {
+
+            String url = "http://image.tmdb.org/t/p/w780" + mMovie.getBackdropPath();
+            String movieTitle = mMovie.getTitle();
+            String movieOverview = mMovie.getOverview();
+
+            CollapsingToolbarLayout collapsingToolbar =
+                    (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+            collapsingToolbar.setTitle(movieTitle);
+
+            TextView overview = (TextView) findViewById(R.id.summary);
+            overview.setText(movieOverview);
+            final ImageView imageView = (ImageView) findViewById(R.id.movie_backdrop);
+            Picasso.with(mContext)
+                    .load(url)
+                    .into(imageView);
+
+            setMovieDetails(mMovie);
+        }
+    }
+
+    private void getMovieDetails() {
+        TmdbService tmdbService = new TmdbService();
+        TmdbService.Tmdb tmdb = tmdbService.getRestAdapter().create(TmdbService.Tmdb.class);
+        mMovie = tmdb.fetchMovieDetails(mMovieId);
+
+
     }
 
     private void setMovieDetails(Movie movie) {
