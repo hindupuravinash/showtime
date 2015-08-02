@@ -30,6 +30,18 @@
             android:name=".ui.LoginActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name=".ui.FeatureRequestActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".ui.PersonActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".ui.ReviewActivity"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>
