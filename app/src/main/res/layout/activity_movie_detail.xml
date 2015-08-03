@@ -71,24 +71,66 @@
                 android:layout_margin="16dp">
 
                 <LinearLayout
+                    android:id="@+id/cast"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.Card">
+                    style="@style/Widget.Card"
+                    android:clickable="true">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Hello"
+                        android:text="Cast"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="World" />
 
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+
+                <LinearLayout
+                    android:id="@+id/crew"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Card"
+                    android:clickable="true">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Crew"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+
+                <LinearLayout
+                    android:id="@+id/reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Card"
+                    android:clickable="true">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Reviews"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
