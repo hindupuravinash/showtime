@@ -12,7 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.net.URL;
@@ -25,12 +27,15 @@ import retrofit.RetrofitError;
 /**
  * Created by Avinash Hindupur on 24/06/15.
  */
-public class MovieDetailActivity extends AppCompatActivity {
+public class MovieDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String MOVIE_POSITION = "movie_position";
     private String mMovieId;
     private Movie mMovie;
     private Context mContext;
+    private LinearLayout mReviewsLayout;
+    private LinearLayout mCastLayout;
+    private LinearLayout mCrewLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,10 +50,43 @@ public class MovieDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mContext = MovieDetailActivity.this;
 
+        mReviewsLayout = (LinearLayout) findViewById(R.id.reviews);
+        mReviewsLayout.setOnClickListener(this);
+        mCastLayout = (LinearLayout) findViewById(R.id.cast);
+        mCastLayout.setOnClickListener(this);
+        mCrewLayout = (LinearLayout) findViewById(R.id.crew);
+        mCrewLayout.setOnClickListener(this);
         Movie movie = Globals.moviesList.get(moviePosition);
         mMovieId = movie.getId();
         new FetchMovieDetailsAsync().execute();
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent;
+
+        switch (v.getId()){
+            case R.id.cast:
+                intent = new Intent(MovieDetailActivity.this, PersonListActivity.class);
+                intent.putExtra("fragment", "cast");
+                intent.putExtra("id", mMovieId);
+                startActivity(intent);
+                break;
+            case R.id.crew:
+                intent = new Intent(MovieDetailActivity.this, PersonListActivity.class);
+                intent.putExtra("fragment", "crew");
+                intent.putExtra("id", mMovieId);
+                startActivity(intent);
+                break;
+            case R.id.reviews:
+                intent = new Intent(MovieDetailActivity.this, ReviewListActivity.class);
+                intent.putExtra("id", mMovieId);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 
     private class FetchMovieDetailsAsync extends AsyncTask<URL, Integer, Boolean> {

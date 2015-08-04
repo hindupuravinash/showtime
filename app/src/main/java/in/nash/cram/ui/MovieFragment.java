@@ -48,7 +48,6 @@ public abstract class MovieFragment extends Fragment {
 
     private class FetchTopMoviesAsync extends AsyncTask<URL, Integer, Boolean> {
 
-
         protected Boolean doInBackground(URL... urls) {
             try {
                 getMovies(setMovieCategory());
