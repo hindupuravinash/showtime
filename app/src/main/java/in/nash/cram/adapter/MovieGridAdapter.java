@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import in.nash.cram.R;
 import in.nash.cram.model.Movie;
-import in.nash.cram.ui.MovieDetailActivity;
+import in.nash.cram.ui.view.impl.MovieDetailActivity;
 
 /**
  * Created by avinash on 21/06/15.

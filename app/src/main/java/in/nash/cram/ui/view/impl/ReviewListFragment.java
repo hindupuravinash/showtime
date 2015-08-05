@@ -1,4 +1,4 @@
-package in.nash.cram.ui;
+package in.nash.cram.ui.view.impl;
 
 import android.content.Intent;
 import android.os.Bundle;

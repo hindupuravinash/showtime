@@ -1,4 +1,4 @@
-package in.nash.cram.ui;
+package in.nash.cram.ui.view.impl;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -36,7 +36,7 @@ public class PersonListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mRecyclerView.setAdapter(new PersonListAdapter(mPersonList));
+        mRecyclerView.setAdapter(new PersonListAdapter(mPersonList,null));
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 

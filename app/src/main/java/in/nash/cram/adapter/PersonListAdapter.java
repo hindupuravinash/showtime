@@ -17,7 +17,7 @@ public class PersonListAdapter extends RecyclerView.Adapter {
     private final View.OnClickListener mOnItemClickListener;
     private final ArrayList<Person> mPersonsList;
 
-    public PersonListAdapter(ArrayList<Person> personsList) {
+    public PersonListAdapter(ArrayList<Person> personsList, View.OnClickListener onClickListener) {
         this.mPersonsList = new ArrayList<>(personsList);
         this.mOnItemClickListener = onClickListener;
     }

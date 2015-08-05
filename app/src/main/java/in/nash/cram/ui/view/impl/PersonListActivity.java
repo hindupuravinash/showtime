@@ -1,4 +1,4 @@
-package in.nash.cram.ui;
+package in.nash.cram.ui.view.impl;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -62,7 +62,7 @@ public class PersonListActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(Boolean result) {
-            mAdapter = new PersonListAdapter(mCredits.mCast);
+            mAdapter = new PersonListAdapter(mCredits.mCast, null);
             mRecyclerView.setAdapter(mAdapter);
             int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
             mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));

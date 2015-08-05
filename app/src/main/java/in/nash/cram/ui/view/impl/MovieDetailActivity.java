@@ -1,4 +1,4 @@
-package in.nash.cram.ui;
+package in.nash.cram.ui.view.impl;
 
 import com.squareup.picasso.Picasso;
 
@@ -22,6 +22,7 @@ import java.net.URL;
 import in.nash.cram.R;
 import in.nash.cram.model.Movie;
 import in.nash.cram.network.TmdbService;
+import in.nash.cram.ui.Globals;
 import retrofit.RetrofitError;
 
 /**

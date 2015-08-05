@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.view.impl.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,27 +19,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.MovieDetailActivity"
+            android:name=".ui.view.impl.MovieDetailActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".ui.AboutActivity"
+            android:name=".ui.view.impl.AboutActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".ui.LoginActivity"
+            android:name=".ui.view.impl.LoginActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".ui.FeatureRequestActivity"
+            android:name=".ui.view.impl.FeatureRequestActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".ui.PersonActivity"
+            android:name=".ui.view.impl.PersonActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".ui.ReviewActivity"
+            android:name=".ui.view.impl.ReviewActivity"
             android:label="@string/app_name" >
         </activity>
     </application>

@@ -1,4 +1,4 @@
-package in.nash.cram.ui;
+package in.nash.cram.ui.view.impl;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import in.nash.cram.R;
 import in.nash.cram.adapter.MovieGridAdapter;
 import in.nash.cram.model.Movie;
 import in.nash.cram.network.TmdbService;
+import in.nash.cram.ui.Globals;
 import in.nash.cram.utils.SpacesItemDecoration;
 import retrofit.RetrofitError;
 

@@ -1,4 +1,4 @@
-package in.nash.cram.ui;
+package in.nash.cram.ui.view.impl;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -27,6 +27,7 @@ import java.util.List;
 import in.nash.cram.R;
 import in.nash.cram.model.Movie;
 import in.nash.cram.network.TmdbService;
+import in.nash.cram.ui.Globals;
 import retrofit.RetrofitError;
 
 public class MainActivity extends AppCompatActivity {

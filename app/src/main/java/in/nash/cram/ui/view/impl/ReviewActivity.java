@@ -1,4 +1,4 @@
-package in.nash.cram.ui;
+package in.nash.cram.ui.view.impl;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -8,15 +8,14 @@ import android.util.Log;
 
 import java.net.URL;
 
-import in.nash.cram.model.Person;
+import in.nash.cram.model.Review;
 import in.nash.cram.network.TmdbService;
 import retrofit.RetrofitError;
 
 /**
- * Created by Avinash Hindupur on 05/07/15.
+ * Created by avinash on 8/2/15.
  */
-public class PersonActivity extends AppCompatActivity {
-
+public class ReviewActivity extends AppCompatActivity{
     private String mId;
 
     @Override
@@ -26,15 +25,15 @@ public class PersonActivity extends AppCompatActivity {
         Bundle extras = intent.getExtras();
         mId = extras.getString("id");
 
-        new FetchPersonAsyncTask().execute();
+        new FetchReviewAsyncTask().execute();
     }
 
-    private class FetchPersonAsyncTask extends AsyncTask<URL, Integer, Boolean> {
+    private class FetchReviewAsyncTask extends AsyncTask<URL, Integer, Boolean> {
 
 
         protected Boolean doInBackground(URL... urls) {
             try {
-                fetchPerson();
+                fetchReview();
             } catch (RetrofitError e) {
 
                 Log.d("Error", e.getMessage());
@@ -45,15 +44,16 @@ public class PersonActivity extends AppCompatActivity {
 
         protected void onPostExecute(Boolean result) {
 
-            //TODO: Setup Person
+            //TODO: Setup Review
         }
     }
 
-    private void fetchPerson() {
+    private void fetchReview() {
         TmdbService tmdbService = new TmdbService();
         TmdbService.Tmdb tmdb = tmdbService.getRestAdapter().create(TmdbService.Tmdb.class);
 
-        Person person = tmdb.fetchPersonDetails(mId);
+        Review review = tmdb.fetchMovieReview(mId);
 
     }
+
 }
