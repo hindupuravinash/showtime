@@ -78,7 +78,7 @@ public final class TmdbService {
         return this.restAdapter;
     }
 
-    private static class ReviewResponse {
+    public static class ReviewResponse {
         @SerializedName("id")
         public String id;
 
