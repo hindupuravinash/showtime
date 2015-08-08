@@ -14,9 +14,9 @@ public class ReviewListActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-       // setContentView(R.layout.activity_layout);
+        setContentView(R.layout.activity_layout);
         ReviewListFragment reviewListFragment = new ReviewListFragment();
-       // getFragmentManager().beginTransaction().add(R.id.list_container, reviewListFragment, reviewListFragment.TAG).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.list_container, reviewListFragment, reviewListFragment.TAG).commit();
     }
 
 }

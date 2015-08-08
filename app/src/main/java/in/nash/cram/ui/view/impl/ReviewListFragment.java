@@ -27,7 +27,7 @@ import retrofit.RetrofitError;
  */
 public class ReviewListFragment  extends Fragment {
 
-    private static final String TAG = "ReviewListFrag";
+    public static final String TAG = "ReviewListFrag";
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<Review> mReviewList = new ArrayList<>();
