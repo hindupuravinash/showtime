@@ -13,19 +13,18 @@ import in.nash.cram.R;
  */
 public class PersonListActivity extends AppCompatActivity {
 
-    private String mId;
+    public static String mId;
     private String fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_layout);
 
         Intent intent = getIntent();
         mId = intent.getStringExtra("id");
         fragment = intent.getStringExtra("fragment");
 
-        setContentView(R.layout.activity_layout);
         PersonListFragment personListFragment = new PersonListFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.list_container, personListFragment, personListFragment.TAG).commit();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

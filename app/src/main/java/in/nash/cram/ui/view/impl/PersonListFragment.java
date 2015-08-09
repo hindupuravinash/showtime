@@ -29,7 +29,6 @@ public class PersonListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<Person> mPersonList = new ArrayList<>();
-    private PersonListAdapter mAdapter;
     private String mId;
     private TmdbService.CreditResponse mCredits;
 
@@ -66,8 +65,8 @@ public class PersonListFragment extends Fragment {
         }
 
         protected void onPostExecute(Boolean result) {
-            mAdapter = new PersonListAdapter(mCredits.mCast, null);
-            mRecyclerView.setAdapter(mAdapter);
+            PersonListAdapter adapter = new PersonListAdapter(mCredits.mCast, null);
+            mRecyclerView.setAdapter(adapter);
             int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
             mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
@@ -78,7 +77,7 @@ public class PersonListFragment extends Fragment {
         TmdbService tmdbService = new TmdbService();
         TmdbService.Tmdb tmdb = tmdbService.getRestAdapter().create(TmdbService.Tmdb.class);
 
-        mCredits = tmdb.fetchMovieCredits(mId);
+        mCredits = tmdb.fetchMovieCredits(PersonListActivity.mId);
 
     }
 
