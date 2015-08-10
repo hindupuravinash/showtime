@@ -5,9 +5,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.webkit.WebView;
+import android.widget.TextView;
 
 import java.net.URL;
 
+import in.nash.cram.R;
 import in.nash.cram.model.Review;
 import in.nash.cram.network.TmdbService;
 import retrofit.RetrofitError;
@@ -15,8 +18,13 @@ import retrofit.RetrofitError;
 /**
  * Created by avinash on 8/2/15.
  */
-public class ReviewActivity extends AppCompatActivity{
+public class ReviewActivity extends AppCompatActivity {
     private String mId;
+    private Review mReview;
+
+    private TextView author;
+    private TextView content;
+    private WebView mWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +32,8 @@ public class ReviewActivity extends AppCompatActivity{
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         mId = extras.getString("id");
+
+        setContentView(R.layout.activity_review);
 
         new FetchReviewAsyncTask().execute();
     }
@@ -44,7 +54,14 @@ public class ReviewActivity extends AppCompatActivity{
 
         protected void onPostExecute(Boolean result) {
 
-            //TODO: Setup Review
+            if (result) {
+                author.setText(mReview.getAuthor());
+                content.setText(mReview.getContent());
+                String url = mReview.getUrl();
+                //TODO: Decide if Webview needs to be shown
+            } else {
+                //TODO: Throw error
+            }
         }
     }
 
@@ -52,7 +69,7 @@ public class ReviewActivity extends AppCompatActivity{
         TmdbService tmdbService = new TmdbService();
         TmdbService.Tmdb tmdb = tmdbService.getRestAdapter().create(TmdbService.Tmdb.class);
 
-        Review review = tmdb.fetchMovieReview(mId);
+        mReview = tmdb.fetchMovieReview(mId);
 
     }
 
