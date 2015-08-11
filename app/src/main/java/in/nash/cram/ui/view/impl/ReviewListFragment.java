@@ -31,7 +31,6 @@ public class ReviewListFragment  extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<Review> mReviewList = new ArrayList<>();
-    private ReviewListAdapter mAdapter;
     private TmdbService.ReviewResponse mReviews;
     private String mId;
 
@@ -40,7 +39,9 @@ public class ReviewListFragment  extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_review_list, container, false);
-
+        Intent intent = getActivity().getIntent();
+        Bundle extras = intent.getExtras();
+        mId = extras.getString("id");
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.reviews_list);
 
         mLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
@@ -79,8 +80,8 @@ public class ReviewListFragment  extends Fragment {
         }
 
         protected void onPostExecute(Boolean result) {
-            mAdapter = new ReviewListAdapter(mReviews.mReviews, null);
-            mRecyclerView.setAdapter(mAdapter);
+            ReviewListAdapter adapter = new ReviewListAdapter(mReviews.mReviews, null);
+            mRecyclerView.setAdapter(adapter);
             int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
             mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
