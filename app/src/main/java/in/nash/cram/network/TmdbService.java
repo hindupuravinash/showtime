@@ -78,7 +78,7 @@ public final class TmdbService {
         return this.restAdapter;
     }
 
-    public static class ReviewResponse {
+    public class ReviewResponse {
         @SerializedName("id")
         public String id;
 
@@ -86,7 +86,7 @@ public final class TmdbService {
         public int page;
 
         @SerializedName("results")
-        public ArrayList<Review> mReviews;
+        public ArrayList<Review> reviews;
 
         @SerializedName("total_pages")
         public int totalPages;

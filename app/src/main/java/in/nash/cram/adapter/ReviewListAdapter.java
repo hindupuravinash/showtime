@@ -1,10 +1,11 @@
 package in.nash.cram.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ReviewListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_review, parent, false);
 
@@ -37,12 +38,21 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
             });
         }
 
-        return null;
+        ViewHolder vh = new ViewHolder(view);
+        return vh;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.mBoundPosition = position;
 
+        Review review = mReviewsList.get(position);
+        String author = review.getAuthor();
+        String description = review.getContent();
+        Log.d(author, description);
+
+        holder.mTitleView.setText(author);
+        holder.mDescriptionView.setText(description);
     }
 
     @Override
@@ -53,10 +63,13 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public int mBoundPosition;
 
-        public ImageView mImageView;
+        public TextView mTitleView;
+        public TextView mDescriptionView;
         public ViewHolder(View view) {
             super(view);
-            mImageView = (ImageView) view.findViewById(R.id.poster_image);
+            mTitleView = (TextView) view.findViewById(R.id.review_title);
+            mDescriptionView = (TextView) view.findViewById(R.id.review_description);
+
         }
     }
 }

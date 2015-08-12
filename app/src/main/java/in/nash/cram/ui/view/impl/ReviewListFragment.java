@@ -25,11 +25,10 @@ import retrofit.RetrofitError;
 /**
  * Created by avinash on 8/2/15.
  */
-public class ReviewListFragment  extends Fragment {
+public class ReviewListFragment extends Fragment {
 
     public static final String TAG = "ReviewListFrag";
     private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<Review> mReviewList = new ArrayList<>();
     private TmdbService.ReviewResponse mReviews;
     private String mId;
@@ -39,27 +38,11 @@ public class ReviewListFragment  extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_review_list, container, false);
-        Intent intent = getActivity().getIntent();
-        Bundle extras = intent.getExtras();
-        mId = extras.getString("id");
+       mId = ReviewListActivity.mId;
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.reviews_list);
 
-        mLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mRecyclerView.setAdapter(new ReviewListAdapter(mReviewList, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick Review");
-                Review review = mReviewList.get(mRecyclerView.getChildLayoutPosition(view));
-                String id = review.getId();
-                Intent intent = new Intent(getActivity(), ReviewActivity.class);
-                intent.putExtra("id", id);
-                startActivity(intent);
-            }
-        }));
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
-        mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getBaseContext());
+        mRecyclerView.setLayoutManager(layoutManager);
 
         new FetchMovieReviews().execute();
         return rootView;
@@ -80,11 +63,25 @@ public class ReviewListFragment  extends Fragment {
         }
 
         protected void onPostExecute(Boolean result) {
-            ReviewListAdapter adapter = new ReviewListAdapter(mReviews.mReviews, null);
-            mRecyclerView.setAdapter(adapter);
-            int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
-            mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-
+            if (result) {
+                Log.d("Result", "true");
+                mReviewList = mReviews.reviews;
+                mRecyclerView.setAdapter(new ReviewListAdapter(mReviewList, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d(TAG, "onClick Review");
+                        Review review = mReviewList.get(mRecyclerView.getChildLayoutPosition(view));
+                        String id = review.getId();
+                        Intent intent = new Intent(getActivity(), ReviewActivity.class);
+                        intent.putExtra("id", id);
+                        startActivity(intent);
+                    }
+                }));
+                int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
+                mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+            } else {
+                Log.d("Error", "Oops something went wrong");
+            }
         }
     }
 
@@ -93,6 +90,7 @@ public class ReviewListFragment  extends Fragment {
         TmdbService.Tmdb tmdb = tmdbService.getRestAdapter().create(TmdbService.Tmdb.class);
 
         mReviews = tmdb.fetchMovieReviews(mId);
+        Log.d("movie id: ", mId);
 
     }
 }
