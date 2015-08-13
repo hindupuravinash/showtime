@@ -13,6 +13,6 @@ public class CramApplication extends Application{
     public void onCreate() {
         super.onCreate();
 
-        Parse.initialize(this, "key", "key");
+        Parse.initialize(this, Secrets.PARSE_APP_ID, Secrets.PARSE_KEY);
     }
 }
