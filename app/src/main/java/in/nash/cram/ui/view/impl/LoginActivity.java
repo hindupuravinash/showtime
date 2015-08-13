@@ -1,8 +1,10 @@
 package in.nash.cram.ui.view.impl;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -11,6 +13,11 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 import in.nash.cram.R;
 
@@ -108,7 +115,19 @@ public class LoginActivity extends AppCompatActivity implements TextView.OnEdito
         switch (mRadioGroup.getCheckedRadioButtonId()) {
             case R.id.radio_login:
 
-                //TODO: login(username, password);
+                ParseUser.logInInBackground(username, password, new LogInCallback() {
+                    public void done(ParseUser user, ParseException e) {
+                        if (user != null) {
+                            Intent intent = new Intent(LoginActivity.this,
+                                    MainActivity.class);
+                            startActivity(intent);
+                        } else {
+                            mPassword.setError("Username or Password is not correct");
+                            Log.e("Error", e.getMessage());
+                        }
+                    }
+                });
+
                 break;
             case R.id.radio_register:
                 final String email = mEmail.getText().toString().trim();
@@ -118,7 +137,25 @@ public class LoginActivity extends AppCompatActivity implements TextView.OnEdito
                 }
                 mEmail.setError(null);
 
-                //TODO: register(username, password, email);
+                ParseUser user = new ParseUser();
+                user.setUsername(username);
+                user.setPassword(password);
+                user.setEmail(email);
+
+                user.signUpInBackground(new SignUpCallback() {
+                    public void done(ParseException e) {
+                        if (e == null) {
+
+                            Intent intent = new Intent(LoginActivity.this,
+                                    MainActivity.class);
+                            startActivity(intent);
+
+                        } else {
+                            Log.e("Error", e.getMessage());
+                        }
+                    }
+                });
+
                 break;
         }
     }
