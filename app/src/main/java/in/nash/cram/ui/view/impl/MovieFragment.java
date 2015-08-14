@@ -11,11 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.net.URL;
-import java.util.ArrayList;
 
 import in.nash.cram.R;
 import in.nash.cram.adapter.MovieGridAdapter;
-import in.nash.cram.model.Movie;
 import in.nash.cram.network.TmdbService;
 import in.nash.cram.ui.Globals;
 import in.nash.cram.utils.SpacesItemDecoration;
@@ -24,9 +22,9 @@ import retrofit.RetrofitError;
 /**
  * Created by avinash on 18/06/15.
  */
-public abstract class MovieFragment extends Fragment {
+public class MovieFragment extends Fragment {
 
-    private String MOVIE_CATEGORY;
+    private MovieType mMovieType;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -51,7 +49,7 @@ public abstract class MovieFragment extends Fragment {
 
         protected Boolean doInBackground(URL... urls) {
             try {
-                getMovies(setMovieCategory());
+                getMovies(getMovieCategory());
             } catch (RetrofitError e) {
 
                 Log.d("Error", e.getMessage());
@@ -69,20 +67,20 @@ public abstract class MovieFragment extends Fragment {
         }
     }
 
-    private void getMovies(String category) {
+    private void getMovies(MovieType category) {
         TmdbService tmdbService = new TmdbService();
         TmdbService.Tmdb tmdb = tmdbService.getRestAdapter().create(TmdbService.Tmdb.class);
 
         TmdbService.MovieResponse movies;
         switch (category) {
 
-            case "top":
+            case TOP:
                 movies = tmdb.fetchTopMovies();
                 break;
-            case "upcoming":
+            case UPCOMING:
                 movies = tmdb.fetchUpcomingMovies();
                 break;
-            case "playing":
+            case PLAYING:
                 movies = tmdb.fetchNowPlayingMovies();
                 break;
             default:
@@ -94,8 +92,33 @@ public abstract class MovieFragment extends Fragment {
 
     }
 
-    public String setMovieCategory(){
+    public MovieType getMovieCategory(){
+        return mMovieType;
+    }
 
-        return MOVIE_CATEGORY;
+    public void setMovieCategory(MovieType category){
+        mMovieType = category;
+    }
+
+    public enum MovieType{
+        PLAYING("playing"),
+        TOP("top"),
+        UPCOMING("upcoming");
+
+        private final String movieType;
+
+        MovieType(String type) {
+            movieType = type;
+        }
+
+        public String getMovieType() {
+            return movieType;
+        }
+    }
+
+    public static MovieFragment getInstance(MovieType type){
+        MovieFragment movieFragment = new MovieFragment();
+        movieFragment.setMovieCategory(type);
+        return movieFragment;
     }
 }

@@ -123,9 +123,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new TopFragment(), "Top");
-        adapter.addFragment(new UpcomingFragment(), "Upcoming");
-        adapter.addFragment(new PlayingFragment(), "Playing");
+        adapter.addFragment(MovieFragment.getInstance(MovieFragment.MovieType.PLAYING), "Top");
+        adapter.addFragment(MovieFragment.getInstance(MovieFragment.MovieType.UPCOMING), "Upcoming");
+        adapter.addFragment(MovieFragment.getInstance(MovieFragment.MovieType.TOP), "Playing");
 
         viewPager.setAdapter(adapter);
     }

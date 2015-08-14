@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import in.nash.cram.R;
 import in.nash.cram.model.Movie;
 import in.nash.cram.ui.view.impl.MovieDetailActivity;
+import rx.internal.util.UtilityFunctions;
 
 /**
  * Created by avinash on 21/06/15.
@@ -40,6 +41,7 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.View
 
         Movie movie = mMoviesList.get(position);
         String url = "http://image.tmdb.org/t/p/w300" + movie.getPosterUrl();
+
         Picasso.with(mContext)
                 .load(url)
                 .into(holder.mImageView);
