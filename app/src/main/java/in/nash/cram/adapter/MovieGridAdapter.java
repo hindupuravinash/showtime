@@ -2,8 +2,11 @@ package in.nash.cram.adapter;
 
 import com.squareup.picasso.Picasso;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +27,23 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.View
 
     private final ArrayList<Movie> mMoviesList;
     private Context mContext;
+    private View.OnClickListener mOnItemClickListener;
 
     @Override
     public MovieGridAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item_movie, parent, false);
 
         mContext = parent.getContext();
+
+        if (mOnItemClickListener != null) {
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onClick(v);
+                }
+            });
+        }
+
         ViewHolder vh = new ViewHolder(view);
         return vh;
     }
@@ -45,17 +59,6 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.View
         Picasso.with(mContext)
                 .load(url)
                 .into(holder.mImageView);
-
-        holder.mImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Context context = view.getContext();
-                Intent intent = new Intent(context, MovieDetailActivity.class);
-                intent.putExtra(MovieDetailActivity.MOVIE_POSITION, holder.mBoundPosition);
-
-                context.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -73,7 +76,9 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.View
         }
     }
 
-    public MovieGridAdapter(ArrayList<Movie> moviesList) {
-        mMoviesList = moviesList;
+    public MovieGridAdapter(Context context, ArrayList<Movie> moviesList, View.OnClickListener onClickListener) {
+        this.mContext = context;
+        this.mMoviesList = new ArrayList<>(moviesList);
+        this.mOnItemClickListener = onClickListener;
     }
 }

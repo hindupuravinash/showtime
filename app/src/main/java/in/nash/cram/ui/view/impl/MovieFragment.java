@@ -11,9 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.net.URL;
+import java.util.ArrayList;
 
 import in.nash.cram.R;
 import in.nash.cram.adapter.MovieGridAdapter;
+import in.nash.cram.model.Movie;
 import in.nash.cram.network.TmdbService;
 import in.nash.cram.ui.Globals;
 import in.nash.cram.utils.SpacesItemDecoration;
@@ -28,6 +30,7 @@ public class MovieFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<Movie> mMovies;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,8 +62,24 @@ public class MovieFragment extends Fragment {
         }
 
         protected void onPostExecute(Boolean result) {
-            mAdapter = new MovieGridAdapter(Globals.moviesList);
+            mAdapter = new MovieGridAdapter(getActivity(), Globals.moviesList, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = mRecyclerView.getChildAdapterPosition(v);
+                    Movie movie = mMovies.get(position);
+                    MovieDetailActivity.navigateTo(getActivity(), movie.getId());
+                }
+            });
             mRecyclerView.setAdapter(mAdapter);
+            mMovies = Globals.moviesList;
+            mRecyclerView.setAdapter(new MovieGridAdapter(getActivity(), Globals.moviesList, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = mRecyclerView.getChildAdapterPosition(v);
+                    Movie movie = mMovies.get(position);
+                    MovieDetailActivity.navigateTo(getActivity(), movie.getId());
+                }
+            }));
             int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
             mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 

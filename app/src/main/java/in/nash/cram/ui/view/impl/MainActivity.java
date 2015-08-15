@@ -33,7 +33,6 @@ import retrofit.RetrofitError;
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
-    public ArrayList<Movie> mMoviesList = new ArrayList<>();
     private TabLayout tabLayout;
     private ViewPager viewPager;
 

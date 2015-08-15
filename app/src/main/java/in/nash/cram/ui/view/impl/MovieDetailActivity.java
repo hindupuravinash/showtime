@@ -2,11 +2,13 @@ package in.nash.cram.ui.view.impl;
 
 import com.squareup.picasso.Picasso;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -44,7 +46,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_movie_detail);
 
         Intent intent = getIntent();
-        final int moviePosition = intent.getIntExtra(MOVIE_POSITION, 0);
+        mMovieId = intent.getStringExtra("id");
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -57,8 +59,6 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         mCastLayout.setOnClickListener(this);
         mCrewLayout = (LinearLayout) findViewById(R.id.crew);
         mCrewLayout.setOnClickListener(this);
-        Movie movie = Globals.moviesList.get(moviePosition);
-        mMovieId = movie.getId();
         new FetchMovieDetailsAsync().execute();
 
     }
@@ -88,6 +88,12 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
             default:
                 break;
         }
+    }
+
+    public static void navigateTo(Activity fromActivity, String movieId) {
+        Intent intent = new Intent(fromActivity, MovieDetailActivity.class);
+        intent.putExtra("id", movieId);
+        fromActivity.startActivity(intent);
     }
 
     private class FetchMovieDetailsAsync extends AsyncTask<URL, Integer, Boolean> {
