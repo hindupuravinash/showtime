@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -20,11 +22,12 @@ import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 import in.nash.cram.R;
+import in.nash.cram.ui.view.ILoginView;
 
 /**
  * Created by Avinash Hindupur on 06/07/15.
  */
-public class LoginActivity extends AppCompatActivity implements TextView.OnEditorActionListener,
+public class LoginActivity extends AppCompatActivity implements ILoginView, TextView.OnEditorActionListener,
         View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private Button mSubmitButton;
@@ -33,12 +36,16 @@ public class LoginActivity extends AppCompatActivity implements TextView.OnEdito
     private EditText mUserName;
     private EditText mPassword;
     private RadioGroup mRadioGroup;
+    private ProgressBar mProgressBar;
+    private LinearLayout mLinearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mLinearLayout = (LinearLayout)findViewById(R.id.linear_layout);
+        mProgressBar = (ProgressBar)findViewById(R.id.progress_bar);
         mUserName = (EditText) findViewById(R.id.input_username);
         mUserName.setOnEditorActionListener(this);
         mPassword = (EditText) findViewById(R.id.input_password);
@@ -159,4 +166,17 @@ public class LoginActivity extends AppCompatActivity implements TextView.OnEdito
                 break;
         }
     }
+
+    @Override
+    public void showProgressBar() {
+        mLinearLayout.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        mLinearLayout.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.GONE);
+    }
+
 }

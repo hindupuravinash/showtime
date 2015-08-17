@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:layout_marginTop="20dp"
         android:padding="16dp">
 
         <android.support.design.widget.TextInputLayout
@@ -20,7 +22,7 @@
                 android:id="@+id/input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Email" />
+                android:hint="Enter Email"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -32,7 +34,7 @@
                 android:id="@+id/input_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Username" />
+                android:hint="Enter Username"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -44,7 +46,7 @@
                 android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Password" />
+                android:hint="Enter Password"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -60,13 +62,13 @@
                 android:id="@+id/radio_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login" />
+                android:text="Login"/>
 
             <RadioButton
                 android:id="@+id/radio_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Register" />
+                android:text="Register"/>
 
         </RadioGroup>
 
@@ -75,6 +77,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Login" />
+            android:text="Login"/>
     </LinearLayout>
-</ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</android.support.v4.widget.NestedScrollView>
