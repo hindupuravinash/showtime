@@ -6,4 +6,5 @@
     <string name="feature_request">You can submit your ideas for new features below!</string>
     <string name="btn_submit">Submit</string>
     <string name="feature_request_placeholder">Cool feature here</string>
+    <string name="something_went_wrong">Oops, something went wrong</string>
 </resources>

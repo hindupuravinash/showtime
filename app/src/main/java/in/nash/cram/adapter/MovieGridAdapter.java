@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import in.nash.cram.R;
 import in.nash.cram.model.Movie;
@@ -25,7 +26,7 @@ import rx.internal.util.UtilityFunctions;
  */
 public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.ViewHolder> {
 
-    private final ArrayList<Movie> mMoviesList;
+    private final List<Movie> mMoviesList;
     private Context mContext;
     private View.OnClickListener mOnItemClickListener;
 
@@ -76,7 +77,7 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.View
         }
     }
 
-    public MovieGridAdapter(Context context, ArrayList<Movie> moviesList, View.OnClickListener onClickListener) {
+    public MovieGridAdapter(Context context, List<Movie> moviesList, View.OnClickListener onClickListener) {
         this.mContext = context;
         this.mMoviesList = new ArrayList<>(moviesList);
         this.mOnItemClickListener = onClickListener;

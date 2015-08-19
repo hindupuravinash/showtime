@@ -3,12 +3,14 @@ package in.nash.cram.network;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import in.nash.cram.model.Movie;
 import in.nash.cram.model.Person;
 import in.nash.cram.model.Review;
 import retrofit.http.GET;
 import retrofit.http.Path;
+import rx.Observable;
 
 /**
  * Created by avinash on 7/20/15.
@@ -16,19 +18,19 @@ import retrofit.http.Path;
 public interface MoviesService {
 
     @GET("/movie/top_rated")
-    MovieResponse fetchTopMovies();
+    Observable<TmdbService.MovieResponse> fetchTopMovies();
 
     @GET("/movie/popular")
-    MovieResponse fetchPopularMovies();
+    Observable<TmdbService.MovieResponse> fetchPopularMovies();
 
     @GET("/movie/upcoming")
-    MovieResponse fetchUpcomingMovies();
+    Observable<TmdbService.MovieResponse> fetchUpcomingMovies();
 
     @GET("/movie/now_playing")
-    MovieResponse fetchNowPlayingMovies();
+    Observable<TmdbService.MovieResponse> fetchNowPlayingMovies();
 
     @GET("/movie/{id}/similar")
-    MovieResponse fetchSimilarMovies(@Path("id") String id);
+    Observable<TmdbService.MovieResponse> fetchSimilarMovies(@Path("id") String id);
 
     @GET("/movie/{id}/credits")
     CreditResponse fetchMovieCredits(@Path("id") String id);
@@ -64,10 +66,4 @@ public interface MoviesService {
         public ArrayList<Person> mCrew;
     }
 
-    public class MovieResponse {
-
-        @SerializedName("results")
-        public ArrayList<Movie> mMovies;
-
-    }
 }

@@ -23,6 +23,8 @@ import in.nash.cram.adapter.MovieGridAdapter;
 import in.nash.cram.model.Movie;
 import in.nash.cram.network.TmdbService;
 import in.nash.cram.ui.Globals;
+import in.nash.cram.ui.presenter.IMoviesPresenter;
+import in.nash.cram.ui.presenter.PresenterFactory;
 import in.nash.cram.ui.view.IMoviesView;
 import in.nash.cram.utils.SpacesItemDecoration;
 import retrofit.RetrofitError;
@@ -38,6 +40,7 @@ public class MovieFragment extends Fragment implements IMoviesView {
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<Movie> mMovies;
     private ProgressBar mProgressBar;
+    private IMoviesPresenter mMoviePresenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,9 +53,16 @@ public class MovieFragment extends Fragment implements IMoviesView {
         mLayoutManager = new GridLayoutManager(getActivity().getBaseContext(), 3);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        new FetchTopMoviesAsync().execute();
 
+        initPresenter();
         return rootView;
+    }
+
+    private void initPresenter() {
+
+        mMoviePresenter = PresenterFactory.createMoviePresenter(this);
+        mMoviePresenter.queryMovies(getMovieCategory());
+
     }
 
     @Override
@@ -71,71 +81,17 @@ public class MovieFragment extends Fragment implements IMoviesView {
     }
 
     @Override
-    public void setMovies(ArrayList<Movie> movies) {
-        mAdapter = new MovieGridAdapter(getActivity(), movies, new View.OnClickListener() {
+    public void setMovies(List<Movie> movies) {
+        mRecyclerView.setAdapter(new MovieGridAdapter(getActivity(), movies, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = mRecyclerView.getChildAdapterPosition(v);
                 Movie movie = mMovies.get(position);
                 MovieDetailActivity.navigateTo(getActivity(), movie.getId());
             }
-        });
-    }
-
-    private class FetchTopMoviesAsync extends AsyncTask<URL, Integer, Boolean> {
-
-        protected Boolean doInBackground(URL... urls) {
-            try {
-                getMovies(getMovieCategory());
-            } catch (RetrofitError e) {
-
-                Log.d("Error", e.getMessage());
-                return false;
-            }
-            return true;
-        }
-
-        protected void onPostExecute(Boolean result) {
-            setMovies(Globals.moviesList);
-            mRecyclerView.setAdapter(mAdapter);
-            mMovies = Globals.moviesList;
-            mRecyclerView.setAdapter(new MovieGridAdapter(getActivity(), Globals.moviesList, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = mRecyclerView.getChildAdapterPosition(v);
-                    Movie movie = mMovies.get(position);
-                    MovieDetailActivity.navigateTo(getActivity(), movie.getId());
-                }
-            }));
-            int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
-            mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-
-        }
-    }
-
-    private void getMovies(MovieType category) {
-        TmdbService tmdbService = new TmdbService();
-        TmdbService.Tmdb tmdb = tmdbService.getRestAdapter().create(TmdbService.Tmdb.class);
-
-        TmdbService.MovieResponse movies;
-        switch (category) {
-
-            case TOP:
-                movies = tmdb.fetchTopMovies();
-                break;
-            case UPCOMING:
-                movies = tmdb.fetchUpcomingMovies();
-                break;
-            case PLAYING:
-                movies = tmdb.fetchNowPlayingMovies();
-                break;
-            default:
-                movies = tmdb.fetchPopularMovies();
-
-        }
-
-        Globals.moviesList = movies.mMovies;
-
+        }));
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
+        mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
 
     public MovieType getMovieCategory() {

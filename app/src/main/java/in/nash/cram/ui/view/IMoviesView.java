@@ -2,7 +2,7 @@ package in.nash.cram.ui.view;
 
 import android.support.annotation.StringRes;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import in.nash.cram.model.Movie;
 
@@ -17,6 +17,6 @@ public interface IMoviesView {
 
     void setError(@StringRes int stringRes);
 
-    void setMovies(ArrayList<Movie> movies);
+    void setMovies(List<Movie> movies);
 
 }

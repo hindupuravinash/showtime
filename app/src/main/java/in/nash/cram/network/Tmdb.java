@@ -1,5 +1,6 @@
 package in.nash.cram.network;
 
+import in.nash.cram.Secrets;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 
@@ -35,7 +36,7 @@ public class Tmdb {
             builder.setEndpoint(API_URL);
             builder.setRequestInterceptor(new RequestInterceptor() {
                 public void intercept(RequestFacade requestFacade) {
-                    requestFacade.addQueryParam(PARAM_API_KEY, apiKey);
+                    requestFacade.addQueryParam(PARAM_API_KEY, Secrets.PARAM_API_KEY);
                 }
             });
 
