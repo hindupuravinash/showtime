@@ -1,33 +1,26 @@
 package in.nash.cram.ui.view.impl;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import in.nash.cram.R;
 import in.nash.cram.adapter.MovieGridAdapter;
 import in.nash.cram.model.Movie;
-import in.nash.cram.network.TmdbService;
-import in.nash.cram.ui.Globals;
 import in.nash.cram.ui.presenter.IMoviesPresenter;
 import in.nash.cram.ui.presenter.PresenterFactory;
 import in.nash.cram.ui.view.IMoviesView;
 import in.nash.cram.utils.SpacesItemDecoration;
-import retrofit.RetrofitError;
 
 /**
  * Created by avinash on 18/06/15.
@@ -38,7 +31,6 @@ public class MovieFragment extends Fragment implements IMoviesView {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<Movie> mMovies;
     private ProgressBar mProgressBar;
     private IMoviesPresenter mMoviePresenter;
 
@@ -81,12 +73,12 @@ public class MovieFragment extends Fragment implements IMoviesView {
     }
 
     @Override
-    public void setMovies(List<Movie> movies) {
+    public void setMovies(final List<Movie> movies) {
         mRecyclerView.setAdapter(new MovieGridAdapter(getActivity(), movies, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = mRecyclerView.getChildAdapterPosition(v);
-                Movie movie = mMovies.get(position);
+                Movie movie = movies.get(position);
                 MovieDetailActivity.navigateTo(getActivity(), movie.getId());
             }
         }));

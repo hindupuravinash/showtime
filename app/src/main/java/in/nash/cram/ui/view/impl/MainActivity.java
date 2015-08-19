@@ -1,7 +1,6 @@
 package in.nash.cram.ui.view.impl;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,21 +13,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import in.nash.cram.R;
-import in.nash.cram.model.Movie;
-import in.nash.cram.network.TmdbService;
-import in.nash.cram.ui.Globals;
-import retrofit.RetrofitError;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,62 +62,15 @@ public class MainActivity extends AppCompatActivity {
             setupViewPager(viewPager);
         }
         tabLayout = (TabLayout) findViewById(R.id.tabs);
-
-        new FetchTopMoviesAsync().execute();
-
-    }
-
-    private class FetchTopMoviesAsync extends AsyncTask<URL, Integer, Boolean> {
-
-
-        protected Boolean doInBackground(URL... urls) {
-            try {
-                getMovies("top");
-            } catch (RetrofitError e) {
-
-                Log.d("Error", e.getMessage());
-                return false;
-            }
-            return true;
-        }
-
-        protected void onPostExecute(Boolean result) {
-
-            tabLayout.setupWithViewPager(viewPager);
-
-        }
-    }
-
-    private void getMovies(String category) {
-        TmdbService tmdbService = new TmdbService();
-        TmdbService.Tmdb tmdb = tmdbService.getRestAdapter().create(TmdbService.Tmdb.class);
-
-        TmdbService.MovieResponse movies;
-        switch (category) {
-
-            case "top":
-                movies = tmdb.fetchTopMovies();
-                break;
-            case "upcoming":
-                movies = tmdb.fetchUpcomingMovies();
-                break;
-            case "playing":
-                movies = tmdb.fetchNowPlayingMovies();
-                break;
-            default:
-                movies = tmdb.fetchPopularMovies();
-
-        }
-
-        Globals.moviesList = movies.mMovies;
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(MovieFragment.getInstance(MovieFragment.MovieType.PLAYING), "Top");
+        adapter.addFragment(MovieFragment.getInstance(MovieFragment.MovieType.PLAYING), "Playing");
         adapter.addFragment(MovieFragment.getInstance(MovieFragment.MovieType.UPCOMING), "Upcoming");
-        adapter.addFragment(MovieFragment.getInstance(MovieFragment.MovieType.TOP), "Playing");
+        adapter.addFragment(MovieFragment.getInstance(MovieFragment.MovieType.TOP), "Top");
 
         viewPager.setAdapter(adapter);
     }
