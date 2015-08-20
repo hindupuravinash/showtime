@@ -52,28 +52,29 @@ public class MoviesPresenterImpl implements IMoviesPresenter {
         }
 
         movies.subscribeOn(Schedulers.newThread())
-        .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<TmdbService.MovieResponse>() {
-            @Override
-            public void onCompleted() {
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<TmdbService.MovieResponse>() {
+                    @Override
+                    public void onCompleted() {
 
-            }
+                    }
 
-            @Override
-            public void onError(Throwable e) {
+                    @Override
+                    public void onError(Throwable e) {
 
-                // TODO: Log into Crashlytics
-                mMoviesView.setError(R.string.something_went_wrong);
-                Log.d("movies", "Error");
+                        // TODO: Log into Crashlytics
+                        mMoviesView.setError(R.string.something_went_wrong);
+                        Log.d("movies", "Error");
 
-            }
+                    }
 
-            @Override
-            public void onNext(TmdbService.MovieResponse movies) {
+                    @Override
+                    public void onNext(TmdbService.MovieResponse movies) {
 
-                Log.d("movies", "" + movies.mMovies.size());
-                mMoviesView.setMovies(movies.mMovies);
-            }
-        });
+                        Log.d("movies", "" + movies.mMovies.size());
+                        mMoviesView.setMovies(movies.mMovies);
+                    }
+                });
 
     }
 }

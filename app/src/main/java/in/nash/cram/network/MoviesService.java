@@ -39,7 +39,7 @@ public interface MoviesService {
     ReviewResponse fetchMovieReviews(@Path("id") String id);
 
     @GET("/movie/{id}")
-    Movie fetchMovieDetails(@Path("id") String id);
+    Observable<Movie> fetchMovieDetails(@Path("id") String id);
 
     public static class ReviewResponse {
         @SerializedName("id")

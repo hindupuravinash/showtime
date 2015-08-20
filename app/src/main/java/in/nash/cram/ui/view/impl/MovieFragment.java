@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import in.nash.cram.R;
@@ -29,10 +28,7 @@ public class MovieFragment extends Fragment implements IMoviesView {
 
     private MovieType mMovieType;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     private ProgressBar mProgressBar;
-    private IMoviesPresenter mMoviePresenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,8 +38,8 @@ public class MovieFragment extends Fragment implements IMoviesView {
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.movies_grid);
 
-        mLayoutManager = new GridLayoutManager(getActivity().getBaseContext(), 3);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity().getBaseContext(), 3);
+        mRecyclerView.setLayoutManager(layoutManager);
 
 
         initPresenter();
@@ -52,8 +48,8 @@ public class MovieFragment extends Fragment implements IMoviesView {
 
     private void initPresenter() {
 
-        mMoviePresenter = PresenterFactory.createMoviePresenter(this);
-        mMoviePresenter.queryMovies(getMovieCategory());
+        IMoviesPresenter moviePresenter = PresenterFactory.createMoviePresenter(this);
+        moviePresenter.queryMovies(getMovieCategory());
 
     }
 

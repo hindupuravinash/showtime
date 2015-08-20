@@ -5,13 +5,10 @@ import com.squareup.picasso.Picasso;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,20 +16,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.net.URL;
-
 import in.nash.cram.R;
 import in.nash.cram.model.Movie;
-import in.nash.cram.network.TmdbService;
-import in.nash.cram.ui.Globals;
-import retrofit.RetrofitError;
+import in.nash.cram.ui.presenter.IMovieDetailPresenter;
+import in.nash.cram.ui.presenter.PresenterFactory;
+import in.nash.cram.ui.view.IMovieDetailView;
 
 /**
  * Created by Avinash Hindupur on 24/06/15.
  */
-public class MovieDetailActivity extends AppCompatActivity implements View.OnClickListener {
+public class MovieDetailActivity extends AppCompatActivity implements IMovieDetailView, View.OnClickListener {
 
-    public static final String MOVIE_POSITION = "movie_position";
     private String mMovieId;
     private Movie mMovie;
     private Context mContext;
@@ -59,7 +53,14 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         mCastLayout.setOnClickListener(this);
         mCrewLayout = (LinearLayout) findViewById(R.id.crew);
         mCrewLayout.setOnClickListener(this);
-        new FetchMovieDetailsAsync().execute();
+
+        initPresenter();
+    }
+
+    private void initPresenter() {
+
+        IMovieDetailPresenter movieDetailPresenter = PresenterFactory.createMovieDetailPresenter(this);
+        movieDetailPresenter.fetchMovie(mMovieId);
 
     }
 
@@ -96,47 +97,24 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         fromActivity.startActivity(intent);
     }
 
-    private class FetchMovieDetailsAsync extends AsyncTask<URL, Integer, Boolean> {
+    @Override
+    public void setMovie(Movie movie) {
+        String url = "http://image.tmdb.org/t/p/w780" + movie.getBackdropPath();
+        String movieTitle = movie.getTitle();
+        String movieOverview = movie.getOverview();
 
+        CollapsingToolbarLayout collapsingToolbar =
+                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitle(movieTitle);
 
-        protected Boolean doInBackground(URL... urls) {
-            try {
-                getMovieDetails();
-            } catch (RetrofitError e) {
+        TextView overview = (TextView) findViewById(R.id.summary);
+        overview.setText(movieOverview);
+        final ImageView imageView = (ImageView) findViewById(R.id.movie_backdrop);
+        Picasso.with(mContext)
+                .load(url)
+                .into(imageView);
 
-                Log.d("Error", e.getMessage());
-                return false;
-            }
-            return true;
-        }
-
-        protected void onPostExecute(Boolean result) {
-
-            String url = "http://image.tmdb.org/t/p/w780" + mMovie.getBackdropPath();
-            String movieTitle = mMovie.getTitle();
-            String movieOverview = mMovie.getOverview();
-
-            CollapsingToolbarLayout collapsingToolbar =
-                    (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-            collapsingToolbar.setTitle(movieTitle);
-
-            TextView overview = (TextView) findViewById(R.id.summary);
-            overview.setText(movieOverview);
-            final ImageView imageView = (ImageView) findViewById(R.id.movie_backdrop);
-            Picasso.with(mContext)
-                    .load(url)
-                    .into(imageView);
-
-            setMovieDetails(mMovie);
-        }
-    }
-
-    private void getMovieDetails() {
-        TmdbService tmdbService = new TmdbService();
-        TmdbService.Tmdb tmdb = tmdbService.getRestAdapter().create(TmdbService.Tmdb.class);
-        mMovie = tmdb.fetchMovieDetails(mMovieId);
-
-
+        setMovieDetails(movie);
     }
 
     private void setMovieDetails(Movie movie) {
