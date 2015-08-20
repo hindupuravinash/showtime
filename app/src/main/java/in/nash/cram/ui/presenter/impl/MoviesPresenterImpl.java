@@ -6,6 +6,7 @@ import java.util.List;
 
 import in.nash.cram.R;
 import in.nash.cram.model.Movie;
+import in.nash.cram.network.MoviesService;
 import in.nash.cram.network.Tmdb;
 import in.nash.cram.network.TmdbService;
 import in.nash.cram.ui.presenter.IMoviesPresenter;
@@ -32,7 +33,7 @@ public class MoviesPresenterImpl implements IMoviesPresenter {
     public void queryMovies(MovieFragment.MovieType category) {
 
         Log.d("Category", category.getMovieType());
-        Observable<TmdbService.MovieResponse> movies;
+        Observable<MoviesService.MovieResponse> movies;
         Tmdb tmdb = new Tmdb();
 
         switch (category) {
@@ -53,7 +54,7 @@ public class MoviesPresenterImpl implements IMoviesPresenter {
 
         movies.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<TmdbService.MovieResponse>() {
+                .subscribe(new Subscriber<MoviesService.MovieResponse>() {
                     @Override
                     public void onCompleted() {
 
@@ -69,7 +70,7 @@ public class MoviesPresenterImpl implements IMoviesPresenter {
                     }
 
                     @Override
-                    public void onNext(TmdbService.MovieResponse movies) {
+                    public void onNext(MoviesService.MovieResponse movies) {
 
                         Log.d("movies", "" + movies.mMovies.size());
                         mMoviesView.setMovies(movies.mMovies);

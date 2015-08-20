@@ -3,7 +3,6 @@ package in.nash.cram.network;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import in.nash.cram.model.Movie;
 import in.nash.cram.model.Person;
@@ -18,30 +17,30 @@ import rx.Observable;
 public interface MoviesService {
 
     @GET("/movie/top_rated")
-    Observable<TmdbService.MovieResponse> fetchTopMovies();
+    Observable<MovieResponse> fetchTopMovies();
 
     @GET("/movie/popular")
-    Observable<TmdbService.MovieResponse> fetchPopularMovies();
+    Observable<MovieResponse> fetchPopularMovies();
 
     @GET("/movie/upcoming")
-    Observable<TmdbService.MovieResponse> fetchUpcomingMovies();
+    Observable<MovieResponse> fetchUpcomingMovies();
 
     @GET("/movie/now_playing")
-    Observable<TmdbService.MovieResponse> fetchNowPlayingMovies();
+    Observable<MovieResponse> fetchNowPlayingMovies();
 
     @GET("/movie/{id}/similar")
-    Observable<TmdbService.MovieResponse> fetchSimilarMovies(@Path("id") String id);
+    Observable<MovieResponse> fetchSimilarMovies(@Path("id") String id);
 
     @GET("/movie/{id}/credits")
-    CreditResponse fetchMovieCredits(@Path("id") String id);
+    Observable<CreditResponse> fetchMovieCredits(@Path("id") String id);
 
     @GET("/movie/{id}/reviews")
-    ReviewResponse fetchMovieReviews(@Path("id") String id);
+    Observable<ReviewResponse> fetchMovieReviews(@Path("id") String id);
 
     @GET("/movie/{id}")
     Observable<Movie> fetchMovieDetails(@Path("id") String id);
 
-    public static class ReviewResponse {
+    class ReviewResponse {
         @SerializedName("id")
         public String id;
 
@@ -58,12 +57,19 @@ public interface MoviesService {
         public int totalResults;
     }
 
-    public class CreditResponse {
+    class CreditResponse {
         @SerializedName("cast")
         public ArrayList<Person> mCast;
 
         @SerializedName("crew")
         public ArrayList<Person> mCrew;
+    }
+
+    class MovieResponse {
+
+        @SerializedName("results")
+        public ArrayList<Movie> mMovies;
+
     }
 
 }

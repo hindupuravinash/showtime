@@ -26,29 +26,11 @@ public final class TmdbService {
 
     public interface Tmdb {
 
-        @GET("/movie/top_rated")
-        MovieResponse fetchTopMovies();
-
-        @GET("/movie/popular")
-        MovieResponse fetchPopularMovies();
-
-        @GET("/movie/upcoming")
-        MovieResponse fetchUpcomingMovies();
-
-        @GET("/movie/now_playing")
-        MovieResponse fetchNowPlayingMovies();
-
-        @GET("/movie/{id}/similar")
-        MovieResponse fetchSimilarMovies(@Path("id") String id);
-
         @GET("/movie/{id}/credits")
         CreditResponse fetchMovieCredits(@Path("id") String id);
 
         @GET("/movie/{id}/reviews")
         ReviewResponse fetchMovieReviews(@Path("id")String id);
-
-        @GET("/movie/{id}")
-        Movie fetchMovieDetails(@Path("id") String id);
 
         @GET("/person/{id}")
         Person fetchPersonDetails(@Path("id") String id);
@@ -103,10 +85,4 @@ public final class TmdbService {
         public ArrayList<Person> mCrew;
     }
 
-    public class MovieResponse {
-
-        @SerializedName("results")
-        public ArrayList<Movie> mMovies;
-
-    }
 }

@@ -3,6 +3,7 @@ package in.nash.cram.network;
 import in.nash.cram.model.Person;
 import retrofit.http.GET;
 import retrofit.http.Path;
+import rx.Observable;
 
 /**
  * Created by avinash on 7/31/15.
@@ -10,6 +11,5 @@ import retrofit.http.Path;
 public interface PersonService {
 
     @GET("/person/{id}")
-    Person fetchPersonDetails(@Path("id") String id);
-
+    Observable<Person> fetchPersonDetails(@Path("id") String id);
 }
