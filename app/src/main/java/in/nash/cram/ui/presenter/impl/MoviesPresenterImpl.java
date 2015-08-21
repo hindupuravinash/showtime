@@ -2,13 +2,9 @@ package in.nash.cram.ui.presenter.impl;
 
 import android.util.Log;
 
-import java.util.List;
-
 import in.nash.cram.R;
-import in.nash.cram.model.Movie;
 import in.nash.cram.network.MoviesService;
 import in.nash.cram.network.Tmdb;
-import in.nash.cram.network.TmdbService;
 import in.nash.cram.ui.presenter.IMoviesPresenter;
 import in.nash.cram.ui.view.IMoviesView;
 import in.nash.cram.ui.view.impl.MovieFragment;
@@ -65,14 +61,12 @@ public class MoviesPresenterImpl implements IMoviesPresenter {
 
                         // TODO: Log into Crashlytics
                         mMoviesView.setError(R.string.something_went_wrong);
-                        Log.d("movies", "Error");
 
                     }
 
                     @Override
                     public void onNext(MoviesService.MovieResponse movies) {
 
-                        Log.d("movies", "" + movies.mMovies.size());
                         mMoviesView.setMovies(movies.mMovies);
                     }
                 });
