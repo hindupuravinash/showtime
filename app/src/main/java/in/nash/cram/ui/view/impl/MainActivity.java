@@ -1,6 +1,7 @@
 package in.nash.cram.ui.view.impl;
 
 import android.content.Intent;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,12 +25,13 @@ import java.util.List;
 
 import in.nash.cram.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener  {
 
     private DrawerLayout mDrawerLayout;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-
+    private AppBarLayout appBarLayout;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +64,19 @@ public class MainActivity extends AppCompatActivity {
         if (viewPager != null) {
             setupViewPager(viewPager);
         }
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.contentView);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.orange);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mSwipeRefreshLayout.setRefreshing(false);
+                // TODO: Refresh the movies
+            }
+        });
+
+        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -102,6 +118,27 @@ public class MainActivity extends AppCompatActivity {
 
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        appBarLayout.addOnOffsetChangedListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        appBarLayout.removeOnOffsetChangedListener(this);
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+        if (i == 0) {
+            mSwipeRefreshLayout.setEnabled(true);
+        } else {
+            mSwipeRefreshLayout.setEnabled(false);
+        }
     }
 
     static class Adapter extends FragmentPagerAdapter {
