@@ -89,8 +89,30 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
         adapter.addFragment(MovieFragment.getInstance(MovieFragment.MovieType.TOP), "Top");
 
         viewPager.setAdapter(adapter);
+        viewPager.setOnPageChangeListener( new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled( int position, float v, int i1 ) {
+            }
+
+            @Override
+            public void onPageSelected( int position ) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged( int state ) {
+                enableDisableSwipeRefresh( state == ViewPager.SCROLL_STATE_IDLE );
+            }
+        } );
+
+
     }
 
+    protected void enableDisableSwipeRefresh(boolean enable) {
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setEnabled(enable);
+        }
+    }
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
