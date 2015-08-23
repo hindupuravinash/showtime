@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
             mSwipeRefreshLayout.setEnabled(enable);
         }
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

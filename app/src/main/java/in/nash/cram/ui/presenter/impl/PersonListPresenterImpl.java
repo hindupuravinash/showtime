@@ -1,5 +1,7 @@
 package in.nash.cram.ui.presenter.impl;
 
+import android.util.Log;
+
 import in.nash.cram.network.MoviesService;
 import in.nash.cram.network.Tmdb;
 import in.nash.cram.ui.presenter.IPersonListPresenter;
@@ -43,6 +45,7 @@ public class PersonListPresenterImpl implements IPersonListPresenter {
                     public void onNext(MoviesService.CreditResponse creditResponse) {
 
                         mPersonListView.setPersonList(creditResponse.mCast);
+                        Log.d("persons", creditResponse.mCast.size() + "");
                     }
                 });
 

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,9 +40,8 @@ public class PersonListFragment extends Fragment implements IPersonListView{
         mLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mRecyclerView.setAdapter(new PersonListAdapter(mPersonList,null));
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
-        mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+       // mRecyclerView.setAdapter(new PersonListAdapter(getActivity().getBaseContext(), mPersonList,null));
+
 
         initPresenter();
         return rootView;
@@ -51,13 +51,13 @@ public class PersonListFragment extends Fragment implements IPersonListView{
 
         IPersonListPresenter personListPresenter = PresenterFactory.createPersonListPresenter(this);
         personListPresenter.queryPersons(PersonListActivity.mId);
+        Log.d("mId", PersonListActivity.mId);
 
     }
 
     @Override
     public void setPersonList(ArrayList<Person> mCast) {
-        PersonListAdapter adapter = new PersonListAdapter(mCast, null);
-        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter( new PersonListAdapter(getActivity().getBaseContext(), mCast, null));
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
