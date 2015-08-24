@@ -3,6 +3,8 @@ package in.nash.cram.ui.view.impl;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -17,21 +20,27 @@ import java.util.ArrayList;
 import in.nash.cram.R;
 import in.nash.cram.adapter.PersonListAdapter;
 import in.nash.cram.adapter.ReviewListAdapter;
+import in.nash.cram.model.Person;
 import in.nash.cram.model.Review;
 import in.nash.cram.network.TmdbService;
+import in.nash.cram.ui.presenter.IPersonListPresenter;
+import in.nash.cram.ui.presenter.IReviewsListPresenter;
+import in.nash.cram.ui.presenter.PresenterFactory;
+import in.nash.cram.ui.view.IReviewsListView;
 import in.nash.cram.utils.SpacesItemDecoration;
 import retrofit.RetrofitError;
 
 /**
  * Created by avinash on 8/2/15.
  */
-public class ReviewListFragment extends Fragment {
+public class ReviewListFragment extends Fragment implements IReviewsListView{
 
     public static final String TAG = "ReviewListFrag";
     private RecyclerView mRecyclerView;
     private ArrayList<Review> mReviewList = new ArrayList<>();
     private TmdbService.ReviewResponse mReviews;
     private String mId;
+    private ProgressBar mProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,8 +53,37 @@ public class ReviewListFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         mRecyclerView.setLayoutManager(layoutManager);
 
-        new FetchMovieReviews().execute();
+        initPresenter();
         return rootView;
+    }
+
+    private void initPresenter() {
+
+        IReviewsListPresenter reviewsListPresenter = PresenterFactory.createReviewsListPresenter(this);
+        reviewsListPresenter.queryReviews(ReviewListActivity.mId);
+
+    }
+    @Override
+    public void showProgressBar() {
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        mProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setError(@StringRes int stringRes) {
+        Snackbar.make(mRecyclerView, stringRes, Snackbar.LENGTH_LONG).show();
+    }
+
+
+    @Override
+    public void setReviewsList(ArrayList<Review> mReviews) {
+            mRecyclerView.setAdapter(new ReviewListAdapter(mReviews, null));
+            int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
+            mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
 
 

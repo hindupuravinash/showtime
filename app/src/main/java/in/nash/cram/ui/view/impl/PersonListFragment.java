@@ -1,6 +1,8 @@
 package in.nash.cram.ui.view.impl;
 
 import android.os.Bundle;
+import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
@@ -22,12 +25,13 @@ import in.nash.cram.utils.SpacesItemDecoration;
 /**
  * Created by avinash on 7/29/15.
  */
-public class PersonListFragment extends Fragment implements IPersonListView{
+public class PersonListFragment extends Fragment implements IPersonListView {
 
     public static final String TAG = "PersonListFrag";
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<Person> mPersonList = new ArrayList<>();
+    private ProgressBar mProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,7 +44,7 @@ public class PersonListFragment extends Fragment implements IPersonListView{
         mLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-       // mRecyclerView.setAdapter(new PersonListAdapter(getActivity().getBaseContext(), mPersonList,null));
+        // mRecyclerView.setAdapter(new PersonListAdapter(getActivity().getBaseContext(), mPersonList,null));
 
 
         initPresenter();
@@ -56,8 +60,23 @@ public class PersonListFragment extends Fragment implements IPersonListView{
     }
 
     @Override
+    public void showProgressBar() {
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        mProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setError(@StringRes int stringRes) {
+        Snackbar.make(mRecyclerView, stringRes, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
     public void setPersonList(ArrayList<Person> mCast) {
-        mRecyclerView.setAdapter( new PersonListAdapter(getActivity().getBaseContext(), mCast, null));
+        mRecyclerView.setAdapter(new PersonListAdapter(getActivity().getBaseContext(), mCast, null));
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
