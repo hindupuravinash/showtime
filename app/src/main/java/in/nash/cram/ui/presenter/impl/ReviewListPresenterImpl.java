@@ -12,6 +12,6 @@ public class ReviewListPresenterImpl implements IReviewsListPresenter {
 
     @Override
     public void queryReviews(String mId) {
-        
+
     }
 }

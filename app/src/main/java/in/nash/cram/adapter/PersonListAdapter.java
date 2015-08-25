@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import in.nash.cram.R;
 import in.nash.cram.model.Person;
+import in.nash.cram.utils.CircleTransform;
 
 /**
  * Created by avinash on 7/29/15.
@@ -59,6 +60,7 @@ public class PersonListAdapter extends RecyclerView.Adapter<PersonListAdapter.Pe
         holder.mRole.setText(person.getCharacter());
         Picasso.with(mContext)
                 .load(url)
+                .transform(new CircleTransform(0F, 0))
                 .into(holder.mImageView);
     }
 

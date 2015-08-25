@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="2dp">
+    android:padding="2dp"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/person_picture"
@@ -31,4 +32,4 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:textSize="12sp" />
-</RelativeLayout> 
+</RelativeLayout>
