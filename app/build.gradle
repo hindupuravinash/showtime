@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.0"
 
     defaultConfig {
-        applicationId "in.nash.cram"
+        applicationId "in.nash.showtime"
         minSdkVersion 17
         targetSdkVersion 23
         versionCode 1

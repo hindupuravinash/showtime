@@ -5,4 +5,4 @@
 .DS_Store
 /build
 /captures
-/app/src/main/java/in/nash/cram/Secrets.java
+/app/src/main/java/in/nash/showtime/Secrets.java
