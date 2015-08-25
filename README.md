@@ -4,6 +4,9 @@ This project is the home to **Showtime - Movies information, redesigned** for An
 
 Started off as a canvas to explore the new Android Libraries and Material Design.
 
+<img src="https://cloud.githubusercontent.com/assets/3033246/9458908/12e09eac-4b12-11e5-9e70-1173daa83962.png" alt="showtime" width="384" height="640">
+
+
 Will be working on newer 3rd party libraries soon
 ## License
 
