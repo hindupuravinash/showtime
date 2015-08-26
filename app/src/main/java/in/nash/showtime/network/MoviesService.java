@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import in.nash.showtime.model.Movie;
 import in.nash.showtime.model.Person;
-import in.nash.showtime.model.Review;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import rx.Observable;
@@ -17,45 +16,28 @@ import rx.Observable;
 public interface MoviesService {
 
     @GET("/movie/top_rated")
-    Observable<MovieResponse> fetchTopMovies();
+    Observable<MoviesResponse> fetchTopMovies();
 
     @GET("/movie/popular")
-    Observable<MovieResponse> fetchPopularMovies();
+    Observable<MoviesResponse> fetchPopularMovies();
 
     @GET("/movie/upcoming")
-    Observable<MovieResponse> fetchUpcomingMovies();
+    Observable<MoviesResponse> fetchUpcomingMovies();
 
     @GET("/movie/now_playing")
-    Observable<MovieResponse> fetchNowPlayingMovies();
+    Observable<MoviesResponse> fetchNowPlayingMovies();
 
     @GET("/movie/{id}/similar")
-    Observable<MovieResponse> fetchSimilarMovies(@Path("id") String id);
+    Observable<MoviesResponse> fetchSimilarMovies(@Path("id") String id);
 
     @GET("/movie/{id}/credits")
     Observable<CreditResponse> fetchMovieCredits(@Path("id") String id);
 
     @GET("/movie/{id}/reviews")
-    Observable<ReviewResponse> fetchMovieReviews(@Path("id") String id);
+    Observable<ReviewsResponse> fetchMovieReviews(@Path("id") String id);
 
     @GET("/movie/{id}")
     Observable<Movie> fetchMovieDetails(@Path("id") String id);
-
-    class ReviewResponse {
-        @SerializedName("id")
-        public String id;
-
-        @SerializedName("page")
-        public int page;
-
-        @SerializedName("results")
-        public ArrayList<Review> mReviews;
-
-        @SerializedName("total_pages")
-        public int totalPages;
-
-        @SerializedName("total_results")
-        public int totalResults;
-    }
 
     class CreditResponse {
         @SerializedName("cast")
@@ -63,13 +45,6 @@ public interface MoviesService {
 
         @SerializedName("crew")
         public ArrayList<Person> mCrew;
-    }
-
-    class MovieResponse {
-
-        @SerializedName("results")
-        public ArrayList<Movie> mMovies;
-
     }
 
 }

@@ -30,7 +30,6 @@ public class PersonListFragment extends Fragment implements IPersonListView {
     public static final String TAG = "PersonListFrag";
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<Person> mPersonList = new ArrayList<>();
     private ProgressBar mProgressBar;
 
     @Override

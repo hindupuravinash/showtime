@@ -25,12 +25,6 @@ public final class TmdbService {
 
     public interface Tmdb {
 
-        @GET("/movie/{id}/credits")
-        CreditResponse fetchMovieCredits(@Path("id") String id);
-
-        @GET("/movie/{id}/reviews")
-        ReviewResponse fetchMovieReviews(@Path("id")String id);
-
         @GET("/person/{id}")
         Person fetchPersonDetails(@Path("id") String id);
 
@@ -57,23 +51,6 @@ public final class TmdbService {
         }
 
         return this.restAdapter;
-    }
-
-    public class ReviewResponse {
-        @SerializedName("id")
-        public String id;
-
-        @SerializedName("page")
-        public int page;
-
-        @SerializedName("results")
-        public ArrayList<Review> reviews;
-
-        @SerializedName("total_pages")
-        public int totalPages;
-
-        @SerializedName("total_results")
-        public int totalResults;
     }
 
     public class CreditResponse {

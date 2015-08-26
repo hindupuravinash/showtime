@@ -3,7 +3,7 @@ package in.nash.showtime.ui.presenter.impl;
 import android.util.Log;
 
 import in.nash.showtime.R;
-import in.nash.showtime.network.MoviesService;
+import in.nash.showtime.network.MoviesResponse;
 import in.nash.showtime.network.Tmdb;
 import in.nash.showtime.ui.presenter.IMoviesPresenter;
 import in.nash.showtime.ui.view.IMoviesView;
@@ -29,7 +29,7 @@ public class MoviesPresenterImpl implements IMoviesPresenter {
     public void queryMovies(MovieFragment.MovieType category) {
 
         Log.d("Category", category.getMovieType());
-        Observable<MoviesService.MovieResponse> movies;
+        Observable<MoviesResponse> movies;
         Tmdb tmdb = new Tmdb();
 
         switch (category) {
@@ -50,7 +50,7 @@ public class MoviesPresenterImpl implements IMoviesPresenter {
 
         movies.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<MoviesService.MovieResponse>() {
+                .subscribe(new Subscriber<MoviesResponse>() {
                     @Override
                     public void onCompleted() {
 
@@ -65,9 +65,9 @@ public class MoviesPresenterImpl implements IMoviesPresenter {
                     }
 
                     @Override
-                    public void onNext(MoviesService.MovieResponse movies) {
+                    public void onNext(MoviesResponse movies) {
 
-                        mMoviesView.setMovies(movies.mMovies);
+                        mMoviesView.setMovies(movies.results);
                     }
                 });
 
