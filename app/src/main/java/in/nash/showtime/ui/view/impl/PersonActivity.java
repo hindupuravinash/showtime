@@ -1,23 +1,21 @@
 package in.nash.showtime.ui.view.impl;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import java.net.URL;
 
 import in.nash.showtime.model.Person;
-import in.nash.showtime.network.TmdbService;
-import retrofit.RetrofitError;
+import in.nash.showtime.ui.presenter.IPersonDetailPresenter;
+import in.nash.showtime.ui.presenter.PresenterFactory;
+import in.nash.showtime.ui.view.IPersonDetailView;
 
 /**
  * Created by Avinash Hindupur on 05/07/15.
  */
-public class PersonActivity extends AppCompatActivity {
+public class PersonActivity extends AppCompatActivity implements IPersonDetailView {
 
     private String mId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,34 +24,18 @@ public class PersonActivity extends AppCompatActivity {
         Bundle extras = intent.getExtras();
         mId = extras.getString("id");
 
-        new FetchPersonAsyncTask().execute();
+        initPresenter();
     }
 
-    private class FetchPersonAsyncTask extends AsyncTask<URL, Integer, Boolean> {
+    private void initPresenter() {
 
-
-        protected Boolean doInBackground(URL... urls) {
-            try {
-                fetchPerson();
-            } catch (RetrofitError e) {
-
-                Log.d("Error", e.getMessage());
-                return false;
-            }
-            return true;
-        }
-
-        protected void onPostExecute(Boolean result) {
-
-            //TODO: Setup Person
-        }
+        IPersonDetailPresenter personDetailPresenter = PresenterFactory.createPersonDetailPresenter(this);
+        personDetailPresenter.fetchPerson(mId);
     }
 
-    private void fetchPerson() {
-        TmdbService tmdbService = new TmdbService();
-        TmdbService.Tmdb tmdb = tmdbService.getRestAdapter().create(TmdbService.Tmdb.class);
-
-        Person person = tmdb.fetchPersonDetails(mId);
-
+    @Override
+    public void setPerson(Person person) {
+        //TODO: Setup Person
     }
+
 }

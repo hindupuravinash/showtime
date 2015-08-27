@@ -2,11 +2,13 @@ package in.nash.showtime.ui.presenter;
 
 import in.nash.showtime.ui.presenter.impl.MovieDetailPresenterImpl;
 import in.nash.showtime.ui.presenter.impl.MoviesPresenterImpl;
+import in.nash.showtime.ui.presenter.impl.PersonDetailPresenterImpl;
 import in.nash.showtime.ui.presenter.impl.PersonListPresenterImpl;
 import in.nash.showtime.ui.presenter.impl.ReviewDetailPresenterImpl;
 import in.nash.showtime.ui.presenter.impl.ReviewListPresenterImpl;
 import in.nash.showtime.ui.view.IMovieDetailView;
 import in.nash.showtime.ui.view.IMoviesView;
+import in.nash.showtime.ui.view.IPersonDetailView;
 import in.nash.showtime.ui.view.IPersonListView;
 import in.nash.showtime.ui.view.IReviewDetailView;
 import in.nash.showtime.ui.view.IReviewsListView;
@@ -36,5 +38,9 @@ public class PresenterFactory {
 
     public static IReviewDetailPresenter createReviewDetailPresenter(IReviewDetailView reviewDetailView) {
         return new ReviewDetailPresenterImpl(reviewDetailView);
+    }
+
+    public static IPersonDetailPresenter createPersonDetailPresenter(IPersonDetailView personDetailView) {
+        return new PersonDetailPresenterImpl(personDetailView);
     }
 }
