@@ -53,4 +53,13 @@ public class Tmdb {
     public MoviesService moviesService() {
         return getRestAdapter().create(MoviesService.class);
     }
+
+    public PersonService personService() {
+        return getRestAdapter().create(PersonService.class);
+    }
+
+    public DetailService detailService() {
+        return getRestAdapter().create(DetailService.class);
+    }
+
 }

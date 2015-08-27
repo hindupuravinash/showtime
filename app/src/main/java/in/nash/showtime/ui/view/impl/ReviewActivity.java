@@ -1,29 +1,25 @@
 package in.nash.showtime.ui.view.impl;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.webkit.WebView;
 import android.widget.TextView;
 
-import java.net.URL;
-
 import in.nash.showtime.R;
 import in.nash.showtime.model.Review;
-import in.nash.showtime.network.TmdbService;
-import retrofit.RetrofitError;
+import in.nash.showtime.ui.presenter.IReviewDetailPresenter;
+import in.nash.showtime.ui.presenter.PresenterFactory;
+import in.nash.showtime.ui.view.IReviewDetailView;
 
 /**
  * Created by avinash on 8/2/15.
  */
-public class ReviewActivity extends AppCompatActivity {
+public class ReviewActivity extends AppCompatActivity implements IReviewDetailView{
     private String mId;
-    private Review mReview;
 
-    private TextView author;
-    private TextView content;
+    private TextView authorView;
+    private TextView contentView;
     private WebView mWebView;
 
     @Override
@@ -35,42 +31,24 @@ public class ReviewActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_review);
 
-        new FetchReviewAsyncTask().execute();
+        authorView = (TextView) findViewById(R.id.author);
+        contentView = (TextView) findViewById(R.id.contentView);
+
+        initPresenter();
     }
 
-    private class FetchReviewAsyncTask extends AsyncTask<URL, Integer, Boolean> {
+    private void initPresenter() {
 
-
-        protected Boolean doInBackground(URL... urls) {
-            try {
-                fetchReview();
-            } catch (RetrofitError e) {
-
-                Log.d("Error", e.getMessage());
-                return false;
-            }
-            return true;
-        }
-
-        protected void onPostExecute(Boolean result) {
-
-            if (result) {
-                author.setText(mReview.getAuthor());
-                content.setText(mReview.getContent());
-                String url = mReview.getUrl();
-                //TODO: Decide if Webview needs to be shown
-            } else {
-                //TODO: Throw error
-            }
-        }
+        IReviewDetailPresenter reviewDetailPresenter = PresenterFactory.createReviewDetailPresenter(this);
+        reviewDetailPresenter.fetchReview(mId);
     }
 
-    private void fetchReview() {
-        TmdbService tmdbService = new TmdbService();
-        TmdbService.Tmdb tmdb = tmdbService.getRestAdapter().create(TmdbService.Tmdb.class);
-
-        mReview = tmdb.fetchMovieReview(mId);
-
+    @Override
+    public void setReview(Review review) {
+        authorView.setText(review.getAuthor());
+        contentView.setText(review.getContent());
+        String url = review.getUrl();
+        //TODO: Decide if Webview needs to be shown
     }
 
 }
