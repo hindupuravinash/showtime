@@ -64,6 +64,12 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
 
     }
 
+    public static Intent getStartIntent(Context context, Movie movie) {
+        Intent starter = new Intent(context, MovieDetailActivity.class);
+        starter.putExtra("id", movie.getId());
+        return starter;
+    }
+
     @Override
     public void onClick(View v) {
         Intent intent;

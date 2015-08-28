@@ -1,11 +1,15 @@
 package in.nash.showtime.ui.view.impl;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +24,7 @@ import in.nash.showtime.ui.presenter.IMoviesPresenter;
 import in.nash.showtime.ui.presenter.PresenterFactory;
 import in.nash.showtime.ui.view.IMoviesView;
 import in.nash.showtime.utils.SpacesItemDecoration;
+import in.nash.showtime.utils.TransitionHelper;
 
 /**
  * Created by avinash on 18/06/15.
@@ -27,6 +32,7 @@ import in.nash.showtime.utils.SpacesItemDecoration;
 public class MovieFragment extends Fragment implements IMoviesView {
 
     private MovieType mMovieType;
+    private Movie mMovie;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
 
@@ -75,7 +81,13 @@ public class MovieFragment extends Fragment implements IMoviesView {
             public void onClick(View v) {
                 int position = mRecyclerView.getChildAdapterPosition(v);
                 Movie movie = movies.get(position);
-                MovieDetailActivity.navigateTo(getActivity(), movie.getId());
+                mMovie = movie;
+                // MovieDetailActivity.navigateTo(getActivity(), movie.getId());
+
+                Activity activity = getActivity();
+                startMovieDetailActivityWithTransition(activity, v,
+                        movie);
+
             }
         }));
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
@@ -111,4 +123,21 @@ public class MovieFragment extends Fragment implements IMoviesView {
         movieFragment.setMovieCategory(type);
         return movieFragment;
     }
+
+    private void startMovieDetailActivityWithTransition(Activity activity, View toolbar,
+                                                        Movie movie) {
+
+        final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, false,
+                new Pair<>(toolbar, activity.getString(R.string.transition_toolbar)));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions sceneTransitionAnimation = ActivityOptions
+                    .makeSceneTransitionAnimation(activity, pairs);
+            // Start the activity with the participants, animating from one to the other.
+            final Bundle transitionBundle = sceneTransitionAnimation.toBundle();
+            activity.startActivity(MovieDetailActivity.getStartIntent(activity, movie), transitionBundle);
+        } else {
+            activity.startActivity(MovieDetailActivity.getStartIntent(activity, movie));
+        }
+    }
+
 }
