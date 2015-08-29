@@ -19,6 +19,14 @@ android {
     }
 }
 
+//Set environment variables in MacOS X Yosemite
+// http://stackoverflow.com/questions/25385934/setting-environment-variables-via-launchd-conf-no-longer-works-in-os-x-yosemite
+android.buildTypes.each { type ->
+    type.buildConfigField 'String', 'PARAM_API_KEY', '"' + System.getenv("SHOWTIME_TMDB_API_KEY")+ '"'
+    type.buildConfigField 'String', 'PARSE_APP_ID', '"' + System.getenv("SHOWTIME_PARSE_APP_ID")+ '"'
+    type.buildConfigField 'String', 'PARSE_KEY', '"' + System.getenv("SHOWTIME_PARSE_KEY")+ '"'
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:design:23.0.0'
