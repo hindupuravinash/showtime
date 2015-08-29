@@ -44,8 +44,8 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, Text
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mLinearLayout = (LinearLayout)findViewById(R.id.linear_layout);
-        mProgressBar = (ProgressBar)findViewById(R.id.progress_bar);
+        mLinearLayout = (LinearLayout) findViewById(R.id.linear_layout);
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mUserName = (EditText) findViewById(R.id.input_username);
         mUserName.setOnEditorActionListener(this);
         mPassword = (EditText) findViewById(R.id.input_password);
@@ -122,13 +122,16 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, Text
         switch (mRadioGroup.getCheckedRadioButtonId()) {
             case R.id.radio_login:
 
+                showProgressBar();
                 ParseUser.logInInBackground(username, password, new LogInCallback() {
                     public void done(ParseUser user, ParseException e) {
                         if (user != null) {
+                            hideProgressBar();
                             Intent intent = new Intent(LoginActivity.this,
                                     MainActivity.class);
                             startActivity(intent);
                         } else {
+                            hideProgressBar();
                             mPassword.setError("Username or Password is not correct");
                             Log.e("Error", e.getMessage());
                         }
@@ -149,15 +152,18 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, Text
                 user.setPassword(password);
                 user.setEmail(email);
 
+                showProgressBar();
                 user.signUpInBackground(new SignUpCallback() {
                     public void done(ParseException e) {
                         if (e == null) {
 
+                            hideProgressBar();
                             Intent intent = new Intent(LoginActivity.this,
                                     MainActivity.class);
                             startActivity(intent);
 
                         } else {
+                            hideProgressBar();
                             Log.e("Error", e.getMessage());
                         }
                     }
