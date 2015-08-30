@@ -1,11 +1,13 @@
 package in.nash.showtime.ui.view.impl;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import in.nash.showtime.R;
+import in.nash.showtime.utils.AppUtils;
 
 /**
  * Created by avinash on 8/31/15.
@@ -31,6 +33,10 @@ public class SettingsActivity extends AppCompatActivity{
                     .commit();
         }
 
+    }
+
+    public static void navigateTo(Activity fromActivity) {
+        AppUtils.navigateToActivitySimple(fromActivity, SettingsActivity.class);
     }
 
     @Override

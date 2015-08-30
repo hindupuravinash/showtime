@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         switch (menuItem.getItemId()){
                             case R.id.nav_settings:
+                                SettingsActivity.navigateTo(MainActivity.this);
                                 break;
                         }
                         menuItem.setChecked(true);

@@ -1,5 +1,6 @@
 package in.nash.showtime.ui.view.impl;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
@@ -19,5 +20,9 @@ public class AboutActivity extends AppCompatActivity{
 
         TextView versionText = (TextView) findViewById(R.id.version);
         versionText.setText("Version: " + AppUtils.getVersionName());
+    }
+
+    public static void navigateTo(Activity fromActivity) {
+        AppUtils.navigateToActivitySimple(fromActivity, AboutActivity.class);
     }
 }
