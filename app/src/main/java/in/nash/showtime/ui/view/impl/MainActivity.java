@@ -24,14 +24,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.nash.showtime.R;
+import in.nash.showtime.ui.presenter.impl.MoviesPresenterImpl;
 
-public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener  {
+public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
 
     private DrawerLayout mDrawerLayout;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private AppBarLayout appBarLayout;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private MoviesPresenterImpl mMoviesPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +75,12 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
             public void onRefresh() {
                 mSwipeRefreshLayout.setRefreshing(false);
                 // TODO: Refresh the movies
+                int currentFragment = viewPager.getCurrentItem();
+                Fragment fr = getSupportFragmentManager()
+                        .findFragmentByTag("android:switcher:" + R.id.viewpager + ":" + currentFragment);
+                if (fr != null) {
+                    ((MovieFragment) fr).refresh();
+                }
             }
         });
 
@@ -89,20 +98,20 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
         adapter.addFragment(MovieFragment.getInstance(MovieFragment.MovieType.TOP), "Top");
 
         viewPager.setAdapter(adapter);
-        viewPager.setOnPageChangeListener( new ViewPager.OnPageChangeListener() {
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled( int position, float v, int i1 ) {
+            public void onPageScrolled(int position, float v, int i1) {
             }
 
             @Override
-            public void onPageSelected( int position ) {
+            public void onPageSelected(int position) {
             }
 
             @Override
-            public void onPageScrollStateChanged( int state ) {
-                enableDisableSwipeRefresh( state == ViewPager.SCROLL_STATE_IDLE );
+            public void onPageScrollStateChanged(int state) {
+                enableDisableSwipeRefresh(state == ViewPager.SCROLL_STATE_IDLE);
             }
-        } );
+        });
 
 
     }

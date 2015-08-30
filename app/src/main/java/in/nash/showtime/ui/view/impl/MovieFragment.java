@@ -35,6 +35,7 @@ public class MovieFragment extends Fragment implements IMoviesView {
     private Movie mMovie;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
+    private IMoviesPresenter mMoviePresenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +48,8 @@ public class MovieFragment extends Fragment implements IMoviesView {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity().getBaseContext(), 3);
         mRecyclerView.setLayoutManager(layoutManager);
 
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
+        mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
         initPresenter();
         return rootView;
@@ -54,9 +57,13 @@ public class MovieFragment extends Fragment implements IMoviesView {
 
     private void initPresenter() {
 
-        IMoviesPresenter moviePresenter = PresenterFactory.createMoviePresenter(this);
-        moviePresenter.queryMovies(getMovieCategory());
+        mMoviePresenter = PresenterFactory.createMoviePresenter(this);
+        mMoviePresenter.queryMovies(getMovieCategory());
 
+    }
+
+    public void refresh(){
+        mMoviePresenter.queryMovies(getMovieCategory());
     }
 
     @Override
@@ -90,8 +97,7 @@ public class MovieFragment extends Fragment implements IMoviesView {
 
             }
         }));
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
-        mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+
     }
 
     public MovieType getMovieCategory() {
