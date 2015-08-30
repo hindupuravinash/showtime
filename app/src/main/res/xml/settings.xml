@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="general"
+        android:title="GENERAL">
+
+        <Preference
+            android:key="edit_profile"
+            android:title="Edit Profile"/>
+        <Preference
+            android:key="share"
+            android:title="Share"/>
+
+        <Preference
+            android:key="about"
+            android:title="About"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

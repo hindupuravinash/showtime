@@ -137,6 +137,10 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        switch (menuItem.getItemId()){
+                            case R.id.nav_settings:
+                                break;
+                        }
                         menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
                         return true;
