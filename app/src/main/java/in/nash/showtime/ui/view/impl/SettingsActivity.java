@@ -12,7 +12,7 @@ import in.nash.showtime.utils.AppUtils;
 /**
  * Created by avinash on 8/31/15.
  */
-public class SettingsActivity extends AppCompatActivity{
+public class SettingsActivity extends AppCompatActivity {
 
     Toolbar mToolbarView;
 

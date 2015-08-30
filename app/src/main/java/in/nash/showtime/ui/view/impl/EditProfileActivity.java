@@ -4,31 +4,40 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import in.nash.showtime.R;
 import in.nash.showtime.utils.AppUtils;
 
 /**
- * Created by Avinash Hindupur on 04/07/15.
+ * Created by avinash on 8/31/15.
  */
-public class AboutActivity extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity {
 
     Toolbar mToolbarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+        setContentView(R.layout.activity_edit_profile);
 
         mToolbarView = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbarView);
-        getSupportActionBar().setTitle("About");
+        getSupportActionBar().setTitle("Edit Profile");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
-        TextView versionText = (TextView) findViewById(R.id.version);
-        versionText.setText("Version: " + AppUtils.getVersionName());
+    public static void navigateTo(Activity fromActivity) {
+        AppUtils.navigateToActivitySimple(fromActivity, EditProfileActivity.class);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_edit_profile, menu);
+        return true;
     }
 
     @Override
@@ -39,10 +48,11 @@ public class AboutActivity extends AppCompatActivity {
             onBackPressed();
             return true;
         }
+        if (id == R.id.done) {
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
-    public static void navigateTo(Activity fromActivity) {
-        AppUtils.navigateToActivitySimple(fromActivity, AboutActivity.class);
-    }
 }

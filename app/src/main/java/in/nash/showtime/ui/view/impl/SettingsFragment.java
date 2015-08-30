@@ -10,7 +10,7 @@ import in.nash.showtime.R;
 /**
  * Created by avinash on 8/31/15.
  */
-public class SettingsFragment  extends PreferenceFragment implements Preference.OnPreferenceClickListener {
+public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class SettingsFragment  extends PreferenceFragment implements Preference.
             case "share":
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "Checkout Showtime -  Movies information, beautifully designed: https://goo.gl/ONNCOq";
+                String shareBody = "Checkout Showtime - Movies information, beautifully designed: https://goo.gl/ONNCOq";
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Checkout Showtime");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
