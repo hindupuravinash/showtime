@@ -2,7 +2,6 @@ package in.nash.showtime.utils;
 
 
 import android.app.Activity;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Pair;
@@ -44,7 +43,7 @@ public class TransitionHelper {
         if (view == null) {
             return;
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (SdkUtil.hasLollipop()) {
             participants.add(new Pair<>(view, view.getTransitionName()));
         }
     }

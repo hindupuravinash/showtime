@@ -2,7 +2,6 @@ package in.nash.showtime.ui.view.impl;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
@@ -23,6 +22,7 @@ import in.nash.showtime.model.Movie;
 import in.nash.showtime.ui.presenter.IMoviesPresenter;
 import in.nash.showtime.ui.presenter.PresenterFactory;
 import in.nash.showtime.ui.view.IMoviesView;
+import in.nash.showtime.utils.SdkUtil;
 import in.nash.showtime.utils.SpacesItemDecoration;
 import in.nash.showtime.utils.TransitionHelper;
 
@@ -62,7 +62,7 @@ public class MovieFragment extends Fragment implements IMoviesView {
 
     }
 
-    public void refresh(){
+    public void refresh() {
         mMoviePresenter.queryMovies(getMovieCategory());
     }
 
@@ -135,7 +135,7 @@ public class MovieFragment extends Fragment implements IMoviesView {
 
         final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, false,
                 new Pair<>(toolbar, activity.getString(R.string.transition_toolbar)));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (SdkUtil.hasLollipop()) {
             ActivityOptions sceneTransitionAnimation = ActivityOptions
                     .makeSceneTransitionAnimation(activity, pairs);
             // Start the activity with the participants, animating from one to the other.
