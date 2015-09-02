@@ -111,7 +111,9 @@ public class MovieFragment extends Fragment implements IMoviesView {
     public enum MovieType {
         PLAYING("playing"),
         TOP("top"),
-        UPCOMING("upcoming");
+        UPCOMING("upcoming"),
+        SEEN("seen"),
+        WISHLIST("wishlist");
 
         private final String movieType;
 

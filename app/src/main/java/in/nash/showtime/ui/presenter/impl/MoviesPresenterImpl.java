@@ -61,6 +61,7 @@ public class MoviesPresenterImpl implements IMoviesPresenter {
 
                         // TODO: Log into Crashlytics
                         mMoviesView.setError(R.string.something_went_wrong);
+                        Log.e("Error", e.getMessage());
 
                     }
 

@@ -86,11 +86,10 @@ public class EditProfileActivity extends AppCompatActivity {
                     setProgressBarIndeterminateVisibility(false);
 
                     if (e == null) {
-                        //Success!
                         finish();
 
                     } else {
-                        Snackbar.make(null, "Error occurred while saving the details", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(null, "Error occurred while saving the changes", Snackbar.LENGTH_LONG).show();
 
                     }
                 }
