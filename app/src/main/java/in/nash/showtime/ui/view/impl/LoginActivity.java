@@ -1,5 +1,6 @@
 package in.nash.showtime.ui.view.impl;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -23,6 +24,7 @@ import com.parse.SignUpCallback;
 
 import in.nash.showtime.R;
 import in.nash.showtime.ui.view.ILoginView;
+import in.nash.showtime.utils.AppUtils;
 
 /**
  * Created by Avinash Hindupur on 06/07/15.
@@ -183,6 +185,10 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, Text
     public void hideProgressBar() {
         mLinearLayout.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.GONE);
+    }
+
+    public static void navigateTo(Activity fromActivity) {
+        AppUtils.navigateToActivitySimple(fromActivity, LoginActivity.class);
     }
 
 }

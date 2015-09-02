@@ -49,6 +49,8 @@ public class EditProfileActivity extends AppCompatActivity {
             return true;
         }
         if (id == R.id.done) {
+            
+            finish();
             return true;
         }
 

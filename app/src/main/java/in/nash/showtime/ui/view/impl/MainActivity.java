@@ -1,6 +1,5 @@
 package in.nash.showtime.ui.view.impl;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
@@ -19,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,11 +57,19 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
 
         View header = navigationView.inflateHeaderView(R.layout.nav_header);
         LinearLayout drawerHeader = (LinearLayout) header.findViewById(R.id.login_view);
+
+        // If user logged in, take to profile, else login
         drawerHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+                ParseUser currentUser = ParseUser.getCurrentUser();
+
+                if(currentUser != null){
+                    ProfileActivity.navigateTo(MainActivity.this);
+                } else {
+                    LoginActivity.navigateTo(MainActivity.this);
+                }
+
             }
         });
         viewPager = (ViewPager) findViewById(R.id.viewpager);
