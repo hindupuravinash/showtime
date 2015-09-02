@@ -1,5 +1,6 @@
 package in.nash.showtime.ui.view.impl;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import in.nash.showtime.R;
+import in.nash.showtime.utils.AppUtils;
 
 /**
  * Created by Avinash Hindupur on 24/07/15.
@@ -42,5 +44,9 @@ public class FeatureRequestActivity extends AppCompatActivity implements View.On
 
     private void postFeatureRequest() {
 
+    }
+
+    public static void navigateTo(Activity fromActivity) {
+        AppUtils.navigateToActivitySimple(fromActivity, FeatureRequestActivity.class);
     }
 }

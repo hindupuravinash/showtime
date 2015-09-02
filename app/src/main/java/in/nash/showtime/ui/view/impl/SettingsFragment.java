@@ -22,6 +22,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         preferenceEditProfile.setOnPreferenceClickListener(this);
         Preference preferenceShare = findPreference("share");
         preferenceShare.setOnPreferenceClickListener(this);
+        Preference preferenceFeedback = findPreference("feedback");
+        preferenceFeedback.setOnPreferenceClickListener(this);
+        Preference preferenceFeature = findPreference("feature");
+        preferenceFeature.setOnPreferenceClickListener(this);
         Preference preferenceAbout = findPreference("about");
         preferenceAbout.setOnPreferenceClickListener(this);
 
@@ -39,6 +43,12 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Checkout Showtime");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                break;
+            case "feedback":
+                //FeedbackActivity.navigateTo(getActivity());
+                break;
+            case "feature":
+                FeatureRequestActivity.navigateTo(getActivity());
                 break;
             case "about":
                 AboutActivity.navigateTo(getActivity());

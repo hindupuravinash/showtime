@@ -13,6 +13,14 @@
             android:title="Share"/>
 
         <Preference
+            android:key="feedback"
+            android:title="Feedback"/>
+
+        <Preference
+            android:key="feature"
+            android:title="Feature Request"/>
+
+        <Preference
             android:key="about"
             android:title="About"/>
 
