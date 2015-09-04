@@ -1,7 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/edit"
-          android:title="EDIT"
-          app:showAsAction="always"/>
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".MainActivity">
+    <item
+        android:id="@+id/edit"
+        android:title="EDIT"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/signout"
+        android:title="SIGN OUT"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/save"
+        android:title="SAVE"
+        app:showAsAction="always"/>
 </menu>

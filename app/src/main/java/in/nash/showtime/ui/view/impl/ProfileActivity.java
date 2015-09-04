@@ -1,14 +1,20 @@
 package in.nash.showtime.ui.view.impl;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import in.nash.showtime.R;
 import in.nash.showtime.utils.AppUtils;
@@ -20,9 +26,17 @@ public class ProfileActivity  extends AppCompatActivity {
 
     Toolbar mToolbarView;
 
-    TextView mName;
+    LinearLayout mRootview;
 
-    TextView mEmail;
+    EditText mName;
+
+    EditText mEmail;
+
+    TextInputLayout mNameTil;
+    TextInputLayout mEmailTil;
+
+    private boolean inProfile = true;
+    private ParseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +44,12 @@ public class ProfileActivity  extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         mToolbarView = (Toolbar) findViewById(R.id.toolbar);
-        mName = (TextView) findViewById(R.id.name);
-        mEmail = (TextView) findViewById(R.id.email);
+        mRootview = (LinearLayout) findViewById(R.id.rootview);
+        mName = (EditText) findViewById(R.id.name);
+        mEmail = (EditText) findViewById(R.id.email);
+
+        mNameTil = (TextInputLayout) findViewById(R.id.name_til);
+        mEmailTil = (TextInputLayout) findViewById(R.id.email_til);
 
         setSupportActionBar(mToolbarView);
         getSupportActionBar().setTitle("Profile");
@@ -41,20 +59,35 @@ public class ProfileActivity  extends AppCompatActivity {
     }
 
     private void setProfileData() {
-        ParseUser currentUser = ParseUser.getCurrentUser();
 
-        mName.setText(currentUser.getUsername());
-        mEmail.setText(currentUser.getEmail());
+        mUser = ParseUser.getCurrentUser();
+
+        mName.setEnabled(false);
+        mEmail.setEnabled(false);
+
+        mName.setText(mUser.getUsername());
+        mEmail.setText(mUser.getEmail());
     }
 
     public static void navigateTo(Activity fromActivity) {
-        AppUtils.navigateToActivitySimple(fromActivity, EditProfileActivity.class);
+        AppUtils.navigateToActivitySimple(fromActivity, ProfileActivity.class);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_profile, menu);
+        MenuItem save = menu.findItem(R.id.save);
+        MenuItem edit = menu.findItem(R.id.edit);
+
+        if (!inProfile) {
+            save.setVisible(true);
+            edit.setVisible(false);
+        } else {
+            save.setVisible(false);
+            edit.setVisible(true);
+        }
+
         return true;
     }
 
@@ -66,11 +99,69 @@ public class ProfileActivity  extends AppCompatActivity {
             onBackPressed();
             return true;
         }
-        if (id == R.id.edit){
-            EditProfileActivity.navigateTo(ProfileActivity.this);
+
+        if (id == R.id.edit) {
+
+            mName.setEnabled(true);
+            mEmail.setEnabled(true);
+
+            inProfile = false;
+            this.invalidateOptionsMenu();
+
+            return true;
+        }
+
+        if (id == R.id.save) {
+
+            String name = mName.getText().toString();
+            String email = mEmail.getText().toString();
+            //   String mobile = mMobile.getText().toString();
+
+
+
+            mName.setEnabled(false);
+            mEmail.setEnabled(false);
+            //   mMobile.setEnabled(false);
+
+            mUser.setUsername(name);
+            mUser.setEmail(email);
+
+            mUser.saveInBackground(new SaveCallback() {
+
+                @Override
+                public void done(ParseException e) {
+                    setProgressBarIndeterminateVisibility(false);
+
+                    if (e == null) {
+                        setProfileData();
+
+                    } else {
+                        Snackbar.make(mRootview, "Error occurred while saving the changes", Snackbar.LENGTH_LONG).show();
+
+                    }
+                }
+            });
+
+            inProfile = true;
+            this.invalidateOptionsMenu();
+
+            return true;
+
+        }
+
+        if (id == R.id.signout){
+
+            navigateToLoginView();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void navigateToLoginView() {
+        Intent i = new Intent(this,LoginActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
     }
 
 }

@@ -61,10 +61,6 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".ui.view.impl.EditProfileActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
             android:name=".ui.view.impl.ProfileActivity"
             android:label="@string/app_name" >
         </activity>
