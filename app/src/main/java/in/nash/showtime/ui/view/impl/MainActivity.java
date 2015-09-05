@@ -150,6 +150,18 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
                             case R.id.nav_settings:
                                 SettingsActivity.navigateTo(MainActivity.this);
                                 break;
+                            case R.id.nav_top:
+                                viewPager.setCurrentItem(2);
+                                mDrawerLayout.closeDrawers();
+                                break;
+                            case R.id.nav_playing:
+                                viewPager.setCurrentItem(0);
+                                mDrawerLayout.closeDrawers();
+                                break;
+                            case R.id.nav_upcoming:
+                                viewPager.setCurrentItem(1);
+                                mDrawerLayout.closeDrawers();
+                                break;
                         }
                         menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
