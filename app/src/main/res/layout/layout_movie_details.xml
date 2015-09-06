@@ -9,6 +9,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <include layout="@layout/row_movie_detail" />
+
         <TextView
             android:id="@+id/released"
             android:layout_width="match_parent"
