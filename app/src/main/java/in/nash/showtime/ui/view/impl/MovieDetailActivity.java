@@ -16,8 +16,12 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import in.nash.showtime.R;
 import in.nash.showtime.model.Movie;
+import in.nash.showtime.model.Person;
+import in.nash.showtime.model.Review;
 import in.nash.showtime.ui.presenter.IMovieDetailPresenter;
 import in.nash.showtime.ui.presenter.PresenterFactory;
 import in.nash.showtime.ui.view.IMovieDetailView;
@@ -139,6 +143,18 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         language.setText(movie.getOriginalLanguage());
     }
 
+    private void setCast(ArrayList<Person> cast){
+
+    }
+
+    private void setCrew(ArrayList<Person> crew){
+
+    }
+
+    private void setReviews(ArrayList<Review> reviews){
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -154,4 +170,5 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
 }

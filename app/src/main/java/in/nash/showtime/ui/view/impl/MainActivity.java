@@ -162,6 +162,10 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
                                 viewPager.setCurrentItem(1);
                                 mDrawerLayout.closeDrawers();
                                 break;
+                            case R.id.nav_wishlist:
+                                AttributionsActivity.navigateTo(MainActivity.this);
+                                mDrawerLayout.closeDrawers();
+                                break;
                         }
                         menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
