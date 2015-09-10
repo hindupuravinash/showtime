@@ -21,6 +21,10 @@
             android:title="Feature Request"/>
 
         <Preference
+            android:key="attributions"
+            android:title="Attributions"/>
+
+        <Preference
             android:key="about"
             android:title="About"/>
 

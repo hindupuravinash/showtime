@@ -26,6 +26,8 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         preferenceFeedback.setOnPreferenceClickListener(this);
         Preference preferenceFeature = findPreference("feature");
         preferenceFeature.setOnPreferenceClickListener(this);
+        Preference preferenceAttributions = findPreference("attributions");
+        preferenceAttributions.setOnPreferenceClickListener(this);
         Preference preferenceAbout = findPreference("about");
         preferenceAbout.setOnPreferenceClickListener(this);
 
@@ -45,10 +47,13 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
                 break;
             case "feedback":
-                //FeedbackActivity.navigateTo(getActivity());
+                FeedbackActivity.navigateTo(getActivity());
                 break;
             case "feature":
                 FeatureRequestActivity.navigateTo(getActivity());
+                break;
+            case "attributions":
+                AttributionsActivity.navigateTo(getActivity());
                 break;
             case "about":
                 AboutActivity.navigateTo(getActivity());

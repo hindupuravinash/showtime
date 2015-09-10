@@ -163,7 +163,6 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
                                 mDrawerLayout.closeDrawers();
                                 break;
                             case R.id.nav_wishlist:
-                                AttributionsActivity.navigateTo(MainActivity.this);
                                 mDrawerLayout.closeDrawers();
                                 break;
                         }
