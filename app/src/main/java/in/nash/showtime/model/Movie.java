@@ -46,6 +46,16 @@ public class Movie {
     @SerializedName("vote_count")
     private int voteCount;
 
+    public Credits credits;
+
+    public Credits getCredits() {
+        return credits;
+    }
+
+    public void setCredits(Credits credits) {
+        this.credits = credits;
+    }
+
     public double getVoteAverage() {
         return voteAverage;
     }

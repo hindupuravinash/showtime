@@ -1,6 +1,9 @@
 package in.nash.showtime.ui.presenter.impl;
 
+import android.util.Log;
+
 import in.nash.showtime.model.Movie;
+import in.nash.showtime.network.ResponseOptions;
 import in.nash.showtime.network.Tmdb;
 import in.nash.showtime.ui.presenter.IMovieDetailPresenter;
 import in.nash.showtime.ui.view.IMovieDetailView;
@@ -25,7 +28,9 @@ public class MovieDetailPresenterImpl implements IMovieDetailPresenter {
     public void fetchMovie(String id) {
         Tmdb tmdb = new Tmdb();
 
-        Observable<Movie> movieObservable = tmdb.moviesService().fetchMovieDetails(id);
+
+        ResponseOptions options = new ResponseOptions(ResponseOptions.ResponseOption.CREDITS);
+        Observable<Movie> movieObservable = tmdb.moviesService().fetchMovieDetails(id, options);
         movieObservable.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Movie>() {

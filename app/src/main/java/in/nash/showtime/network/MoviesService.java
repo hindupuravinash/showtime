@@ -8,6 +8,7 @@ import in.nash.showtime.model.Movie;
 import in.nash.showtime.model.Person;
 import retrofit.http.GET;
 import retrofit.http.Path;
+import retrofit.http.Query;
 import rx.Observable;
 
 /**
@@ -37,7 +38,7 @@ public interface MoviesService {
     Observable<ReviewsResponse> fetchMovieReviews(@Path("id") String id);
 
     @GET("/movie/{id}")
-    Observable<Movie> fetchMovieDetails(@Path("id") String id);
+    Observable<Movie> fetchMovieDetails(@Path("id") String id,  @Query("append_to_response") ResponseOptions responseOptions);
 
     class CreditResponse {
         @SerializedName("cast")
