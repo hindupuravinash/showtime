@@ -8,4 +8,8 @@
     <string name="feature_request_placeholder">Cool feature here</string>
     <string name="something_went_wrong">Oops, something went wrong</string>
     <string name="transition_toolbar">ToolbarTransition</string>
+    <string name="feedback">We would love to hear back from you. Tell us anything and everything!</string>
+    <string name="feedback_title">Feedback</string>
+    <string name="email">EMAIL</string>
+    <string name="name">NAME</string>
 </resources>

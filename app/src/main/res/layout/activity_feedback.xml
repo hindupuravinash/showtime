@@ -18,18 +18,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:gravity="center"
-            android:text="We would love to hear back from you. Tell us anything and everything!"
-            android:textSize="16sp"
-            android:textColor="@color/abc_primary_text_material_light"/>
+            android:text="@string/feedback"
+            android:textColor="@color/abc_primary_text_material_light"
+            android:textSize="16sp"/>
 
         <EditText
             android:id="@+id/feedback"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:hint="Feedback"
+            android:hint="@string/feedback_title"
+            android:inputType="textMultiLine"
             android:textColor="@color/abc_primary_text_material_light"/>
     </LinearLayout>
-
 
 </LinearLayout>
