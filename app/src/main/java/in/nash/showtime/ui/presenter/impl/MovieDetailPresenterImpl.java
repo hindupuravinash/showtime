@@ -1,7 +1,5 @@
 package in.nash.showtime.ui.presenter.impl;
 
-import android.util.Log;
-
 import in.nash.showtime.model.Movie;
 import in.nash.showtime.network.ResponseOptions;
 import in.nash.showtime.network.Tmdb;
