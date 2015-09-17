@@ -5,7 +5,16 @@ package in.nash.showtime.utils;
  */
 public class StringUtil {
 
-    public String getSrtingFromInt(int i){
+    public static String getSrtingFromInt(int i){
+        StringBuilder sb = new StringBuilder();
+        sb.append("");
+        sb.append(i);
+        String strI = sb.toString();
+        return strI;
+    }
+
+
+    public static String getSrtingFromInt(double i){
         StringBuilder sb = new StringBuilder();
         sb.append("");
         sb.append(i);

@@ -21,6 +21,7 @@ import in.nash.showtime.model.Movie;
 import in.nash.showtime.ui.presenter.IMovieDetailPresenter;
 import in.nash.showtime.ui.presenter.PresenterFactory;
 import in.nash.showtime.ui.view.IMovieDetailView;
+import in.nash.showtime.utils.StringUtil;
 
 /**
  * Created by Avinash Hindupur on 24/06/15.
@@ -130,8 +131,8 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         TextView language = (TextView) findViewById(R.id.language);
 
         released.setText(movie.getReleaseDate());
-        runtime.setText("" + movie.getRuntime());
-        budget.setText("" + movie.getRevenue());
+        runtime.setText(StringUtil.getSrtingFromInt(movie.getRuntime()));
+        budget.setText(StringUtil.getSrtingFromInt(movie.getRevenue()));
         language.setText(movie.getOriginalLanguage());
     }
 
