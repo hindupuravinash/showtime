@@ -16,12 +16,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-
 import in.nash.showtime.R;
 import in.nash.showtime.model.Movie;
-import in.nash.showtime.model.Person;
-import in.nash.showtime.model.Review;
 import in.nash.showtime.ui.presenter.IMovieDetailPresenter;
 import in.nash.showtime.ui.presenter.PresenterFactory;
 import in.nash.showtime.ui.view.IMovieDetailView;
@@ -130,29 +126,13 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     private void setMovieDetails(Movie movie) {
         TextView released = (TextView) findViewById(R.id.released);
         TextView runtime = (TextView) findViewById(R.id.runtime);
-        TextView certification = (TextView) findViewById(R.id.certification);
-        TextView genres = (TextView) findViewById(R.id.genres);
         TextView budget = (TextView) findViewById(R.id.budget);
         TextView language = (TextView) findViewById(R.id.language);
 
         released.setText(movie.getReleaseDate());
         runtime.setText("" + movie.getRuntime());
-        //certification.setText(movie.setCertification);
-        //genres.setText(movie.getGenres);
         budget.setText("" + movie.getRevenue());
         language.setText(movie.getOriginalLanguage());
-    }
-
-    private void setCast(ArrayList<Person> cast){
-
-    }
-
-    private void setCrew(ArrayList<Person> crew){
-
-    }
-
-    private void setReviews(ArrayList<Review> reviews){
-
     }
 
     @Override

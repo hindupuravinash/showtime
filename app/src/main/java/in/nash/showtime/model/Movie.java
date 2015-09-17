@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by avinash on 19/06/15.
  */
+
 public class Movie {
 
     @SerializedName("id")
