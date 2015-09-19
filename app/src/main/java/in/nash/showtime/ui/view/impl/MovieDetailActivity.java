@@ -128,11 +128,13 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         TextView released = (TextView) findViewById(R.id.released);
         TextView runtime = (TextView) findViewById(R.id.runtime);
         TextView budget = (TextView) findViewById(R.id.budget);
+        TextView revenue = (TextView) findViewById(R.id.revenue);
         TextView language = (TextView) findViewById(R.id.language);
 
         released.setText(movie.getReleaseDate());
         runtime.setText(StringUtil.getSrtingFromInt(movie.getRuntime()));
-        budget.setText(StringUtil.getSrtingFromInt(movie.getRevenue()));
+        budget.setText(StringUtil.getSrtingFromInt(movie.getBudget()));
+        revenue.setText(StringUtil.getSrtingFromInt(movie.getRevenue()));
         language.setText(movie.getOriginalLanguage());
     }
 

@@ -20,6 +20,9 @@ public class Movie {
     @SerializedName("release_date")
     private String releaseDate;
 
+    @SerializedName("budget")
+    public Integer budget;
+
     @SerializedName("popularity")
     private String popularity;
 
@@ -36,7 +39,7 @@ public class Movie {
     private String overview;
 
     @SerializedName("revenue")
-    private double revenue;
+    private Integer revenue;
 
     @SerializedName("runtime")
     private int runtime;
@@ -77,7 +80,7 @@ public class Movie {
         return revenue;
     }
 
-    public void setRevenue(double revenue) {
+    public void setRevenue(Integer revenue) {
         this.revenue = revenue;
     }
 
@@ -167,5 +170,13 @@ public class Movie {
 
     public void setOverview(String overview) {
         this.overview = overview;
+    }
+
+    public Integer getBudget() {
+        return budget;
+    }
+
+    public void setBudget(Integer budget) {
+        this.budget = budget;
     }
 }
