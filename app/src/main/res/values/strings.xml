@@ -12,4 +12,6 @@
     <string name="feedback_title">Feedback</string>
     <string name="email">EMAIL</string>
     <string name="name">NAME</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
 </resources>

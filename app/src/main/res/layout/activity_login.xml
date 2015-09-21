@@ -34,6 +34,7 @@
                     android:id="@+id/input_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
                     android:hint="Enter Email"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -46,6 +47,7 @@
                     android:id="@+id/input_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:hint="Enter Username"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -58,6 +60,8 @@
                     android:id="@+id/input_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:inputType="textPassword"
                     android:hint="Enter Password"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -74,13 +78,13 @@
                     android:id="@+id/radio_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Login"/>
+                    android:text="@string/login"/>
 
                 <RadioButton
                     android:id="@+id/radio_register"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Register"/>
+                    android:text="@string/register"/>
 
             </RadioGroup>
 
@@ -89,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Login"/>
+                android:text="@string/login"/>
         </LinearLayout>
     </LinearLayout>
 
