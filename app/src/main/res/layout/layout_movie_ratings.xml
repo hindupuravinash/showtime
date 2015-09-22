@@ -12,7 +12,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Showtime"
+            android:text="@string/app_name"
             android:gravity="center"
             android:paddingBottom="20dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
@@ -20,25 +20,25 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TMDB"
+            android:text="@string/tmdb"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="IMDB"
+            android:text="@string/imdb"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Rotten Tomatoes"
+            android:text="@string/rotten_tomatoes"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Metacritic"
+            android:text="@string/metacritic"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
     </LinearLayout>

@@ -18,7 +18,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Released"
+                android:text="@string/released"
                 android:textStyle="bold"/>
 
             <Space
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Runtime"
+                android:text="@string/runtime"
                 android:textStyle="bold"/>
 
             <Space
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Certification"
+                android:text="@string/certification"
                 android:textStyle="bold"/>
 
             <Space
@@ -93,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Genres"
+                android:text="@string/genres"
                 android:textStyle="bold"/>
 
             <Space
@@ -118,7 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Budget"
+                android:text="@string/budget"
                 android:textStyle="bold"/>
 
             <Space
@@ -143,7 +143,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Revenue"
+                android:text="@string/revenue"
                 android:textStyle="bold"/>
 
             <Space
@@ -168,7 +168,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Language"
+                android:text="@string/language"
                 android:textStyle="bold"/>
 
             <Space
