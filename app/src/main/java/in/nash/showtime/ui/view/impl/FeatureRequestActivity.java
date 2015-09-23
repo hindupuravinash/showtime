@@ -32,7 +32,7 @@ public class FeatureRequestActivity extends AppCompatActivity implements View.On
         if (view.getId() == R.id.btn_submit) {
             final String feature = mFeatureText.getText().toString().trim();
             if (feature.isEmpty()) {
-                mFeatureText.setError("Feature cannot be empty");
+                mFeatureText.setError(getString(R.string.error_feature_empty));
                 return;
             }
             mFeatureText.setError(null);

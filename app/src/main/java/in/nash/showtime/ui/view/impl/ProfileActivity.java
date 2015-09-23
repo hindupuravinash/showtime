@@ -52,7 +52,7 @@ public class ProfileActivity  extends AppCompatActivity {
         mEmailTil = (TextInputLayout) findViewById(R.id.email_til);
 
         setSupportActionBar(mToolbarView);
-        getSupportActionBar().setTitle("Profile");
+        getSupportActionBar().setTitle(R.string.profile);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setProfileData();
@@ -136,7 +136,7 @@ public class ProfileActivity  extends AppCompatActivity {
                         setProfileData();
 
                     } else {
-                        Snackbar.make(mRootview, "Error occurred while saving the changes", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(mRootview, R.string.error_saving_changes, Snackbar.LENGTH_LONG).show();
 
                     }
                 }

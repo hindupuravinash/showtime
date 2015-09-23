@@ -138,11 +138,11 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, Text
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.radio_login:
-                mSubmitButton.setText("Login");
+                mSubmitButton.setText(R.string.login);
                 mEmailInputLayout.setVisibility(View.INVISIBLE);
                 break;
             case R.id.radio_register:
-                mSubmitButton.setText("Register");
+                mSubmitButton.setText(R.string.register);
                 mEmailInputLayout.setVisibility(View.VISIBLE);
                 break;
         }
@@ -174,7 +174,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, Text
         final String username = mUserName.getText().toString().trim();
 
         if (username.isEmpty()) {
-            mUserName.setError("Username cannot be empty");
+            mUserName.setError(getString(R.string.error_username_empty));
             return;
         }
         mUserName.setError(null);
@@ -182,7 +182,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, Text
         final String password = mPassword.getText().toString().trim();
 
         if (password.isEmpty()) {
-            mPassword.setError("Password cannot be empty");
+            mPassword.setError(getString(R.string.error_password_empty));
             return;
         }
         mPassword.setError(null);
@@ -200,7 +200,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, Text
                             startActivity(intent);
                         } else {
                             hideProgressBar();
-                            mPassword.setError("Username or Password is not correct");
+                            mPassword.setError(getString(R.string.error_username_password_incorrect));
                             Log.e("Error", e.getMessage());
                         }
                     }
@@ -210,7 +210,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, Text
             case R.id.radio_register:
                 final String email = mEmail.getText().toString().trim();
                 if (email.isEmpty()) {
-                    mEmail.setError("Email cannot be empty");
+                    mEmail.setError(getString(R.string.error_email_empty));
                     return;
                 }
                 mEmail.setError(null);
@@ -232,7 +232,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, Text
 
                         } else {
                             hideProgressBar();
-                            Log.e("Error", e.getMessage());
+                            Log.e(getString(R.string.error), e.getMessage());
                         }
                     }
                 });

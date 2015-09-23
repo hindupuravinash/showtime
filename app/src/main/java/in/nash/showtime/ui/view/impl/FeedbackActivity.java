@@ -30,7 +30,7 @@ public class FeedbackActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Feedback");
+        getSupportActionBar().setTitle(R.string.feedback_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
@@ -60,7 +60,7 @@ public class FeedbackActivity extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("plain/text");
             intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"howdy@nash.in"});
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback for Showtime Android");
+            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
             intent.putExtra(Intent.EXTRA_TEXT, feedbackText);
             startActivity(Intent.createChooser(intent, ""));
             return true;

@@ -29,4 +29,17 @@
     <string name="imdb">IMDB</string>
     <string name="rotten_tomatoes">Rotten Tomatoes</string>
     <string name="metacritic">Metacritic</string>
+    <string name="error.username_empty">Username cannot be empty</string>
+    <string name="error.password_empty">Password cannot be empty</string>
+    <string name="error.username_password_incorrect">Username or Password is not correct</string>
+    <string name="error.email_empty">Email cannot be empty</string>
+    <string name="error">Error</string>
+    <string name="about">About</string>
+    <string name="error.saving_changes">Error occurred while saving the changes</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+    <string name="info.share_app">Checkout Showtime - Movies information, beautifully designed: https://goo.gl/ONNCOq</string>
+    <string name="share_subject">Checkout Showtime</string>
+    <string name="error.feature_empty">Feature cannot be empty</string>
+    <string name="feedback_subject">Feedback for Showtime Android</string>
 </resources>
