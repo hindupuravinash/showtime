@@ -7,6 +7,7 @@ import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -36,6 +37,7 @@ public class MovieFragment extends Fragment implements IMoviesView {
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
     private IMoviesPresenter mMoviePresenter;
+    private LinearLayoutManager mLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,14 +47,23 @@ public class MovieFragment extends Fragment implements IMoviesView {
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.movies_grid);
 
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity().getBaseContext(), 3);
-        mRecyclerView.setLayoutManager(layoutManager);
+        displayGridView();
 
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
         initPresenter();
         return rootView;
+    }
+
+    private void displayListView() {
+        mLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+    }
+
+    private void displayGridView() {
+        mLayoutManager = new GridLayoutManager(getActivity().getBaseContext(), 3);
+        mRecyclerView.setLayoutManager(mLayoutManager);
     }
 
     private void initPresenter() {
