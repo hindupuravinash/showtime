@@ -2,6 +2,8 @@ package in.nash.showtime.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import in.nash.showtime.network.MoviesResponse;
+
 /**
  * Created by avinash on 19/06/15.
  */
@@ -51,6 +53,10 @@ public class Movie {
     private int voteCount;
 
     public Credits credits;
+
+    public Videos videos;
+
+    public MoviesResponse similar;
 
     public Credits getCredits() {
         return credits;

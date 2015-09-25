@@ -15,4 +15,35 @@ public class Credits {
 
     public List<Person> guest_stars;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public List<Person> getCast() {
+        return cast;
+    }
+
+    public void setCast(List<Person> cast) {
+        this.cast = cast;
+    }
+
+    public List<Person> getCrew() {
+        return crew;
+    }
+
+    public void setCrew(List<Person> crew) {
+        this.crew = crew;
+    }
+
+    public List<Person> getGuest_stars() {
+        return guest_stars;
+    }
+
+    public void setGuest_stars(List<Person> guest_stars) {
+        this.guest_stars = guest_stars;
+    }
 }

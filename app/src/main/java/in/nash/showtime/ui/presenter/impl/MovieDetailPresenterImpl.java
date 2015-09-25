@@ -26,8 +26,9 @@ public class MovieDetailPresenterImpl implements IMovieDetailPresenter {
     public void fetchMovie(String id) {
         Tmdb tmdb = new Tmdb();
 
-
-        ResponseOptions options = new ResponseOptions(ResponseOptions.ResponseOption.CREDITS);
+        ResponseOptions options = new ResponseOptions(ResponseOptions.ResponseOption.CREDITS,
+                ResponseOptions.ResponseOption.VIDEOS,
+                ResponseOptions.ResponseOption.SIMILAR);
         Observable<Movie> movieObservable = tmdb.moviesService().fetchMovieDetails(id, options);
         movieObservable.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
