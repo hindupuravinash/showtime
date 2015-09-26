@@ -1,12 +1,15 @@
 package in.nash.showtime.ui.view.impl;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,12 +19,17 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import in.nash.showtime.R;
+import in.nash.showtime.adapter.MovieGridAdapter;
 import in.nash.showtime.model.Movie;
 import in.nash.showtime.ui.presenter.IMovieDetailPresenter;
 import in.nash.showtime.ui.presenter.PresenterFactory;
 import in.nash.showtime.ui.view.IMovieDetailView;
+import in.nash.showtime.utils.SdkUtil;
 import in.nash.showtime.utils.StringUtil;
+import in.nash.showtime.utils.TransitionHelper;
 
 /**
  * Created by Avinash Hindupur on 24/06/15.
@@ -34,6 +42,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     private LinearLayout mReviewsLayout;
     private LinearLayout mCastLayout;
     private LinearLayout mCrewLayout;
+    private RecyclerView mRecyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -136,6 +145,38 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         budget.setText(StringUtil.getSrtingFromInt(movie.getBudget()));
         revenue.setText(StringUtil.getSrtingFromInt(movie.getRevenue()));
         language.setText(movie.getOriginalLanguage());
+    }
+
+    private void setSimilarMovies(final List<Movie> movies){
+        mRecyclerView.setAdapter(new MovieGridAdapter(this, movies, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = mRecyclerView.getChildAdapterPosition(v);
+                Movie movie = movies.get(position);
+                mMovie = movie;
+                // MovieDetailActivity.navigateTo(getActivity(), movie.getId());
+
+                startMovieDetailActivityWithTransition(MovieDetailActivity.this, v,
+                        movie);
+
+            }
+        }));
+    }
+
+    private void startMovieDetailActivityWithTransition(Activity activity, View toolbar,
+                                                        Movie movie) {
+
+        final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, false,
+                new Pair<>(toolbar, activity.getString(R.string.transition_toolbar)));
+        if (SdkUtil.hasLollipop()) {
+            ActivityOptions sceneTransitionAnimation = ActivityOptions
+                    .makeSceneTransitionAnimation(activity, pairs);
+            // Start the activity with the participants, animating from one to the other.
+            final Bundle transitionBundle = sceneTransitionAnimation.toBundle();
+            activity.startActivity(MovieDetailActivity.getStartIntent(activity, movie), transitionBundle);
+        } else {
+            activity.startActivity(MovieDetailActivity.getStartIntent(activity, movie));
+        }
     }
 
     @Override
