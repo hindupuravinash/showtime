@@ -132,6 +132,10 @@
 
             </android.support.v7.widget.CardView>
 
+            <include layout="@layout/layout_movie_similar"/>
+
+            <include layout="@layout/layout_movie_videos"/>
+
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
