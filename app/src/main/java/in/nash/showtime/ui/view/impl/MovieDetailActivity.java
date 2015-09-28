@@ -162,6 +162,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     }
 
     private void setSimilarMovies(final List<Movie> movies){
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mRecyclerView.setAdapter(new MovieGridAdapter(this, movies, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

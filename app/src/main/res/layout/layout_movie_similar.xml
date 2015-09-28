@@ -4,10 +4,23 @@
                                     android:layout_height="wrap_content"
                                     android:layout_margin="16dp">
 
+    <LinearLayout
+        android:id="@+id/similar"
+        style="@style/Widget.Card"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:clickable="true">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Similar"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/movies_similar"
-        style="@style/Widget.Card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"/>
+    </LinearLayout>
 </android.support.v7.widget.CardView>

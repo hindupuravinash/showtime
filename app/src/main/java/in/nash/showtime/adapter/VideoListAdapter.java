@@ -2,6 +2,7 @@ package in.nash.showtime.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,8 +49,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         holder.mBoundPosition = position;
 
         Video video = mVideosList.get(position);
-        String url = "http://img.youtube.com/vi/" + video.getKey() + "/default.jpg";
+        String url = "http://img.youtube.com/vi/" + video.getKey() + "/hqdefault.jpg";
 
+        Log.d("url", url);
         Picasso.with(mContext)
                 .load(url)
                 .into(holder.mImageView);
