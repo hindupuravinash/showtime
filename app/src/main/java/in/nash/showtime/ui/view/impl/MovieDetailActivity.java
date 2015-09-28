@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Pair;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import in.nash.showtime.R;
 import in.nash.showtime.adapter.MovieGridAdapter;
+import in.nash.showtime.adapter.VideoListAdapter;
 import in.nash.showtime.model.Movie;
 import in.nash.showtime.model.Video;
 import in.nash.showtime.ui.presenter.IMovieDetailPresenter;
@@ -44,6 +46,8 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     private LinearLayout mCastLayout;
     private LinearLayout mCrewLayout;
     private RecyclerView mRecyclerView;
+    private RecyclerView mVideoRecyclerView;
+    private LinearLayoutManager mLayoutManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,8 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
 
         mReviewsLayout = (LinearLayout) findViewById(R.id.reviews);
         mReviewsLayout.setOnClickListener(this);
+        mVideoRecyclerView = (RecyclerView) findViewById(R.id.movie_videos);
+        mRecyclerView = (RecyclerView) findViewById(R.id.movies_similar);
         mCastLayout = (LinearLayout) findViewById(R.id.cast);
         mCastLayout.setOnClickListener(this);
         mCrewLayout = (LinearLayout) findViewById(R.id.crew);
@@ -167,6 +173,8 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     }
 
     private void setVideos(final List<Video> videos){
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(new VideoListAdapter(this, videos, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
