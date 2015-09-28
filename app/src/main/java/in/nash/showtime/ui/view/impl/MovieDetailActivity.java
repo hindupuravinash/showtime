@@ -24,6 +24,7 @@ import java.util.List;
 import in.nash.showtime.R;
 import in.nash.showtime.adapter.MovieGridAdapter;
 import in.nash.showtime.model.Movie;
+import in.nash.showtime.model.Video;
 import in.nash.showtime.ui.presenter.IMovieDetailPresenter;
 import in.nash.showtime.ui.presenter.PresenterFactory;
 import in.nash.showtime.ui.view.IMovieDetailView;
@@ -131,6 +132,8 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
                 .into(imageView);
 
         setMovieDetails(movie);
+        setSimilarMovies(movie.similar.results);
+        setVideos(movie.videos.getResults());
     }
 
     private void setMovieDetails(Movie movie) {
@@ -163,6 +166,16 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         }));
     }
 
+    private void setVideos(final List<Video> videos){
+        mRecyclerView.setAdapter(new VideoListAdapter(this, videos, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = mRecyclerView.getChildAdapterPosition(v);
+                Video video = videos.get(position);
+
+            }
+        }));
+    }
     private void startMovieDetailActivityWithTransition(Activity activity, View toolbar,
                                                         Movie movie) {
 
