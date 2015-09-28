@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -139,7 +141,10 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
 
         setMovieDetails(movie);
         setSimilarMovies(movie.similar.results);
+        Log.d("log similar", "" + movie.similar.results.size());
         setVideos(movie.videos.getResults());
+        Log.d("log videos", "" + movie.videos.getResults().size());
+
     }
 
     private void setMovieDetails(Movie movie) {
@@ -173,14 +178,16 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     }
 
     private void setVideos(final List<Video> videos){
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(new VideoListAdapter(this, videos, new View.OnClickListener() {
+        mVideoRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mVideoRecyclerView.setAdapter(new VideoListAdapter(this, videos, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int position = mRecyclerView.getChildAdapterPosition(v);
+                int position = mVideoRecyclerView.getChildAdapterPosition(v);
                 Video video = videos.get(position);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("http://www.youtube.com/watch?v=" + video.getKey()));
 
+                startActivity(intent);
             }
         }));
     }

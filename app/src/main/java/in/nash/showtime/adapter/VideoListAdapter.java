@@ -5,6 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +48,11 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         holder.mBoundPosition = position;
 
         Video video = mVideosList.get(position);
-        String url = "https://www.youtube.com/watch?v=" + video.getKey();
+        String url = "http://img.youtube.com/vi/" + video.getKey() + "/default.jpg";
+
+        Picasso.with(mContext)
+                .load(url)
+                .into(holder.mImageView);
     }
 
     @Override
@@ -56,8 +63,10 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public int mBoundPosition;
 
+        public ImageView mImageView;
         public ViewHolder(View view) {
             super(view);
+            mImageView = (ImageView) view.findViewById(R.id.poster_image);
         }
     }
 
