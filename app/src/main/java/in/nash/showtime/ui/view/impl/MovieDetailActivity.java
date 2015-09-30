@@ -22,17 +22,23 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import in.nash.showtime.R;
 import in.nash.showtime.adapter.MovieGridAdapter;
+import in.nash.showtime.adapter.PersonListAdapter;
+import in.nash.showtime.adapter.ReviewListAdapter;
 import in.nash.showtime.adapter.VideoListAdapter;
 import in.nash.showtime.model.Movie;
+import in.nash.showtime.model.Person;
+import in.nash.showtime.model.Review;
 import in.nash.showtime.model.Video;
 import in.nash.showtime.ui.presenter.IMovieDetailPresenter;
 import in.nash.showtime.ui.presenter.PresenterFactory;
 import in.nash.showtime.ui.view.IMovieDetailView;
 import in.nash.showtime.utils.SdkUtil;
+import in.nash.showtime.utils.SpacesItemDecoration;
 import in.nash.showtime.utils.StringUtil;
 import in.nash.showtime.utils.TransitionHelper;
 
@@ -49,6 +55,9 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     private LinearLayout mCrewLayout;
     private RecyclerView mRecyclerView;
     private RecyclerView mVideoRecyclerView;
+    private RecyclerView mCastRecyclerView;
+    private RecyclerView mCrewRecyclerView;
+    private RecyclerView mReviewsRecyclerView;
     private LinearLayoutManager mLayoutManager;
 
     @Override
@@ -68,6 +77,10 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         mReviewsLayout.setOnClickListener(this);
         mVideoRecyclerView = (RecyclerView) findViewById(R.id.movie_videos);
         mRecyclerView = (RecyclerView) findViewById(R.id.movies_similar);
+        mCastRecyclerView = (RecyclerView) findViewById(R.id.movie_cast);
+        mCrewRecyclerView = (RecyclerView) findViewById(R.id.movie_crew);
+        mReviewsRecyclerView = (RecyclerView) findViewById(R.id.movie_reviews);
+
         mCastLayout = (LinearLayout) findViewById(R.id.cast);
         mCastLayout.setOnClickListener(this);
         mCrewLayout = (LinearLayout) findViewById(R.id.crew);
@@ -140,6 +153,8 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
                 .into(imageView);
 
         setMovieDetails(movie);
+        setCast((ArrayList<Person>) movie.credits.cast);
+        setCrew((ArrayList<Person>) movie.credits.crew);
         setSimilarMovies(movie.similar.results);
         Log.d("log similar", "" + movie.similar.results.size());
         setVideos(movie.videos.getResults());
@@ -176,6 +191,30 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
 
             }
         }));
+    }
+
+    private void setCast(final ArrayList<Person> cast){
+        LinearLayoutManager castLayoutManager = new LinearLayoutManager(this);
+        mCastRecyclerView.setLayoutManager(castLayoutManager);
+        mCastRecyclerView.setAdapter(new PersonListAdapter(this, cast, null, true));
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
+        mCastRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+    }
+
+    private void setCrew(final ArrayList<Person> crew){
+        LinearLayoutManager crewLayoutManager = new LinearLayoutManager(this);
+        mCrewRecyclerView.setLayoutManager(crewLayoutManager);
+        mCrewRecyclerView.setAdapter(new PersonListAdapter(this, crew, null, true));
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
+        mCrewRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+    }
+
+    private void setReviews(final ArrayList<Review> reviews){
+        LinearLayoutManager reviewsLayoutManager = new LinearLayoutManager(this);
+        mReviewsRecyclerView.setLayoutManager(reviewsLayoutManager);
+        mReviewsRecyclerView.setAdapter(new ReviewListAdapter(reviews, null, true));
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
+        mReviewsRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
 
     private void setVideos(final List<Video> videos){

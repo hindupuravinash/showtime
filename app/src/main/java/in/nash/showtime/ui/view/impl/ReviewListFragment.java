@@ -70,7 +70,7 @@ public class ReviewListFragment extends Fragment implements IReviewsListView {
 
     @Override
     public void setReviewsList(ArrayList<Review> reviews) {
-            mRecyclerView.setAdapter(new ReviewListAdapter(reviews, null));
+            mRecyclerView.setAdapter(new ReviewListAdapter(reviews, null, false));
             int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
             mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }

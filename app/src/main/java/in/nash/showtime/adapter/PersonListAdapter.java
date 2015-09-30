@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import in.nash.showtime.R;
 import in.nash.showtime.model.Person;
+import in.nash.showtime.ui.Globals;
 import in.nash.showtime.utils.CircleTransform;
 
 /**
@@ -24,11 +25,13 @@ public class PersonListAdapter extends RecyclerView.Adapter<PersonListAdapter.Pe
     private final View.OnClickListener mOnItemClickListener;
     private final ArrayList<Person> mPersonsList;
     private Context mContext;
+    private boolean mPreview;
 
-    public PersonListAdapter(Context context, ArrayList<Person> personsList, View.OnClickListener onClickListener) {
+    public PersonListAdapter(Context context, ArrayList<Person> personsList, View.OnClickListener onClickListener, boolean isPreview) {
         this.mContext = context;
         this.mPersonsList = new ArrayList<>(personsList);
         this.mOnItemClickListener = onClickListener;
+        this.mPreview = isPreview;
     }
 
     @Override
@@ -67,7 +70,14 @@ public class PersonListAdapter extends RecyclerView.Adapter<PersonListAdapter.Pe
     public int getItemCount() {
         Log.d("person list", mPersonsList.size() + "");
 
-        return mPersonsList.size();
+        if(mPreview){
+            return Globals.MAX_PREVIEW_LENGTH;
+
+        }
+        else{
+            return mPersonsList.size();
+        }
+
     }
 
     public static class PersonListViewHolder extends RecyclerView.ViewHolder {

@@ -19,4 +19,5 @@ public class Globals {
 
     public static final String CACHE_DIRECTORY = "responses";
 
+    public static final int MAX_PREVIEW_LENGTH = 3;
 }

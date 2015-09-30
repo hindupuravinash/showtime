@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import in.nash.showtime.R;
 import in.nash.showtime.model.Review;
+import in.nash.showtime.ui.Globals;
 
 /**
  * Created by avinash on 8/1/15.
@@ -18,10 +19,12 @@ import in.nash.showtime.model.Review;
 public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.ViewHolder> {
     private final View.OnClickListener mOnItemClickListener;
     private final ArrayList<Review> mReviewsList;
+    private final boolean mIsPreview;
 
-    public ReviewListAdapter(ArrayList<Review> reviewsList, View.OnClickListener onClickListener) {
+    public ReviewListAdapter(ArrayList<Review> reviewsList, View.OnClickListener onClickListener, boolean isPreview) {
         this.mReviewsList = new ArrayList<>(reviewsList);
         this.mOnItemClickListener = onClickListener;
+        this.mIsPreview = isPreview;
     }
 
     @Override
@@ -57,7 +60,13 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return mReviewsList.size();
+        if(mIsPreview){
+            return Globals.MAX_PREVIEW_LENGTH;
+
+        }
+        else{
+            return mReviewsList.size();
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

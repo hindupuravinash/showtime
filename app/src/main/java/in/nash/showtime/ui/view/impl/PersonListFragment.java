@@ -75,7 +75,7 @@ public class PersonListFragment extends Fragment implements IPersonListView {
 
     @Override
     public void setPersonList(ArrayList<Person> mCast) {
-        mRecyclerView.setAdapter(new PersonListAdapter(getActivity().getBaseContext(), mCast, null));
+        mRecyclerView.setAdapter(new PersonListAdapter(getActivity().getBaseContext(), mCast, null, false));
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
