@@ -68,7 +68,9 @@
             <include layout="@layout/layout_movie_ratings"/>
 
             <include layout="@layout/layout_movie_cast"/>
+
             <include layout="@layout/layout_movie_crew"/>
+
             <include layout="@layout/layout_movie_reviews"/>
 
             <include layout="@layout/layout_movie_similar"/>

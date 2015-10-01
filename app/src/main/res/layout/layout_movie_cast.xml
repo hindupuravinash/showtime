@@ -17,11 +17,12 @@
             android:text="Cast"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
-        <android.support.v7.widget.RecyclerView
+        <LinearLayout
             android:id="@+id/movie_cast"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"/>
+            android:background="@color/white"
+            android:orientation="vertical"/>
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

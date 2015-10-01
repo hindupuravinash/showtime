@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -37,6 +36,7 @@ import in.nash.showtime.model.Video;
 import in.nash.showtime.ui.presenter.IMovieDetailPresenter;
 import in.nash.showtime.ui.presenter.PresenterFactory;
 import in.nash.showtime.ui.view.IMovieDetailView;
+import in.nash.showtime.utils.LinearLayoutManager;
 import in.nash.showtime.utils.SdkUtil;
 import in.nash.showtime.utils.SpacesItemDecoration;
 import in.nash.showtime.utils.StringUtil;
@@ -55,7 +55,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     private LinearLayout mCrewLayout;
     private RecyclerView mRecyclerView;
     private RecyclerView mVideoRecyclerView;
-    private RecyclerView mCastRecyclerView;
+    private LinearLayout mCastRecyclerView;
     private RecyclerView mCrewRecyclerView;
     private RecyclerView mReviewsRecyclerView;
     private LinearLayoutManager mLayoutManager;
@@ -77,7 +77,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         mReviewsLayout.setOnClickListener(this);
         mVideoRecyclerView = (RecyclerView) findViewById(R.id.movie_videos);
         mRecyclerView = (RecyclerView) findViewById(R.id.movies_similar);
-        mCastRecyclerView = (RecyclerView) findViewById(R.id.movie_cast);
+        mCastRecyclerView = (LinearLayout) findViewById(R.id.movie_cast);
         mCrewRecyclerView = (RecyclerView) findViewById(R.id.movie_crew);
         mReviewsRecyclerView = (RecyclerView) findViewById(R.id.movie_reviews);
 
@@ -194,11 +194,11 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     }
 
     private void setCast(final ArrayList<Person> cast){
-        LinearLayoutManager castLayoutManager = new LinearLayoutManager(this);
-        mCastRecyclerView.setLayoutManager(castLayoutManager);
-        mCastRecyclerView.setAdapter(new PersonListAdapter(this, cast, null, true));
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
-        mCastRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+        PersonListAdapter personListAdapter = new PersonListAdapter(this, cast, null, true);
+        for (int i = 0; i < 3; i++) {
+           // View item = personListAdapter.onCreateViewHolder(i, null, null);
+          //  mCastRecyclerView.addView(item);
+        }
     }
 
     private void setCrew(final ArrayList<Person> crew){
