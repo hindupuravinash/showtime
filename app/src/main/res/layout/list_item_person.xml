@@ -2,9 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="80dp"
-    android:background="@android:color/white"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:background="@android:color/white">
 
     <ImageView
         android:id="@+id/person_picture"
@@ -22,24 +20,18 @@
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/person_picture"
         android:paddingTop="16dp"
+        android:text="Name Super Big"
         android:textColor="@color/abc_primary_text_material_light"
         android:textSize="18sp"/>
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/person_picture"
-        android:background="@color/grey"/>
 
     <TextView
         android:id="@+id/person_role"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/divider"
         android:layout_toRightOf="@id/person_picture"
+        android:layout_below="@id/person_name"
         android:paddingBottom="16dp"
+        android:text="Role Super Big"
         android:singleLine="true"
         android:textSize="14sp"/>
 

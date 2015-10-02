@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.RecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/persons_list"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_blue_grey_800" />
+    android:background="@color/material_blue_grey_800"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"/>
