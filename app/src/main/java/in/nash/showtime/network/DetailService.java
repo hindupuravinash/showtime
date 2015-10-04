@@ -12,9 +12,9 @@ import rx.Observable;
  */
 public interface DetailService {
 
-    @GET("/person/{id}")
+    @GET("person/{id}")
     Observable<Result<Person>> fetchPersonDetails(@Path("id") String id);
 
-    @GET("/review/{id}")
+    @GET("review/{id}")
     Observable<Result<Review>> fetchMovieReview(@Path("id") String id);
 }

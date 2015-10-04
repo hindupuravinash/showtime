@@ -11,6 +11,6 @@ import rx.Observable;
  */
 public interface PersonService {
 
-    @GET("/person/{id}")
+    @GET("person/{id}")
     Observable<Result<Person>> fetchPersonDetails(@Path("id") String id);
 }

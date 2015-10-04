@@ -14,28 +14,28 @@ import rx.Observable;
  */
 public interface MoviesService {
 
-    @GET("/movie/top_rated")
+    @GET("movie/top_rated")
     Observable<MoviesResponse> fetchTopMovies();
 
-    @GET("/movie/popular")
+    @GET("movie/popular")
     Observable<MoviesResponse> fetchPopularMovies();
 
-    @GET("/movie/upcoming")
+    @GET("movie/upcoming")
     Observable<MoviesResponse> fetchUpcomingMovies();
 
-    @GET("/movie/now_playing")
+    @GET("movie/now_playing")
     Observable<MoviesResponse> fetchNowPlayingMovies();
 
-    @GET("/movie/{id}/similar")
+    @GET("movie/{id}/similar")
     Observable<MoviesResponse> fetchSimilarMovies(@Path("id") String id);
 
-    @GET("/movie/{id}/credits")
+    @GET("movie/{id}/credits")
     Observable<CreditResponse> fetchMovieCredits(@Path("id") String id);
 
-    @GET("/movie/{id}/reviews")
+    @GET("movie/{id}/reviews")
     Observable<ReviewsResponse> fetchMovieReviews(@Path("id") String id);
 
-    @GET("/movie/{id}")
+    @GET("movie/{id}")
     Observable<Movie> fetchMovieDetails(@Path("id") String id,  @Query("append_to_response") ResponseOptions responseOptions);
 
     class CreditResponse {
