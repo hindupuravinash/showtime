@@ -1,31 +1,22 @@
 package in.nash.showtime.model;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Created by Avinash Hindupur on 25/06/15.
  */
 public class Person {
 
-    @SerializedName("id")
     private String id;
 
-    @SerializedName("name")
     private String name;
 
-    @SerializedName("profile_path")
-    private String profilePath;
+    private String profile_path;
 
-    @SerializedName("credit_id")
-    private String creditId;
+    private String credit_id;
 
-    @SerializedName("character")
     private String character;
 
-    @SerializedName("job")
     private String job;
 
-    @SerializedName("department")
     private String department;
 
     public String getId() {
@@ -45,19 +36,19 @@ public class Person {
     }
 
     public String getProfilePath() {
-        return profilePath;
+        return profile_path;
     }
 
     public void setProfilePath(String profilePath) {
-        this.profilePath = profilePath;
+        this.profile_path = profilePath;
     }
 
     public String getCreditId() {
-        return creditId;
+        return credit_id;
     }
 
     public void setCreditId(String creditId) {
-        this.creditId = creditId;
+        this.credit_id = creditId;
     }
 
     public String getCharacter() {

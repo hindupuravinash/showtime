@@ -66,9 +66,9 @@ public class MoviesPresenterImpl implements IMoviesPresenter {
                     }
 
                     @Override
-                    public void onNext(MoviesResponse movies) {
+                    public void onNext(MoviesResponse moviesResponse) {
 
-                        mMoviesView.setMovies(movies.results);
+                        mMoviesView.setMovies(moviesResponse.results);
                     }
                 });
 

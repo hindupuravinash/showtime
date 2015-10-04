@@ -39,11 +39,11 @@ public class Credits {
         this.crew = crew;
     }
 
-    public List<Person> getGuest_stars() {
+    public List<Person> getGuestStars() {
         return guest_stars;
     }
 
-    public void setGuest_stars(List<Person> guest_stars) {
-        this.guest_stars = guest_stars;
+    public void setGuestStars(List<Person> guestStars) {
+        this.guest_stars = guestStars;
     }
 }

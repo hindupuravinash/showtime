@@ -1,7 +1,5 @@
 package in.nash.showtime.network;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 
 import in.nash.showtime.model.Movie;
@@ -41,11 +39,9 @@ public interface MoviesService {
     Observable<Movie> fetchMovieDetails(@Path("id") String id,  @Query("append_to_response") ResponseOptions responseOptions);
 
     class CreditResponse {
-        @SerializedName("cast")
-        public ArrayList<Person> mCast;
+        public ArrayList<Person> cast;
 
-        @SerializedName("crew")
-        public ArrayList<Person> mCrew;
+        public ArrayList<Person> crew;
     }
 
 }
