@@ -10,6 +10,7 @@ import in.nash.showtime.Secrets;
 import in.nash.showtime.ShowtimeApplication;
 import in.nash.showtime.ui.Globals;
 import in.nash.showtime.utils.ConnectivityUtils;
+import in.nash.showtime.utils.StethoUtil;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -50,6 +51,7 @@ public class Tmdb {
 
             OkHttpClient okHttpClient = new OkHttpClient();
             okHttpClient.setCache(cache);
+            StethoUtil.addStethoIntercepter(okHttpClient);
 
             RestAdapter.Builder builder = newRestAdapterBuilder();
             builder.setEndpoint(API_URL)
