@@ -14,6 +14,8 @@ import in.nash.showtime.ui.Globals;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
+import in.nash.showtime.utils.ConnectivityUtils;
+import in.nash.showtime.utils.StethoUtil;
 
 /**
  * Created by Avinash Hindupur on 7/20/15.
@@ -33,7 +35,8 @@ public class Tmdb {
     }
 
     private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
-        @Override public Response intercept(Chain chain) throws IOException {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
             Response originalResponse = chain.proceed(chain.request());
             return originalResponse.newBuilder()
                     .header("Cache-Control", "max-age=60")
@@ -43,19 +46,20 @@ public class Tmdb {
 
     protected Retrofit getRestAdapter() {
 
-            File httpCacheDirectory = new File(ShowtimeApplication.getAppContext().getCacheDir(), Globals.CACHE_DIRECTORY);
+        File httpCacheDirectory = new File(ShowtimeApplication.getAppContext().getCacheDir(), Globals.CACHE_DIRECTORY);
 
-            Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
+        Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
 
-            OkHttpClient okHttpClient = new OkHttpClient();
-            okHttpClient.interceptors().add(new AuthInterceptor());
+        OkHttpClient okHttpClient = new OkHttpClient();
+        StethoUtil.addStethoIntercepter(okHttpClient);
+        okHttpClient.interceptors().add(new AuthInterceptor());
 
-            return new Retrofit.Builder()
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl(API_URL)
-                    .client(okHttpClient)
-                    .build();
+        return new Retrofit.Builder()
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(API_URL)
+                .client(okHttpClient)
+                .build();
     }
 
     public MoviesService moviesService() {

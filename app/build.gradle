@@ -42,4 +42,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.parse.bolts:bolts-android:1.+'
     compile fileTree(dir: 'libs', include: 'Parse-*.jar')
+
+    debugCompile ('com.facebook.stetho:stetho:1.2.0')
+    debugCompile ('com.facebook.stetho:stetho-okhttp:1.2.0')
 }
