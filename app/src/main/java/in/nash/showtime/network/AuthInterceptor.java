@@ -1,9 +1,8 @@
 package in.nash.showtime.network;
 
-import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
@@ -24,14 +23,18 @@ public final class AuthInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        RequestBody formBody = new FormEncodingBuilder()
-                .add(PARAM_API_KEY, apiKey)
-                .build();
+
+        HttpUrl url = chain.request().httpUrl();
+        HttpUrl.Builder builder = url.newBuilder();
+        builder.addQueryParameter(PARAM_API_KEY, apiKey);
+
+        HttpUrl appendedUrl = builder.build();
 
         Request authenticatedRequest = chain.request().newBuilder()
                 .addHeader("Content-Type", "application/json")
-                .post(formBody)
+                .url(appendedUrl)
                 .build();
+
         return chain.proceed(authenticatedRequest);
     }
 }
