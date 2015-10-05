@@ -2,84 +2,77 @@ package in.nash.showtime.network;
 
 
 import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.HttpUrl;
+import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Response;
 
 import java.io.File;
+import java.io.IOException;
 
-import in.nash.showtime.Secrets;
 import in.nash.showtime.ShowtimeApplication;
 import in.nash.showtime.ui.Globals;
 import in.nash.showtime.utils.ConnectivityUtils;
 import in.nash.showtime.utils.StethoUtil;
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
+import retrofit.GsonConverterFactory;
+import retrofit.Retrofit;
+import retrofit.RxJavaCallAdapterFactory;
 
 /**
  * Created by Avinash Hindupur on 7/20/15.
  */
 public class Tmdb {
 
-    public static final String API_URL = "https://api.themoviedb.org/3";
-
-    public static final String PARAM_API_KEY = "api_key";
-
-    private String apiKey;
-    private boolean isDebug;
-    private RestAdapter restAdapter;
+    public static final HttpUrl API_URL = HttpUrl.parse("https://api.themoviedb.org/3/");
 
     public Tmdb() {
     }
 
-    public Tmdb setApiKey(String value) {
-        this.apiKey = value;
-        restAdapter = null;
-        return this;
+    protected Retrofit.Builder newRestAdapterBuilder() {
+        return new Retrofit.Builder();
     }
 
-    protected RestAdapter.Builder newRestAdapterBuilder() {
-        return new RestAdapter.Builder();
-    }
+    private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Response originalResponse = chain.proceed(chain.request());
 
-    protected RestAdapter getRestAdapter() {
+            if (ConnectivityUtils.isConnected(ShowtimeApplication.getAppContext())) {
+                int maxAge = Globals.CACHE_MAX_AGE__NETWORK_CONNECTED; // read from cache for 10 minutes if connected
 
-        if (restAdapter == null) {
+                return originalResponse.newBuilder()
+                        .header("Cache-Control", "public, max-age=" + maxAge)
+                        .build();
 
-            File httpCacheDirectory = new File(ShowtimeApplication.getAppContext().getCacheDir(), Globals.CACHE_DIRECTORY);
+            } else {
+                int maxStale = Globals.SECONDS_IN_MIN * Globals.MINUTES_IN_HOUR * Globals.HOURS_IN_DAY * Globals.CACHE_VALID_DAYS; // tolerate 1 month stale
 
-            Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
-
-            OkHttpClient okHttpClient = new OkHttpClient();
-            okHttpClient.setCache(cache);
-            StethoUtil.addStethoIntercepter(okHttpClient);
-
-            RestAdapter.Builder builder = newRestAdapterBuilder();
-            builder.setEndpoint(API_URL)
-                    .setClient(new OkClient(okHttpClient))
-                    .setRequestInterceptor(new RequestInterceptor() {
-                        public void intercept(RequestFacade requestFacade) {
-                            requestFacade.addQueryParam(PARAM_API_KEY, Secrets.PARAM_API_KEY);
-
-                            if (ConnectivityUtils.isConnected(ShowtimeApplication.getAppContext())) {
-                                int maxAge = Globals.CACHE_MAX_AGE__NETWORK_CONNECTED; // read from cache for 10 minutes if connected
-                                requestFacade.addHeader("Cache-Control", "public, max-age=" + maxAge);
-                            } else {
-                                int maxStale = Globals.SECONDS_IN_MIN * Globals.MINUTES_IN_HOUR
-                                        * Globals.HOURS_IN_DAY * Globals.CACHE_VALID_DAYS; // tolerate 1 month stale
-                                requestFacade.addHeader("Cache-Control",
-                                        "public, only-if-cached, max-stale=" + maxStale);
-                            }
-                        }
-                    });
-
-            if (isDebug) {
-                builder.setLogLevel(RestAdapter.LogLevel.FULL);
+                return originalResponse.newBuilder()
+                        .header("Cache-Control",
+                                "public, only-if-cached, max-stale=" + maxStale)
+                        .build();
             }
 
-            restAdapter = builder.build();
         }
+    };
 
-        return restAdapter;
+    protected Retrofit getRestAdapter() {
+
+        File httpCacheDirectory = new File(ShowtimeApplication.getAppContext().getCacheDir(), Globals.CACHE_DIRECTORY);
+
+        Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+        StethoUtil.addStethoIntercepter(okHttpClient);
+        okHttpClient.networkInterceptors().add(new AuthInterceptor());
+        okHttpClient.setCache(cache);
+
+        return new Retrofit.Builder()
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(API_URL)
+                .client(okHttpClient)
+                .build();
     }
 
     public MoviesService moviesService() {

@@ -4,6 +4,7 @@ import in.nash.showtime.model.Person;
 import in.nash.showtime.network.Tmdb;
 import in.nash.showtime.ui.presenter.IPersonDetailPresenter;
 import in.nash.showtime.ui.view.IPersonDetailView;
+import retrofit.Result;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -25,10 +26,10 @@ public class PersonDetailPresenterImpl implements IPersonDetailPresenter {
     public void fetchPerson(String id) {
         Tmdb tmdb = new Tmdb();
 
-        Observable<Person> reviewObservable = tmdb.detailService().fetchPersonDetails(id);
+        Observable<Result<Person>> reviewObservable = tmdb.detailService().fetchPersonDetails(id);
         reviewObservable.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Person>() {
+                .subscribe(new Subscriber<Result<Person>>() {
                     @Override
                     public void onCompleted() {
 
@@ -40,9 +41,9 @@ public class PersonDetailPresenterImpl implements IPersonDetailPresenter {
                     }
 
                     @Override
-                    public void onNext(Person person) {
+                    public void onNext(Result<Person> result) {
 
-                        mPersonDetailView.setPerson(person);
+                        mPersonDetailView.setPerson(result.response().body());
 
                     }
                 });

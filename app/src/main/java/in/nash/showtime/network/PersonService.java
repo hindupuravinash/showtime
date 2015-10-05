@@ -1,6 +1,7 @@
 package in.nash.showtime.network;
 
 import in.nash.showtime.model.Person;
+import retrofit.Result;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import rx.Observable;
@@ -10,6 +11,6 @@ import rx.Observable;
  */
 public interface PersonService {
 
-    @GET("/person/{id}")
-    Observable<Person> fetchPersonDetails(@Path("id") String id);
+    @GET("person/{id}")
+    Observable<Result<Person>> fetchPersonDetails(@Path("id") String id);
 }

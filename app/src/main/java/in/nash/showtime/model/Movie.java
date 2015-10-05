@@ -1,7 +1,5 @@
 package in.nash.showtime.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import in.nash.showtime.network.MoviesResponse;
 
 /**
@@ -10,47 +8,33 @@ import in.nash.showtime.network.MoviesResponse;
 
 public class Movie {
 
-    @SerializedName("id")
     private String id;
 
-    @SerializedName("original_language")
-    private String originalLanguage;
+    private String original_language;
 
-    @SerializedName("original_title")
-    private String originalTitle;
+    private String original_title;
 
-    @SerializedName("release_date")
-    private String releaseDate;
+    private String release_date;
 
-    @SerializedName("budget")
     public Integer budget;
 
-    @SerializedName("popularity")
     private String popularity;
 
-    @SerializedName("title")
     private String title;
 
-    @SerializedName("backdrop_path")
-    private String backdropPath;
+    private String backdrop_path;
 
-    @SerializedName("poster_path")
-    private String posterPath;
+    private String poster_path;
 
-    @SerializedName("overview")
     private String overview;
 
-    @SerializedName("revenue")
     private Integer revenue;
 
-    @SerializedName("runtime")
     private int runtime;
 
-    @SerializedName("vote_average")
-    private double voteAverage;
+    private double vote_average;
 
-    @SerializedName("vote_count")
-    private int voteCount;
+    private int vote_count;
 
     public Credits credits;
 
@@ -67,19 +51,19 @@ public class Movie {
     }
 
     public double getVoteAverage() {
-        return voteAverage;
+        return vote_average;
     }
 
     public void setVoteAverage(double voteAverage) {
-        this.voteAverage = voteAverage;
+        this.vote_average = voteAverage;
     }
 
     public int getVoteCount() {
-        return voteCount;
+        return vote_count;
     }
 
     public void setVoteCount(int voteCount) {
-        this.voteCount = voteCount;
+        this.vote_count = voteCount;
     }
 
     public double getRevenue() {
@@ -99,19 +83,19 @@ public class Movie {
     }
 
     public String getBackdropPath() {
-        return backdropPath;
+        return backdrop_path;
     }
 
     public void setBackdropPath(String backdropPath) {
-        this.backdropPath = backdropPath;
+        this.backdrop_path = backdropPath;
     }
 
     public String getPosterUrl() {
-        return posterPath;
+        return poster_path;
     }
 
     public void setPosterUrl(String posterPath) {
-        this.posterPath = posterPath;
+        this.poster_path = posterPath;
     }
 
     public String getId() {
@@ -123,27 +107,27 @@ public class Movie {
     }
 
     public String getOriginalLanguage() {
-        return originalLanguage;
+        return original_language;
     }
 
     public void setOriginalLanguage(String originalLanguage) {
-        this.originalLanguage = originalLanguage;
+        this.original_language = originalLanguage;
     }
 
     public String getOriginalTitle() {
-        return originalTitle;
+        return original_title;
     }
 
     public void setOriginalTitle(String originalTitle) {
-        this.originalTitle = originalTitle;
+        this.original_title = originalTitle;
     }
 
     public String getReleaseDate() {
-        return releaseDate;
+        return release_date;
     }
 
     public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
+        this.release_date = releaseDate;
     }
 
     public String getPopularity() {
@@ -163,11 +147,11 @@ public class Movie {
     }
 
     public String getPosterPath() {
-        return posterPath;
+        return poster_path;
     }
 
     public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
+        this.poster_path = posterPath;
     }
 
     public String getOverview() {

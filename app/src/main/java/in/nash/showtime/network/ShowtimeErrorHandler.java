@@ -1,17 +1,9 @@
 package in.nash.showtime.network;
 
-import android.content.Context;
-
-import java.net.HttpURLConnection;
-
-import in.nash.showtime.ShowtimeApplication;
-import retrofit.ErrorHandler;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
 /**
  * Created by avinash on 9/11/15.
  */
+/*** Temporarily stop using this
 public class ShowtimeErrorHandler implements ErrorHandler {
 
     private Context mContext;
@@ -59,3 +51,4 @@ public class ShowtimeErrorHandler implements ErrorHandler {
     }
 
 }
+ ***/

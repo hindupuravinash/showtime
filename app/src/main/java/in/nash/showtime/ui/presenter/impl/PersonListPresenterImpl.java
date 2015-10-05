@@ -44,8 +44,8 @@ public class PersonListPresenterImpl implements IPersonListPresenter {
                     @Override
                     public void onNext(MoviesService.CreditResponse creditResponse) {
 
-                        mPersonListView.setPersonList(creditResponse.mCast);
-                        Log.d("persons", creditResponse.mCast.size() + "");
+                        mPersonListView.setPersonList(creditResponse.cast);
+                        Log.d("persons", creditResponse.cast.size() + "");
                     }
                 });
 

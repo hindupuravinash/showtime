@@ -1,22 +1,16 @@
 package in.nash.showtime.model;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Created by Avinash Hindupur on 28/06/15.
  */
 public class Review {
 
-    @SerializedName("id")
     private String id;
 
-    @SerializedName("author")
     private String author;
 
-    @SerializedName("content")
     private String content;
 
-    @SerializedName("url")
     private String url;
 
     public String getId() {

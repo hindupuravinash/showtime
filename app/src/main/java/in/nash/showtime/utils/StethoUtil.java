@@ -10,7 +10,7 @@ import com.squareup.okhttp.OkHttpClient;
  * Created by avinash on 10/4/15.
  */
 public class StethoUtil {
-    
+
     public static void initStetho(Application application){
         Stetho.initializeWithDefaults(application);
     }

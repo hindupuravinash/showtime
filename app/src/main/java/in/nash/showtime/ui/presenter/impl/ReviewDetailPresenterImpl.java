@@ -4,6 +4,7 @@ import in.nash.showtime.model.Review;
 import in.nash.showtime.network.Tmdb;
 import in.nash.showtime.ui.presenter.IReviewDetailPresenter;
 import in.nash.showtime.ui.view.IReviewDetailView;
+import retrofit.Result;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -25,10 +26,10 @@ public class ReviewDetailPresenterImpl implements IReviewDetailPresenter {
     public void fetchReview(String id) {
         Tmdb tmdb = new Tmdb();
 
-        Observable<Review> reviewObservable = tmdb.detailService().fetchMovieReview(id);
+        Observable<Result<Review>> reviewObservable = tmdb.detailService().fetchMovieReview(id);
         reviewObservable.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Review>() {
+                .subscribe(new Subscriber<Result<Review>>() {
                     @Override
                     public void onCompleted() {
 
@@ -40,9 +41,9 @@ public class ReviewDetailPresenterImpl implements IReviewDetailPresenter {
                     }
 
                     @Override
-                    public void onNext(Review review) {
+                    public void onNext(Result<Review> result) {
 
-                        mReviewDetailView.setReview(review);
+                        mReviewDetailView.setReview(result.response().body());
 
                     }
                 });
