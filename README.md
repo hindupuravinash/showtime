@@ -1,4 +1,4 @@
-# Showtime [![Build Status](https://travis-ci.org/hindupuravinash/showtime.svg)](https://travis-ci.org/hindupuravinash/showtime)
+# Showtime [![Build Status](https://travis-ci.org/sowrabh/showtime.svg)](https://travis-ci.org/sowrabh/showtime)
 
 This project is the home to **Showtime - Movies information, redesigned** for Android.
 
