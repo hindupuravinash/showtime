@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView android:id="@+id/similar"
+                                    xmlns:android="http://schemas.android.com/apk/res/android"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="@dimen/card_window_margin"
                                     android:layout_marginLeft="@dimen/card_window_margin"
-                                    android:layout_marginRight="@dimen/card_window_margin">
+                                    android:layout_marginRight="@dimen/card_window_margin"
+                                    android:visibility="gone">
 
     <LinearLayout
-        android:id="@+id/similar"
         style="@style/Widget.Card"
         android:layout_width="match_parent"
         android:layout_height="240dp"
         android:clickable="true">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Similar"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Similar"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/movies_similar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/movies_similar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>

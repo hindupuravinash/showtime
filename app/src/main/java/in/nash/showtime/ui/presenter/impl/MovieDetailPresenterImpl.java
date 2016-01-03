@@ -24,8 +24,8 @@ public class MovieDetailPresenterImpl implements IMovieDetailPresenter {
 
     @Override
     public void fetchMovie(String id) {
+        mMovieDetailView.showProgressBar();
         Tmdb tmdb = new Tmdb();
-
         ResponseOptions options = new ResponseOptions(ResponseOptions.ResponseOption.CREDITS,
                 ResponseOptions.ResponseOption.VIDEOS,
                 ResponseOptions.ResponseOption.REVIEWS,
@@ -41,12 +41,13 @@ public class MovieDetailPresenterImpl implements IMovieDetailPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        mMovieDetailView.hideProgressBar();
                     }
 
                     @Override
                     public void onNext(Movie movie) {
 
+                        mMovieDetailView.hideProgressBar();
                         mMovieDetailView.setMovie(movie);
 
                     }

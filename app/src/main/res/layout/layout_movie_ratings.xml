@@ -30,18 +30,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/imdb"
+            android:visibility="gone"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/rotten_tomatoes"
+            android:visibility="gone"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/metacritic"
+            android:visibility="gone"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
     </LinearLayout>

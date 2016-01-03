@@ -8,4 +8,8 @@ import in.nash.showtime.model.Movie;
  */
 public interface IMovieDetailView {
     void setMovie(Movie movie);
+
+    void showProgressBar();
+
+    void hideProgressBar();
 }

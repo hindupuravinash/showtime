@@ -14,7 +14,7 @@
             android:title="Now Playing" />
         <item
             android:id="@+id/nav_wishlist"
-            android:title="Wishlist" />
+            android:title="Wishlist (Coming Soon!)" />
         <item
             android:id="@+id/nav_settings"
             android:title="Settings" />

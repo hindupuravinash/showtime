@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,6 +17,7 @@ import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -58,7 +61,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.movies_similar)
-    RecyclerView mRecyclerView;
+    RecyclerView mSimilarsRecyclerView;
     @Bind(R.id.movie_videos)
     RecyclerView mVideoRecyclerView;
     @Bind(R.id.movie_cast)
@@ -71,6 +74,20 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     CollapsingToolbarLayout collapsingToolbar;
     @Bind(R.id.rating_tmdb)
     TextView tmdb;
+    @Bind(R.id.cast)
+    CardView castLayout;
+    @Bind(R.id.crew)
+    CardView crewLayout;
+    @Bind(R.id.reviews)
+    CardView reviewsLayout;
+    @Bind(R.id.videos)
+    CardView videosLayout;
+    @Bind(R.id.similar)
+    CardView similarsLayout;
+    @Bind(R.id.progress_bar)
+    ProgressBar mProgressBar;
+    @Bind(R.id.nested_scrollview)
+    NestedScrollView mNestedScrollView;
     @BindDimen(R.dimen.spacing)
     int spacingInPixels;
     //endregion
@@ -172,72 +189,110 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         TextView budget = (TextView) findViewById(R.id.budget);
         TextView revenue = (TextView) findViewById(R.id.revenue);
         TextView language = (TextView) findViewById(R.id.language);
+        TextView genres = (TextView) findViewById(R.id.genres);
 
         Log.d("Time", movie.getReleaseDate());
         Log.d("Time", movie.getReleaseDate());
         //released.setText(movie.getReleaseDate());
 
+        String languageTitle = movie.getOriginalLanguage(); // TODO: Fix this, temporary hack
+
+        switch (languageTitle) {
+            case "en":
+                languageTitle = "English";
+                break;
+            case "ja":
+                languageTitle = "Japanese";
+                break;
+            case "fr":
+                languageTitle = "French";
+                break;
+            case "es":
+                languageTitle = "Spanish";
+                break;
+            case "de":
+                languageTitle = "German";
+                break;
+        }
+
         released.setText(DateUtils.toDateWithoutTime(movie.getReleaseDate()));
         runtime.setText(StringUtil.getSrtingFromInt(movie.getRuntime()) + " mins");
         budget.setText("$ " + StringUtil.getSrtingFromInt(movie.getBudget()));
         revenue.setText(StringUtil.getSrtingFromInt(movie.getRevenue()));
-        language.setText(movie.getOriginalLanguage());
+        genres.setText(movie.getGenre());
+        language.setText(languageTitle);
     }
 
     private void setSimilarMovies(final List<Movie> movies) {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-        mRecyclerView.setAdapter(new MovieGridAdapter(this, movies, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = mRecyclerView.getChildAdapterPosition(v);
-                Movie movie = movies.get(position);
-                mMovie = movie;
-                // MovieDetailActivity.navigateTo(getActivity(), movie.getId());
+        if (movies.size() > 0) {
+            similarsLayout.setVisibility(View.VISIBLE);
+            mSimilarsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+            mSimilarsRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+            mSimilarsRecyclerView.setAdapter(new MovieGridAdapter(this, movies, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = mSimilarsRecyclerView.getChildAdapterPosition(v);
+                    Movie movie = movies.get(position);
+                    mMovie = movie;
+                    // MovieDetailActivity.navigateTo(getActivity(), movie.getId());
 
-                startMovieDetailActivityWithTransition(MovieDetailActivity.this, v,
-                        movie);
+                    startMovieDetailActivityWithTransition(MovieDetailActivity.this, v,
+                            movie);
 
-            }
-        }));
+                }
+            }));
+        }
     }
 
     private void setCast(final ArrayList<Person> cast) {
-        LinearLayoutManager castLayoutManager = new LinearLayoutManager(this);
-        mCastRecyclerView.setLayoutManager(castLayoutManager);
-        mCastRecyclerView.setAdapter(new PersonListAdapter(this, cast, null, true));
-        mCastRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+        if (cast.size() > 0) {
+            castLayout.setVisibility(View.VISIBLE);
+            LinearLayoutManager castLayoutManager = new LinearLayoutManager(this);
+            mCastRecyclerView.setLayoutManager(castLayoutManager);
+            mCastRecyclerView.setAdapter(new PersonListAdapter(this, cast, null, true));
+            mCastRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+        }
+
     }
 
     private void setCrew(final ArrayList<Person> crew) {
-        LinearLayoutManager crewLayoutManager = new LinearLayoutManager(this);
-        mCrewRecyclerView.setLayoutManager(crewLayoutManager);
-        mCrewRecyclerView.setAdapter(new PersonListAdapter(this, crew, null, true));
-        mCrewRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+        if (crew.size() > 0) {
+            crewLayout.setVisibility(View.VISIBLE);
+            LinearLayoutManager crewLayoutManager = new LinearLayoutManager(this);
+            mCrewRecyclerView.setLayoutManager(crewLayoutManager);
+            mCrewRecyclerView.setAdapter(new PersonListAdapter(this, crew, null, true));
+            mCrewRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+        }
     }
 
     private void setReviews(final List<Review> reviews) {
-        Log.d("reviews", "" + reviews.size());
-        LinearLayoutManager reviewsLayoutManager = new LinearLayoutManager(this);
-        mReviewsRecyclerView.setLayoutManager(reviewsLayoutManager);
-        mReviewsRecyclerView.setAdapter(new ReviewListAdapter(reviews, null, true));
-        mReviewsRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+        if (reviews.size() > 0) {
+            reviewsLayout.setVisibility(View.VISIBLE);
+            Log.d("reviews", "" + reviews.size());
+            LinearLayoutManager reviewsLayoutManager = new LinearLayoutManager(this);
+            mReviewsRecyclerView.setLayoutManager(reviewsLayoutManager);
+            mReviewsRecyclerView.setAdapter(new ReviewListAdapter(reviews, null, true));
+            mReviewsRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+        }
     }
 
     private void setVideos(final List<Video> videos) {
-        mVideoRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        mVideoRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-        mVideoRecyclerView.setAdapter(new VideoListAdapter(this, videos, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = mVideoRecyclerView.getChildAdapterPosition(v);
-                Video video = videos.get(position);
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("http://www.youtube.com/watch?v=" + video.getKey()));
+        if (videos.size() > 0) {
+            videosLayout.setVisibility(View.VISIBLE);
+            mVideoRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+            mVideoRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+            mVideoRecyclerView.setAdapter(new VideoListAdapter(this, videos, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = mVideoRecyclerView.getChildAdapterPosition(v);
+                    Video video = videos.get(position);
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("http://www.youtube.com/watch?v=" + video.getKey()));
 
-                startActivity(intent);
-            }
-        }));
+                    startActivity(intent);
+                }
+            }));
+        }
     }
 
     private void startMovieDetailActivityWithTransition(Activity activity, View toolbar,
@@ -264,6 +319,18 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showProgressBar() {
+        mProgressBar.setVisibility(View.VISIBLE);
+        mNestedScrollView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        mProgressBar.setVisibility(View.GONE);
+        mNestedScrollView.setVisibility(View.VISIBLE);
     }
 
     public void setRatings(Movie movie) {

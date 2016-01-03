@@ -1,5 +1,8 @@
 package in.nash.showtime.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import in.nash.showtime.network.MoviesResponse;
 import in.nash.showtime.network.ReviewsResponse;
 
@@ -18,6 +21,8 @@ public class Movie {
     private String release_date;
 
     public Integer budget;
+
+    public List<Genre> genres;
 
     private String popularity;
 
@@ -172,4 +177,19 @@ public class Movie {
     public void setBudget(Integer budget) {
         this.budget = budget;
     }
+
+
+    public String getGenre(){
+        if(genres.size() >0){
+            ArrayList<String> genreStringList = new ArrayList<>();
+
+            for(Genre genre: genres){
+                genreStringList.add(genre.name);
+            }
+            return android.text.TextUtils.join(", ", genreStringList);
+
+        }
+        return "";
+    }
+
 }
