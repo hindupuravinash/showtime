@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Pair;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -159,6 +158,8 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         setCast((ArrayList<Person>) movie.credits.cast);
         setCrew((ArrayList<Person>) movie.credits.crew);
         setSimilarMovies(movie.similar.results);
+        setReviews(movie.reviews.results);
+        Log.d("log reviews", "" + movie.reviews.results.size());
         Log.d("log similar", "" + movie.similar.results.size());
         setVideos(movie.videos.getResults());
         Log.d("log videos", "" + movie.videos.getResults().size());
@@ -215,7 +216,8 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         mCrewRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
 
-    private void setReviews(final ArrayList<Review> reviews) {
+    private void setReviews(final List<Review> reviews) {
+        Log.d("reviews", "" + reviews.size());
         LinearLayoutManager reviewsLayoutManager = new LinearLayoutManager(this);
         mReviewsRecyclerView.setLayoutManager(reviewsLayoutManager);
         mReviewsRecyclerView.setAdapter(new ReviewListAdapter(reviews, null, true));

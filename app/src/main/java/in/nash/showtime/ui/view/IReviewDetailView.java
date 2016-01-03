@@ -7,5 +7,9 @@ import in.nash.showtime.model.Review;
  */
 public interface IReviewDetailView {
 
+    void showProgressBar();
+
+    void hideProgressBar();
+
     void setReview(Review review);
 }

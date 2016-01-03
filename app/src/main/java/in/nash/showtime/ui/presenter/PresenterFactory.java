@@ -32,12 +32,12 @@ public class PresenterFactory {
 
     }
 
-    public static IReviewsListPresenter createReviewsListPresenter(IReviewsListView reviewsListView) {
-        return new ReviewListPresenterImpl(reviewsListView);
+    public static IReviewsListPresenter createReviewsListPresenter(IReviewsListView reviewsListView, String movieId) {
+        return new ReviewListPresenterImpl(reviewsListView, movieId);
     }
 
-    public static IReviewDetailPresenter createReviewDetailPresenter(IReviewDetailView reviewDetailView) {
-        return new ReviewDetailPresenterImpl(reviewDetailView);
+    public static IReviewDetailPresenter createReviewDetailPresenter(IReviewDetailView reviewDetailView, String reviewId) {
+        return new ReviewDetailPresenterImpl(reviewDetailView, reviewId);
     }
 
     public static IPersonDetailPresenter createPersonDetailPresenter(IPersonDetailView personDetailView, String personId) {

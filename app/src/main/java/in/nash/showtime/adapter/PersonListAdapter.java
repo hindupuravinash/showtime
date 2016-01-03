@@ -68,11 +68,9 @@ public class PersonListAdapter extends RecyclerView.Adapter<PersonListAdapter.Pe
 
     @Override
     public int getItemCount() {
-        Log.d("person list", mPersonsList.size() + "");
 
         if(mPreview){
-            return Globals.MAX_PREVIEW_LENGTH;
-
+            return Math.min(mPersonsList.size(), Globals.MAX_PREVIEW_LENGTH);
         }
         else{
             return mPersonsList.size();

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import in.nash.showtime.R;
 import in.nash.showtime.model.Review;
@@ -21,7 +22,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
     private final ArrayList<Review> mReviewsList;
     private final boolean mIsPreview;
 
-    public ReviewListAdapter(ArrayList<Review> reviewsList, View.OnClickListener onClickListener, boolean isPreview) {
+    public ReviewListAdapter(List<Review> reviewsList, View.OnClickListener onClickListener, boolean isPreview) {
         this.mReviewsList = new ArrayList<>(reviewsList);
         this.mOnItemClickListener = onClickListener;
         this.mIsPreview = isPreview;
@@ -61,7 +62,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
     @Override
     public int getItemCount() {
         if(mIsPreview){
-            return Globals.MAX_PREVIEW_LENGTH;
+            return Math.min(mReviewsList.size(), Globals.MAX_PREVIEW_LENGTH);
 
         }
         else{

@@ -5,6 +5,6 @@ package in.nash.showtime.ui.presenter;
  */
 public interface IReviewDetailPresenter {
 
-    void fetchReview(String id);
+    void fetchReview();
 
 }

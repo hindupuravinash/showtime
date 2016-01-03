@@ -2,7 +2,7 @@ package in.nash.showtime.ui.view;
 
 import android.support.annotation.StringRes;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import in.nash.showtime.model.Review;
 
@@ -17,5 +17,5 @@ public interface IReviewsListView {
 
     void setError(@StringRes int stringRes);
 
-    void setReviewsList(ArrayList<Review> mReviews);
+    void setReviewsList(List<Review> mReviews);
 }

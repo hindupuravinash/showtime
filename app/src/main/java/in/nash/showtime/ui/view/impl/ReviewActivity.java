@@ -8,64 +8,57 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import in.nash.showtime.R;
+import in.nash.showtime.model.Review;
+import in.nash.showtime.ui.presenter.IReviewDetailPresenter;
+import in.nash.showtime.ui.presenter.PresenterFactory;
+import in.nash.showtime.ui.view.IReviewDetailView;
 
 /**
  * Created by avinash on 8/2/15.
  */
-public class ReviewActivity extends AppCompatActivity {
+public class ReviewActivity extends AppCompatActivity implements IReviewDetailView{
     private String mId;
 
-    private WebView mWebView;
-    private String mUrl;
-    private Toolbar toolbar;
-    private ProgressBar mProgress;
+    //region View variables
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.review_content)
+    TextView reviewText;
+    @Bind(R.id.scrollView)
+    ScrollView mScrollView;
+    @Bind(R.id.progress_bar)
+    ProgressBar mProgressBar;
+    private String mReviewId;
+    //endregion
 
     protected void onCreate(Bundle savedInstanceState) {
 
         this.getWindow().requestFeature(Window.FEATURE_PROGRESS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
-
-        mWebView = (WebView) findViewById(R.id.webview);
-        if (savedInstanceState != null) {
-            ((WebView) findViewById(R.id.webview)).restoreState(savedInstanceState);
-        }
+        ButterKnife.bind(this);
 
         Bundle extras = getIntent().getExtras();
-        mUrl = extras.getString("url");
-
+        mReviewId = extras.getString("id");
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mWebView.setVisibility(View.GONE);
-        mProgress.setVisibility(View.VISIBLE);
+        initPresenter();
+    }
 
-        mWebView.setWebViewClient(new CareWebViewClient());
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setDomStorageEnabled(true);
+    private void initPresenter() {
 
-        if (savedInstanceState == null) {
-            mWebView.loadUrl(mUrl);
-        }
+        IReviewDetailPresenter reviewDetailPresenter = PresenterFactory.createReviewDetailPresenter(this, mReviewId);
+        reviewDetailPresenter.fetchReview();
 
-        mWebView.setWebChromeClient(new WebChromeClient() {
-            public void onProgressChanged(WebView view, int loadProgress) {
-                mProgress.setVisibility(View.VISIBLE);
-                mWebView.setVisibility(View.GONE);
-                if (loadProgress == 100) {
-                    mProgress.setVisibility(View.GONE);
-                    mWebView.setVisibility(View.VISIBLE);
-
-                }
-            }
-        });
     }
 
     @Override
@@ -80,35 +73,32 @@ public class ReviewActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static void navigateTo(Activity fromActivity, String url) {
+    public static void navigateTo(Activity fromActivity, Review review) {
         Intent intent = new Intent(fromActivity, ReviewActivity.class);
-        intent.putExtra("url", url);
+        intent.putExtra("id", review.getId());
         fromActivity.startActivity(intent);
     }
 
-    private class CareWebViewClient extends WebViewClient {
 
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-        }
+    @Override
+    public void showProgressBar() {
+        mProgressBar.setVisibility(View.VISIBLE);
+        mScrollView.setVisibility(View.GONE);
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mWebView.saveState(outState);
+    public void hideProgressBar() {
+        mProgressBar.setVisibility(View.GONE);
+        mScrollView.setVisibility(View.VISIBLE);
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        mWebView.restoreState(savedInstanceState);
+    public void setReview(Review review) {
+        String title = review.getAuthor() +"'s Review";
+        String reviewContent = review.getContent();
+
+        toolbar.setTitle(title);
+       reviewText.setText(reviewContent);
     }
 
 }

@@ -1,6 +1,7 @@
 package in.nash.showtime.model;
 
 import in.nash.showtime.network.MoviesResponse;
+import in.nash.showtime.network.ReviewsResponse;
 
 /**
  * Created by avinash on 19/06/15.
@@ -41,6 +42,8 @@ public class Movie {
     public Videos videos;
 
     public MoviesResponse similar;
+
+    public ReviewsResponse reviews;
 
     public Credits getCredits() {
         return credits;

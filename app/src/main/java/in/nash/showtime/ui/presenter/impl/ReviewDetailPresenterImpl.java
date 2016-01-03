@@ -16,17 +16,19 @@ import rx.schedulers.Schedulers;
 public class ReviewDetailPresenterImpl implements IReviewDetailPresenter {
 
     private final IReviewDetailView mReviewDetailView;
+    private final String mReviewId;
 
-    public ReviewDetailPresenterImpl(IReviewDetailView reviewDetailView) {
+    public ReviewDetailPresenterImpl(IReviewDetailView reviewDetailView, String reviewId) {
         this.mReviewDetailView = reviewDetailView;
+        this.mReviewId = reviewId;
 
     }
 
     @Override
-    public void fetchReview(String id) {
+    public void fetchReview() {
+        mReviewDetailView.showProgressBar();
         Tmdb tmdb = new Tmdb();
-
-        Observable<Result<Review>> reviewObservable = tmdb.detailService().fetchMovieReview(id);
+        Observable<Result<Review>> reviewObservable = tmdb.detailService().fetchMovieReview(mReviewId);
         reviewObservable.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Result<Review>>() {
@@ -38,11 +40,12 @@ public class ReviewDetailPresenterImpl implements IReviewDetailPresenter {
                     @Override
                     public void onError(Throwable e) {
 
+                        mReviewDetailView.hideProgressBar();
                     }
 
                     @Override
                     public void onNext(Result<Review> result) {
-
+                        mReviewDetailView.hideProgressBar();
                         mReviewDetailView.setReview(result.response().body());
 
                     }

@@ -54,6 +54,7 @@ public class PersonListActivity extends AppCompatActivity implements IPersonList
         fragment = intent.getStringExtra("fragment");
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(fragment);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);

@@ -35,6 +35,7 @@ public class ResponseOptions {
         VIDEOS("videos"),
         RELEASES("releases"),
         CREDITS("credits"),
+        REVIEWS("reviews"),
         SIMILAR("similar"),
         IMAGES("images"),
         EXTERNAL_IDS("external_ids");

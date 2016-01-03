@@ -28,6 +28,7 @@ public class MovieDetailPresenterImpl implements IMovieDetailPresenter {
 
         ResponseOptions options = new ResponseOptions(ResponseOptions.ResponseOption.CREDITS,
                 ResponseOptions.ResponseOption.VIDEOS,
+                ResponseOptions.ResponseOption.REVIEWS,
                 ResponseOptions.ResponseOption.SIMILAR);
         Observable<Movie> movieObservable = tmdb.moviesService().fetchMovieDetails(id, options);
         movieObservable.subscribeOn(Schedulers.newThread())
