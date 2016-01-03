@@ -3,9 +3,12 @@ package in.nash.showtime;
 import android.app.Application;
 import android.content.Context;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
 import com.parse.Parse;
 
 import in.nash.showtime.utils.StethoUtil;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by avinash on 8/13/15.
@@ -17,6 +20,7 @@ public class ShowtimeApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Answers(), new Crashlytics());
 
         StethoUtil.initStetho(this);
 
