@@ -16,18 +16,20 @@ import rx.schedulers.Schedulers;
  */
 public class PersonListPresenterImpl implements IPersonListPresenter {
 
+    private final String mMovieId;
     private IPersonListView mPersonListView;
 
-    public PersonListPresenterImpl(IPersonListView personListView) {
+    public PersonListPresenterImpl(IPersonListView personListView, String movieId) {
         mPersonListView = personListView;
+        mMovieId = movieId;
     }
 
     @Override
-    public void queryPersons(String id) {
+    public void queryPersons(final String type) {
 
         Tmdb tmdb = new Tmdb();
         Observable<MoviesService.CreditResponse> persons;
-        persons = tmdb.moviesService().fetchMovieCredits(id);
+        persons = tmdb.moviesService().fetchMovieCredits(mMovieId);
         persons.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<MoviesService.CreditResponse>() {
@@ -44,8 +46,14 @@ public class PersonListPresenterImpl implements IPersonListPresenter {
                     @Override
                     public void onNext(MoviesService.CreditResponse creditResponse) {
 
-                        mPersonListView.setPersonList(creditResponse.cast);
-                        Log.d("persons", creditResponse.cast.size() + "");
+                        if(type.equalsIgnoreCase("cast")) {
+                            mPersonListView.setPersonList(creditResponse.cast);
+                            Log.d("persons", creditResponse.cast.size() + "");
+                        }
+                        if(type.equalsIgnoreCase("crew")){
+                            mPersonListView.setPersonList(creditResponse.crew);
+                            Log.d("persons", creditResponse.crew.size() + "");
+                        }
                     }
                 });
 

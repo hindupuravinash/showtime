@@ -59,6 +59,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     private RecyclerView mCrewRecyclerView;
     private RecyclerView mReviewsRecyclerView;
     private LinearLayoutManager mLayoutManager;
+    private int spacingInPixels;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,8 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mContext = MovieDetailActivity.this;
+
+        spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
 
         mReviewsLayout = (LinearLayout) findViewById(R.id.reviews);
         mReviewsLayout.setOnClickListener(this);
@@ -178,6 +181,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
 
     private void setSimilarMovies(final List<Movie> movies){
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
         mRecyclerView.setAdapter(new MovieGridAdapter(this, movies, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,7 +201,6 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         LinearLayoutManager castLayoutManager = new LinearLayoutManager(this);
         mCastRecyclerView.setLayoutManager(castLayoutManager);
         mCastRecyclerView.setAdapter(new PersonListAdapter(this, cast, null, true));
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
         mCastRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
 
@@ -205,7 +208,6 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         LinearLayoutManager crewLayoutManager = new LinearLayoutManager(this);
         mCrewRecyclerView.setLayoutManager(crewLayoutManager);
         mCrewRecyclerView.setAdapter(new PersonListAdapter(this, crew, null, true));
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
         mCrewRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
 
@@ -213,12 +215,12 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         LinearLayoutManager reviewsLayoutManager = new LinearLayoutManager(this);
         mReviewsRecyclerView.setLayoutManager(reviewsLayoutManager);
         mReviewsRecyclerView.setAdapter(new ReviewListAdapter(reviews, null, true));
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
         mReviewsRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
 
     private void setVideos(final List<Video> videos){
         mVideoRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mVideoRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
         mVideoRecyclerView.setAdapter(new VideoListAdapter(this, videos, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

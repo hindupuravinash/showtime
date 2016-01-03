@@ -26,9 +26,9 @@ public class PresenterFactory {
         return new MovieDetailPresenterImpl(movieDetailView);
     }
 
-    public static IPersonListPresenter createPersonListPresenter(IPersonListView personListView) {
+    public static IPersonListPresenter createPersonListPresenter(IPersonListView personListView, String movieId) {
 
-        return new PersonListPresenterImpl(personListView);
+        return new PersonListPresenterImpl(personListView, movieId);
 
     }
 
