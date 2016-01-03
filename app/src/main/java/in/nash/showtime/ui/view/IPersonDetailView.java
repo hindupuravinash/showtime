@@ -7,5 +7,9 @@ import in.nash.showtime.model.Person;
  */
 public interface IPersonDetailView {
 
+    void showProgressBar();
+
+    void hideProgressBar();
+
     void setPerson(Person person);
 }

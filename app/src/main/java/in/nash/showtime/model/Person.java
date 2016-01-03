@@ -17,6 +17,8 @@ public class Person {
 
     private String job;
 
+    public String biography;
+
     private String department;
 
     public String getId() {

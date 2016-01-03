@@ -40,7 +40,7 @@ public class PresenterFactory {
         return new ReviewDetailPresenterImpl(reviewDetailView);
     }
 
-    public static IPersonDetailPresenter createPersonDetailPresenter(IPersonDetailView personDetailView) {
-        return new PersonDetailPresenterImpl(personDetailView);
+    public static IPersonDetailPresenter createPersonDetailPresenter(IPersonDetailView personDetailView, String personId) {
+        return new PersonDetailPresenterImpl(personDetailView, personId);
     }
 }

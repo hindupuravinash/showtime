@@ -16,17 +16,20 @@ import rx.schedulers.Schedulers;
 public class PersonDetailPresenterImpl implements IPersonDetailPresenter {
 
     private final IPersonDetailView mPersonDetailView;
+    private final String mPersonId;
 
-    public PersonDetailPresenterImpl(IPersonDetailView personDetailView) {
+    public PersonDetailPresenterImpl(IPersonDetailView personDetailView, String personId) {
         this.mPersonDetailView = personDetailView;
+        this.mPersonId = personId;
 
     }
 
     @Override
-    public void fetchPerson(String id) {
+    public void fetchPerson() {
         Tmdb tmdb = new Tmdb();
 
-        Observable<Result<Person>> reviewObservable = tmdb.detailService().fetchPersonDetails(id);
+        mPersonDetailView.showProgressBar();
+        Observable<Result<Person>> reviewObservable = tmdb.detailService().fetchPersonDetails(mPersonId);
         reviewObservable.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Result<Person>>() {
@@ -37,12 +40,13 @@ public class PersonDetailPresenterImpl implements IPersonDetailPresenter {
 
                     @Override
                     public void onError(Throwable e) {
+                        mPersonDetailView.hideProgressBar();
 
                     }
 
                     @Override
                     public void onNext(Result<Person> result) {
-
+                        mPersonDetailView.hideProgressBar();
                         mPersonDetailView.setPerson(result.response().body());
 
                     }

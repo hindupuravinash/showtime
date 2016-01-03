@@ -70,6 +70,8 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     RecyclerView mReviewsRecyclerView;
     @Bind(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
+    @Bind(R.id.rating_tmdb)
+    TextView tmdb;
     @BindDimen(R.dimen.spacing)
     int spacingInPixels;
     //endregion
@@ -153,6 +155,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
                 .into(imageView);
 
         setMovieDetails(movie);
+        setRatings(movie);
         setCast((ArrayList<Person>) movie.credits.cast);
         setCrew((ArrayList<Person>) movie.credits.crew);
         setSimilarMovies(movie.similar.results);
@@ -261,10 +264,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void setRatings(Movie movie) {
+        tmdb.setText("TMDB - " + movie.getVoteAverage() + "/10");
     }
-
 }

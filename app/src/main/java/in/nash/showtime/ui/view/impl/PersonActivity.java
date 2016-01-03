@@ -1,33 +1,47 @@
 package in.nash.showtime.ui.view.impl;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import in.nash.showtime.R;
+import in.nash.showtime.model.Person;
+import in.nash.showtime.ui.presenter.IPersonDetailPresenter;
+import in.nash.showtime.ui.presenter.PresenterFactory;
+import in.nash.showtime.ui.view.IPersonDetailView;
 
 /**
  * Created by Avinash Hindupur on 05/07/15.
  */
-public class PersonActivity extends AppCompatActivity {
+public class PersonActivity extends AppCompatActivity implements IPersonDetailView{
 
     //region View variables
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.web_view)
-    WebView mWebView;
     @Bind(R.id.progress_bar)
-    ProgressBar mProgress;
+    ProgressBar mProgressBar;
+    @Bind(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbar;
+    @Bind(R.id.person_backdrop)
+    ImageView personBackdrop;
+    @Bind(R.id.summary)
+    TextView summary;
+    private Context mContext;
+    private String mPersonId;
     //endregion
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,40 +49,25 @@ public class PersonActivity extends AppCompatActivity {
         this.getWindow().requestFeature(Window.FEATURE_PROGRESS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
-
-        if (savedInstanceState != null) {
-            ((WebView) findViewById(R.id.webview)).restoreState(savedInstanceState);
-        }
+        ButterKnife.bind(this);
 
         Bundle extras = getIntent().getExtras();
-        String url = extras.getString("url");
+        mPersonId = extras.getString("id");
 
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mWebView.setVisibility(View.GONE);
-        mProgress.setVisibility(View.VISIBLE);
+        mContext = PersonActivity.this;
 
-        mWebView.setWebViewClient(new CareWebViewClient());
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setDomStorageEnabled(true);
+        initPresenter();
+    }
 
-        if (savedInstanceState == null) {
-            mWebView.loadUrl(url);
-        }
+    private void initPresenter() {
 
-        mWebView.setWebChromeClient(new WebChromeClient() {
-            public void onProgressChanged(WebView view, int loadProgress) {
-                mProgress.setVisibility(View.VISIBLE);
-                mWebView.setVisibility(View.GONE);
-                if (loadProgress == 100) {
-                    mProgress.setVisibility(View.GONE);
-                    mWebView.setVisibility(View.VISIBLE);
+        IPersonDetailPresenter personDetailPresenter = PresenterFactory.createPersonDetailPresenter(this, mPersonId);
+        personDetailPresenter.fetchPerson();
 
-                }
-            }
-        });
     }
 
     @Override
@@ -83,34 +82,31 @@ public class PersonActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static void navigateTo(Activity fromActivity, String url) {
+    public static void navigateTo(Activity fromActivity, Person person) {
         Intent intent = new Intent(fromActivity, PersonActivity.class);
-        intent.putExtra("url", url);
+        intent.putExtra("id", person.getId());
         fromActivity.startActivity(intent);
     }
 
-    private class CareWebViewClient extends WebViewClient {
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-        }
+    @Override
+    public void showProgressBar() {
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mWebView.saveState(outState);
+    public void hideProgressBar() {
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        mWebView.restoreState(savedInstanceState);
+    public void setPerson(Person person) {
+        String url = "http://image.tmdb.org/t/p/w780" + person.getProfilePath();
+        String personName = person.getName();
+
+        collapsingToolbar.setTitle(personName);
+        Picasso.with(mContext)
+                .load(url)
+                .into(personBackdrop);
+        summary.setText(person.biography);
     }
 }

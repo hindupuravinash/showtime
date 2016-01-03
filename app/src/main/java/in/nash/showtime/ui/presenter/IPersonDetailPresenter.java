@@ -5,6 +5,6 @@ package in.nash.showtime.ui.presenter;
  */
 public interface IPersonDetailPresenter {
 
-    void fetchPerson(String id);
+    void fetchPerson();
 
 }

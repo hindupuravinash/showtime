@@ -97,8 +97,16 @@ public class PersonListActivity extends AppCompatActivity implements IPersonList
     }
 
     @Override
-    public void setPersonList(ArrayList<Person> mCast) {
-        mRecyclerView.setAdapter(new PersonListAdapter(this, mCast, null, false));
+    public void setPersonList(final ArrayList<Person> personsList) {
+        mRecyclerView.setAdapter(new PersonListAdapter(this, personsList, new View.OnClickListener() {
+            @Override
+            public void onClick(View item) {
+                int position = mRecyclerView.getChildAdapterPosition(item);
+                Person person = personsList.get(position);
+                PersonActivity.navigateTo(PersonListActivity.this, person);
+
+            }
+        }, false));
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
