@@ -24,33 +24,41 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import in.nash.showtime.R;
-import in.nash.showtime.ui.presenter.impl.MoviesPresenterImpl;
 
 public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
 
-    private DrawerLayout mDrawerLayout;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private AppBarLayout appBarLayout;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-    private MoviesPresenterImpl mMoviesPresenter;
+    //region View variables
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @Bind(R.id.nav_view)
+    NavigationView navigationView;
+    @Bind(R.id.contentView)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    @Bind(R.id.viewpager)
+    ViewPager viewPager;
+    @Bind(R.id.appbar)
+    AppBarLayout appBarLayout;
+    @Bind(R.id.tabs)
+    TabLayout tabLayout;
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         final ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
@@ -64,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
             public void onClick(View v) {
                 ParseUser currentUser = ParseUser.getCurrentUser();
 
-                if(currentUser != null){
+                if (currentUser != null) {
                     ProfileActivity.navigateTo(MainActivity.this);
                 } else {
                     LoginActivity.navigateTo(MainActivity.this);
@@ -72,12 +80,10 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
 
             }
         });
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
         if (viewPager != null) {
             setupViewPager(viewPager);
         }
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.contentView);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.orange);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -93,9 +99,6 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
             }
         });
 
-        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
     }
@@ -146,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        switch (menuItem.getItemId()){
+                        switch (menuItem.getItemId()) {
                             case R.id.nav_settings:
                                 SettingsActivity.navigateTo(MainActivity.this);
                                 break;

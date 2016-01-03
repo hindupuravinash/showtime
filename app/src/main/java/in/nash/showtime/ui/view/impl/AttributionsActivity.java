@@ -6,27 +6,31 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import in.nash.showtime.R;
 
 /**
  * Created by avinash on 9/9/15.
  */
-public class AttributionsActivity extends AppCompatActivity{
-    private WebView mWebView;
+public class AttributionsActivity extends AppCompatActivity {
+    //region View variables
+    @Bind(R.id.web_view)
+    WebView mWebView;
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attributions);
+        ButterKnife.bind(this);
 
         if (savedInstanceState != null) {
-            ((WebView) findViewById(R.id.web_view)).restoreState(savedInstanceState);
+            mWebView.restoreState(savedInstanceState);
         }
 
         String url = "file:///android_asset/licenses.html";
-
-        mWebView = (WebView) findViewById(R.id.web_view);
 
         if (savedInstanceState == null) {
             mWebView.loadUrl(url);

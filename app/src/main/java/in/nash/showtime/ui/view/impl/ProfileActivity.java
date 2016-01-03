@@ -16,24 +16,30 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import in.nash.showtime.R;
 import in.nash.showtime.utils.AppUtils;
 
 /**
  * Created by avinash on 9/3/15.
  */
-public class ProfileActivity  extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
+    //region View variables
+    @Bind(R.id.toolbar)
     Toolbar mToolbarView;
-
+    @Bind(R.id.rootview)
     LinearLayout mRootview;
-
+    @Bind(R.id.name)
     EditText mName;
-
+    @Bind(R.id.email)
     EditText mEmail;
-
+    @Bind(R.id.name_til)
     TextInputLayout mNameTil;
+    @Bind(R.id.email_til)
     TextInputLayout mEmailTil;
+    //endregion
 
     private boolean inProfile = true;
     private ParseUser mUser;
@@ -42,14 +48,7 @@ public class ProfileActivity  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
-        mToolbarView = (Toolbar) findViewById(R.id.toolbar);
-        mRootview = (LinearLayout) findViewById(R.id.rootview);
-        mName = (EditText) findViewById(R.id.name);
-        mEmail = (EditText) findViewById(R.id.email);
-
-        mNameTil = (TextInputLayout) findViewById(R.id.name_til);
-        mEmailTil = (TextInputLayout) findViewById(R.id.email_til);
+        ButterKnife.bind(this);
 
         setSupportActionBar(mToolbarView);
         getSupportActionBar().setTitle(R.string.profile);
@@ -118,7 +117,6 @@ public class ProfileActivity  extends AppCompatActivity {
             //   String mobile = mMobile.getText().toString();
 
 
-
             mName.setEnabled(false);
             mEmail.setEnabled(false);
             //   mMobile.setEnabled(false);
@@ -149,7 +147,7 @@ public class ProfileActivity  extends AppCompatActivity {
 
         }
 
-        if (id == R.id.signout){
+        if (id == R.id.signout) {
 
             navigateToLoginView();
         }
@@ -158,7 +156,7 @@ public class ProfileActivity  extends AppCompatActivity {
     }
 
     public void navigateToLoginView() {
-        Intent i = new Intent(this,LoginActivity.class);
+        Intent i = new Intent(this, LoginActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);

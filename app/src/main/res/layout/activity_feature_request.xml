@@ -6,6 +6,8 @@
     android:gravity="center_horizontal"
     android:padding="16dp">
 
+    <include layout="@layout/toolbar"/>
+
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

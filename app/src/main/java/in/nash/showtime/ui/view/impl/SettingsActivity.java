@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import in.nash.showtime.R;
 import in.nash.showtime.utils.AppUtils;
 
@@ -14,15 +16,17 @@ import in.nash.showtime.utils.AppUtils;
  */
 public class SettingsActivity extends AppCompatActivity {
 
+    //region View variables
+    @Bind(R.id.toolbar)
     Toolbar mToolbarView;
+    //endregion
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_settings);
+        ButterKnife.bind(this);
 
-        mToolbarView = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbarView);
         getSupportActionBar().setTitle(R.string.settings);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -15,6 +15,8 @@ import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import in.nash.showtime.R;
 import in.nash.showtime.adapter.PersonListAdapter;
 import in.nash.showtime.model.Person;
@@ -28,11 +30,16 @@ import in.nash.showtime.utils.SpacesItemDecoration;
  */
 public class PersonListActivity extends AppCompatActivity implements IPersonListView {
 
-    public static final String TAG = "PersonListActivity";
-    private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private ProgressBar mProgressBar;
+    //region View variables
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.persons_list)
+    RecyclerView mRecyclerView;
+    @Bind(R.id.progress_bar)
+    ProgressBar mProgressBar;
+    //engregion
 
+    public static final String TAG = "PersonListActivity";
     public static String mId;
     private String fragment;
 
@@ -40,19 +47,17 @@ public class PersonListActivity extends AppCompatActivity implements IPersonList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_persons_list);
+        ButterKnife.bind(this);
 
         Intent intent = getIntent();
         mId = intent.getStringExtra("id");
         fragment = intent.getStringExtra("fragment");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.persons_list);
-
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
 
         initPresenter();
 

@@ -17,6 +17,9 @@ import android.widget.ProgressBar;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.BindDimen;
+import butterknife.ButterKnife;
 import in.nash.showtime.R;
 import in.nash.showtime.adapter.MovieGridAdapter;
 import in.nash.showtime.model.Movie;
@@ -32,9 +35,15 @@ import in.nash.showtime.utils.TransitionHelper;
  */
 public class MovieFragment extends Fragment implements IMoviesView {
 
+    //region View variables
+    @Bind(R.id.movies_grid)
+    RecyclerView mRecyclerView;
+    @BindDimen(R.dimen.spacing)
+    int spacingInPixels;
+    //endregion
+
     private MovieType mMovieType;
     private Movie mMovie;
-    private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
     private IMoviesPresenter mMoviePresenter;
     private LinearLayoutManager mLayoutManager;
@@ -44,12 +53,10 @@ public class MovieFragment extends Fragment implements IMoviesView {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_movies_grid, container, false);
-
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.movies_grid);
+        ButterKnife.bind(this, rootView);
 
         displayGridView();
 
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
         initPresenter();

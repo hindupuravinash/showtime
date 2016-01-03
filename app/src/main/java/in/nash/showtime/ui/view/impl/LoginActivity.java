@@ -30,6 +30,8 @@ import com.parse.SignUpCallback;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import in.nash.showtime.R;
 import in.nash.showtime.ShowtimeApplication;
 import in.nash.showtime.ui.view.ILoginView;
@@ -46,35 +48,35 @@ import rx.schedulers.Schedulers;
 public class LoginActivity extends AppCompatActivity implements ILoginView, TextView.OnEditorActionListener,
         View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
-    private Button mSubmitButton;
-    private AutoCompleteTextView mEmail;
-    private TextInputLayout mEmailInputLayout;
-    private EditText mUserName;
-    private EditText mPassword;
-    private RadioGroup mRadioGroup;
-    private ProgressBar mProgressBar;
-    private LinearLayout mLinearLayout;
+    //region View variables
+    @Bind(R.id.button_submit)
+    Button mSubmitButton;
+    @Bind(R.id.input_email)
+    AutoCompleteTextView mEmail;
+    @Bind(R.id.input_layout_email)
+    TextInputLayout mEmailInputLayout;
+    @Bind(R.id.input_username)
+    EditText mUserName;
+    @Bind(R.id.input_password)
+    EditText mPassword;
+    @Bind(R.id.radio_group)
+    RadioGroup mRadioGroup;
+    @Bind(R.id.progress_bar)
+    ProgressBar mProgressBar;
+    @Bind(R.id.linear_layout)
+    LinearLayout mLinearLayout;
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
 
-        mLinearLayout = (LinearLayout) findViewById(R.id.linear_layout);
-        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        mUserName = (EditText) findViewById(R.id.input_username);
         mUserName.setOnEditorActionListener(this);
-        mPassword = (EditText) findViewById(R.id.input_password);
         mPassword.setOnEditorActionListener(this);
-
-        mSubmitButton = (Button) findViewById(R.id.button_submit);
         mSubmitButton.setOnClickListener(this);
-
-        mRadioGroup = (RadioGroup) findViewById(R.id.radio_group);
         mRadioGroup.setOnCheckedChangeListener(this);
-
-        mEmailInputLayout = (TextInputLayout) findViewById(R.id.input_layout_email);
-        mEmail = (AutoCompleteTextView) findViewById(R.id.input_email);
 
         fetchEmails();
 

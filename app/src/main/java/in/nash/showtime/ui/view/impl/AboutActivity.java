@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import in.nash.showtime.R;
 import in.nash.showtime.utils.AppUtils;
 
@@ -15,19 +17,23 @@ import in.nash.showtime.utils.AppUtils;
  */
 public class AboutActivity extends AppCompatActivity {
 
+    //region View variables
+    @Bind(R.id.toolbar)
     Toolbar mToolbarView;
+    @Bind(R.id.version)
+    TextView versionText;
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        ButterKnife.bind(this);
 
-        mToolbarView = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbarView);
         getSupportActionBar().setTitle(R.string.about);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        TextView versionText = (TextView) findViewById(R.id.version);
         versionText.setText("Version: " + AppUtils.getVersionName());
     }
 

@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import in.nash.showtime.R;
 import in.nash.showtime.utils.AppUtils;
 
@@ -17,17 +19,18 @@ import in.nash.showtime.utils.AppUtils;
  */
 public class FeedbackActivity extends AppCompatActivity {
 
+    //region View variables
+    @Bind(R.id.toolbar)
     Toolbar mToolbar;
-
+    @Bind(R.id.feedback)
     EditText mFeedbackView;
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
-
-        mFeedbackView = (EditText) findViewById(R.id.feedback);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(R.string.feedback_title);

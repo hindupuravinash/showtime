@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -24,6 +23,10 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.BindDimen;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import in.nash.showtime.R;
 import in.nash.showtime.adapter.MovieGridAdapter;
 import in.nash.showtime.adapter.PersonListAdapter;
@@ -50,44 +53,38 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     private String mMovieId;
     private Movie mMovie;
     private Context mContext;
-    private LinearLayout mReviewsLayout;
-    private LinearLayout mCastLayout;
-    private LinearLayout mCrewLayout;
-    private RecyclerView mRecyclerView;
-    private RecyclerView mVideoRecyclerView;
-    private RecyclerView mCastRecyclerView;
-    private RecyclerView mCrewRecyclerView;
-    private RecyclerView mReviewsRecyclerView;
-    private LinearLayoutManager mLayoutManager;
-    private int spacingInPixels;
+
+    //region View variables
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.movies_similar)
+    RecyclerView mRecyclerView;
+    @Bind(R.id.movie_videos)
+    RecyclerView mVideoRecyclerView;
+    @Bind(R.id.movie_cast)
+    RecyclerView mCastRecyclerView;
+    @Bind(R.id.movie_crew)
+    RecyclerView mCrewRecyclerView;
+    @Bind(R.id.movie_reviews)
+    RecyclerView mReviewsRecyclerView;
+    @Bind(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbar;
+    @BindDimen(R.dimen.spacing)
+    int spacingInPixels;
+    //endregion
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
+        ButterKnife.bind(this);
 
         Intent intent = getIntent();
         mMovieId = intent.getStringExtra("id");
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mContext = MovieDetailActivity.this;
-
-        spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
-
-        mReviewsLayout = (LinearLayout) findViewById(R.id.reviews);
-        mReviewsLayout.setOnClickListener(this);
-        mVideoRecyclerView = (RecyclerView) findViewById(R.id.movie_videos);
-        mRecyclerView = (RecyclerView) findViewById(R.id.movies_similar);
-        mCastRecyclerView = (RecyclerView) findViewById(R.id.movie_cast);
-        mCrewRecyclerView = (RecyclerView) findViewById(R.id.movie_crew);
-        mReviewsRecyclerView = (RecyclerView) findViewById(R.id.movie_reviews);
-
-        mCastLayout = (LinearLayout) findViewById(R.id.cast);
-        mCastLayout.setOnClickListener(this);
-        mCrewLayout = (LinearLayout) findViewById(R.id.crew);
-        mCrewLayout.setOnClickListener(this);
 
         initPresenter();
     }
@@ -106,10 +103,11 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
     }
 
     @Override
+    @OnClick({R.id.cast, R.id.crew, R.id.reviews})
     public void onClick(View v) {
         Intent intent;
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.cast:
                 intent = new Intent(MovieDetailActivity.this, PersonListActivity.class);
                 intent.putExtra("fragment", "cast");
@@ -144,8 +142,6 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         String movieTitle = movie.getTitle();
         String movieOverview = movie.getOverview();
 
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(movieTitle);
 
         TextView overview = (TextView) findViewById(R.id.summary);
@@ -179,7 +175,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         language.setText(movie.getOriginalLanguage());
     }
 
-    private void setSimilarMovies(final List<Movie> movies){
+    private void setSimilarMovies(final List<Movie> movies) {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
         mRecyclerView.setAdapter(new MovieGridAdapter(this, movies, new View.OnClickListener() {
@@ -197,28 +193,28 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         }));
     }
 
-    private void setCast(final ArrayList<Person> cast){
+    private void setCast(final ArrayList<Person> cast) {
         LinearLayoutManager castLayoutManager = new LinearLayoutManager(this);
         mCastRecyclerView.setLayoutManager(castLayoutManager);
         mCastRecyclerView.setAdapter(new PersonListAdapter(this, cast, null, true));
         mCastRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
 
-    private void setCrew(final ArrayList<Person> crew){
+    private void setCrew(final ArrayList<Person> crew) {
         LinearLayoutManager crewLayoutManager = new LinearLayoutManager(this);
         mCrewRecyclerView.setLayoutManager(crewLayoutManager);
         mCrewRecyclerView.setAdapter(new PersonListAdapter(this, crew, null, true));
         mCrewRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
 
-    private void setReviews(final ArrayList<Review> reviews){
+    private void setReviews(final ArrayList<Review> reviews) {
         LinearLayoutManager reviewsLayoutManager = new LinearLayoutManager(this);
         mReviewsRecyclerView.setLayoutManager(reviewsLayoutManager);
         mReviewsRecyclerView.setAdapter(new ReviewListAdapter(reviews, null, true));
         mReviewsRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
     }
 
-    private void setVideos(final List<Video> videos){
+    private void setVideos(final List<Video> videos) {
         mVideoRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mVideoRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
         mVideoRecyclerView.setAdapter(new VideoListAdapter(this, videos, new View.OnClickListener() {
@@ -233,6 +229,7 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
             }
         }));
     }
+
     private void startMovieDetailActivityWithTransition(Activity activity, View toolbar,
                                                         Movie movie) {
 

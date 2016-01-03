@@ -13,17 +13,22 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import butterknife.Bind;
 import in.nash.showtime.R;
 
 /**
  * Created by Avinash Hindupur on 05/07/15.
  */
 public class PersonActivity extends AppCompatActivity {
-    
-    private WebView mWebView;
-    private String mUrl;
-    private Toolbar toolbar;
-    private ProgressBar mProgress;
+
+    //region View variables
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.web_view)
+    WebView mWebView;
+    @Bind(R.id.progress_bar)
+    ProgressBar mProgress;
+    //endregion
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -31,16 +36,12 @@ public class PersonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
 
-        mWebView = (WebView) findViewById(R.id.webview);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        mProgress = (ProgressBar) findViewById(R.id.progress_bar);
-
         if (savedInstanceState != null) {
             ((WebView) findViewById(R.id.webview)).restoreState(savedInstanceState);
         }
 
         Bundle extras = getIntent().getExtras();
-        mUrl = extras.getString("url");
+        String url = extras.getString("url");
 
 
         setSupportActionBar(toolbar);
@@ -54,7 +55,7 @@ public class PersonActivity extends AppCompatActivity {
         mWebView.getSettings().setDomStorageEnabled(true);
 
         if (savedInstanceState == null) {
-            mWebView.loadUrl(mUrl);
+            mWebView.loadUrl(url);
         }
 
         mWebView.setWebChromeClient(new WebChromeClient() {
