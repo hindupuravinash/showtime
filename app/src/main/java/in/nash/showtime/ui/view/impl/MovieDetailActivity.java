@@ -39,6 +39,7 @@ import in.nash.showtime.model.Video;
 import in.nash.showtime.ui.presenter.IMovieDetailPresenter;
 import in.nash.showtime.ui.presenter.PresenterFactory;
 import in.nash.showtime.ui.view.IMovieDetailView;
+import in.nash.showtime.utils.DateUtils;
 import in.nash.showtime.utils.LinearLayoutManager;
 import in.nash.showtime.utils.SdkUtil;
 import in.nash.showtime.utils.SpacesItemDecoration;
@@ -168,9 +169,13 @@ public class MovieDetailActivity extends AppCompatActivity implements IMovieDeta
         TextView revenue = (TextView) findViewById(R.id.revenue);
         TextView language = (TextView) findViewById(R.id.language);
 
-        released.setText(movie.getReleaseDate());
-        runtime.setText(StringUtil.getSrtingFromInt(movie.getRuntime()));
-        budget.setText(StringUtil.getSrtingFromInt(movie.getBudget()));
+        Log.d("Time", movie.getReleaseDate());
+        Log.d("Time", movie.getReleaseDate());
+        //released.setText(movie.getReleaseDate());
+
+        released.setText(DateUtils.toDateWithoutTime(movie.getReleaseDate()));
+        runtime.setText(StringUtil.getSrtingFromInt(movie.getRuntime()) + " mins");
+        budget.setText("$ " + StringUtil.getSrtingFromInt(movie.getBudget()));
         revenue.setText(StringUtil.getSrtingFromInt(movie.getRevenue()));
         language.setText(movie.getOriginalLanguage());
     }
