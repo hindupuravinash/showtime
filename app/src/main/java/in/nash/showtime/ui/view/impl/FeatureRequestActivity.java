@@ -30,7 +30,7 @@ public class FeatureRequestActivity extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feature_request);
         ButterKnife.bind(this);
-        
+
         setSupportActionBar(mToolbarView);
         getSupportActionBar().setTitle(R.string.title_feature_request);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

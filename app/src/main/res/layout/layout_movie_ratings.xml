@@ -1,7 +1,9 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="16dp">
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/card_window_margin"
+                                    android:layout_marginLeft="@dimen/card_window_margin"
+                                    android:layout_marginRight="@dimen/card_window_margin">
 
     <LinearLayout
         style="@style/Widget.Card"
@@ -12,34 +14,34 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
             android:gravity="center"
             android:paddingBottom="20dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            android:text="@string/app_name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tmdb"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/imdb"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/rotten_tomatoes"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/metacritic"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
     </LinearLayout>
 
