@@ -7,7 +7,6 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.parse.Parse;
 
-import in.nash.showtime.utils.StethoUtil;
 import io.fabric.sdk.android.Fabric;
 
 /**
@@ -22,7 +21,7 @@ public class ShowtimeApplication extends Application{
         super.onCreate();
         Fabric.with(this, new Answers(), new Crashlytics());
 
-        StethoUtil.initStetho(this);
+        //StethoUtil.initStetho(this);
 
         Parse.initialize(this, Secrets.PARSE_APP_ID, Secrets.PARSE_KEY);
 

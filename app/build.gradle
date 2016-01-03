@@ -1,3 +1,5 @@
+import com.crashlytics.tools.utils.PropertiesUtils
+
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
@@ -33,9 +35,18 @@ android {
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
     }
     buildTypes {
+        debug {
+            ext.crashlyticsApiSecret = System.getenv("SHOWTIME_CRASHLYTICS_API_SECRET")
+            ext.crashlyticsApiKey = System.getenv("SHOWTIME_FABRIC_API_KEY")
+
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            ext.crashlyticsApiSecret = System.getenv("SHOWTIME_CRASHLYTICS_API_SECRET")
+            ext.crashlyticsApiKey = System.getenv("SHOWTIME_FABRIC_API_KEY")
+
         }
     }
 }
@@ -70,8 +81,8 @@ dependencies {
     compile 'com.parse.bolts:bolts-android:1.+'
     compile fileTree(dir: 'libs', include: 'Parse-*.jar')
 
-    debugCompile('com.facebook.stetho:stetho:1.2.0')
-    debugCompile('com.facebook.stetho:stetho-okhttp:1.2.0')
+    //debugCompile('com.facebook.stetho:stetho:1.2.0')
+    //debugCompile('com.facebook.stetho:stetho-okhttp:1.2.0')
     compile('com.crashlytics.sdk.android:answers:1.3.6@aar') {
         transitive = true;
     }
@@ -80,3 +91,19 @@ dependencies {
     }
 
 }
+
+File crashlyticsProperties = new File("${project.projectDir.absolutePath}/fabric.properties")
+android.applicationVariants.all { variant ->
+    def variantSuffix = variant.name.capitalize()
+    def generateResourcesTask = project.tasks.getByName("fabricGenerateResources${variantSuffix}")
+    def generatePropertiesTask = task("fabricGenerateProperties${variantSuffix}") << {
+        Properties properties = new Properties()
+        println "...copying apiSecret for ${variant.name}"
+        properties.put("apiSecret", variant.buildType.ext.crashlyticsApiSecret)
+        println "...copying apiKey for ${variant.name}"
+        properties.put("apiKey", variant.buildType.ext.crashlyticsApiKey)
+        PropertiesUtils.injectPropertyInFile(crashlyticsProperties, properties, "")
+    }
+    generateResourcesTask.dependsOn generatePropertiesTask
+}
+

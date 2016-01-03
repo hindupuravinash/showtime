@@ -13,7 +13,6 @@ import java.io.IOException;
 import in.nash.showtime.ShowtimeApplication;
 import in.nash.showtime.ui.Globals;
 import in.nash.showtime.utils.ConnectivityUtils;
-import in.nash.showtime.utils.StethoUtil;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
@@ -63,7 +62,7 @@ public class Tmdb {
         Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
 
         OkHttpClient okHttpClient = new OkHttpClient();
-        StethoUtil.addStethoIntercepter(okHttpClient);
+        //StethoUtil.addStethoIntercepter(okHttpClient);
         okHttpClient.networkInterceptors().add(new AuthInterceptor());
         okHttpClient.setCache(cache);
 
