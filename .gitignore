@@ -7,3 +7,7 @@
 /captures
 
 app/fabric.properties
+
+.idea/misc.xml
+
+app/app.iml
