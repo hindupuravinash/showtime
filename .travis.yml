@@ -25,7 +25,10 @@ android:
     #- sys-img-armeabi-v7a-android-23
     #- sys-img-x86-android-23
 
-script: ./gradlew assembleDebug
+script:
+    - ./gradlew build jacocoTestReport assembleAndroidTest
+    - ./gradlew connectedCheck
+    - ./gradlew assembleDebug
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
