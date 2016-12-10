@@ -35,6 +35,9 @@ android {
         versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
     }
+    lintOptions {
+        abortOnError false
+    }
     buildTypes {
         debug {
             ext.crashlyticsApiSecret = System.getenv("SHOWTIME_CRASHLYTICS_API_SECRET")
